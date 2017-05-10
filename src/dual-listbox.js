@@ -16,7 +16,7 @@ class DualListbox {
         this.available = [];
 
         this.splitSelectOptions(this.select);
-        this.dualListbox = this.initDualListbox(this.select.parentNode);
+        this.initDualListbox(this.select.parentNode);
     }
 
     /**
@@ -130,9 +130,8 @@ class DualListbox {
         container.insertBefore(dualListbox, this.select);
 
         this.select.style.display = 'none';
+        this.dualListbox = dualListbox;
         this.redraw();
-        
-        return dualListbox;
     }
 
     /**
@@ -234,7 +233,7 @@ class DualListbox {
         listItem.innerText = option.innerText;
         listItem.dataset.id = option.value;
 
-        return listItem
+        return listItem;
     }
 }
 

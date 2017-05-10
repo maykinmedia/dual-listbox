@@ -1,11 +1,11 @@
 var paths = require('./build/paths');
 var webpack = require('webpack');
-// var nodeExternals = require('webpack-node-externals');
+var nodeExternals = require('webpack-node-externals');
 
 
 module.exports = {
     entry: './src/' + paths.packageName,
-    // externals: [nodeExternals()],
+    externals: [nodeExternals()],
     target: 'node',
 
     output: {
@@ -25,6 +25,6 @@ module.exports = {
     },
 
     plugins: [
-        // new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin()
     ]
 };
