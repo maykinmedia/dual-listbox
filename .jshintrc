@@ -1,0 +1,14 @@
+{
+    "browser":true,
+    "bitwise":true,
+    "curly":true,
+    "eqeqeq":true,
+    "esversion":6,
+    "forin":true,
+    "freeze":true,
+    "maxdepth":2,
+    "undef":true,
+    "unused":true,
+
+    "jasmine": true
+}
