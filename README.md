@@ -2,7 +2,15 @@
 
 # Dual Listbox
 
-> TODO.
+> Make your multi select pretty and easy to use with only javascript.
+
+Styling.
+
+![Default](screenshots/select1.png)
+
+with selected options and one option highlighted.
+
+![selected](screenshots/select2.png)
 
 ## Install
 
@@ -12,9 +20,32 @@ Install with [npm](https://www.npmjs.com/)
 $ npm i dual-listbox --save
 ```
 
-## Usage 
+## Usage
 
-TODO
+```javascript
+new DualListbox('select'); // Selects the first selectbox on the page.
+new DualListbox('.select'); // Selects the first element with the class 'select'
+new DualListbox('#select'); // Selects the first element with the id 'select'
+```
+
+You can also pass some options to the DualListbox
+
+```javascript
+new DualListbox('#select', {
+    addEvent: function(value) {
+        console.log(value);
+    },
+    removeEvent: function(value) {
+        console.log(value);
+    },
+    availableTitle: 'Different title',
+    selectedTitle: 'Different title',
+    addButtonText: '>',
+    removeButtonText: '<',
+    addAllButtonText: '>>',
+    removeAllButtonText: '<<'
+});
+```
 
 ## Contributing
 
