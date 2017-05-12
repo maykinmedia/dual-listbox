@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/maykinmedia/dual-listbox.svg?branch=1.0)](https://travis-ci.org/maykinmedia/dual-listbox)
+[![Build Status](https://travis-ci.org/maykinmedia/dual-listbox.svg?branch=master)](https://travis-ci.org/maykinmedia/dual-listbox)
 
 # Dual Listbox
 
