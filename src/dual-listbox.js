@@ -75,8 +75,8 @@ class DualListbox {
      *
      * @param {Object} searchString
      */
-    searchLists(searchString) {
-        let items = this.dualListbox.querySelectorAll(`.${ITEM_ELEMENT}`);
+    searchLists(searchString, dualListbox) {
+        let items = dualListbox.querySelectorAll(`.${ITEM_ELEMENT}`);
 
         for(let i = 0; i < items.length; i++) {
             let item = items[i];
@@ -139,8 +139,7 @@ class DualListbox {
      */
     _actionItemSelected(event) {
         event.preventDefault();
-        console.log(this);
-        console.log(this.dualListbox);
+
         let selected = this.dualListbox.querySelector(`.${SELECTED_MODIFIER}`);
         if(selected) {
             this.addSelected(selected);
@@ -179,8 +178,6 @@ class DualListbox {
             event.stopPropagation();
         }
 
-        console.log("Double click", listItem);
-        console.log(this.selected.indexOf(listItem) > -1);
         if (this.selected.indexOf(listItem) > -1) {
             this.removeSelected(listItem);
         } else {
@@ -192,7 +189,6 @@ class DualListbox {
      * Action when single clicked on a listItem.
      */
     _actionItemClick(listItem, dualListbox, event=null) {
-        console.log('Single click', listItem);
         if(event) {
             event.preventDefault();
         }
@@ -248,8 +244,8 @@ class DualListbox {
      * Adds the actions to the search input.
      */
     _addSearchActions() {
-        this.search.addEventListener('change', (event) => this.searchLists(event.target.value));
-        this.search.addEventListener('keyup', (event) => this.searchLists(event.target.value));
+        this.search.addEventListener('change', (event) => this.searchLists(event.target.value, this.dualListbox));
+        this.search.addEventListener('keyup', (event) => this.searchLists(event.target.value, this.dualListbox));
     }
 
     /**
