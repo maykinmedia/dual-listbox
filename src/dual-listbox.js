@@ -82,13 +82,13 @@ class DualListbox {
             let item = items[i];
 
             if(searchString) {
-                if(!item.textContent.includes(searchString)) {
+                if(item.textContent.indexOf(searchString) === -1) {
                     item.style.display = 'none';
                 } else {
-                    item.style.display = 'block';
+                    item.style.display = 'list-item';
                 }
             } else {
-                item.style.display = 'block';
+                item.style.display = 'list-item';
             }
         }
     }
