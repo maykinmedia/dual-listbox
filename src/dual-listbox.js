@@ -78,7 +78,9 @@ class DualListbox {
     searchLists(searchString) {
         let items = this.dualListbox.querySelectorAll(`.${ITEM_ELEMENT}`);
 
-        items.forEach(function(item) {
+        for(let i = 0; i < items.length; i++) {
+            let item = items[i];
+
             if(searchString) {
                 if(!item.innerText.includes(searchString)) {
                     item.style.display = 'none';
@@ -88,7 +90,7 @@ class DualListbox {
             } else {
                 item.style.display = 'block';
             }
-        });
+        }
     }
 
     /**
@@ -97,8 +99,9 @@ class DualListbox {
     updateAvailableListbox() {
         this.availebleList.innerHTML = '';
         this.availebleList.appendChild(this.availableListTitle);
-        for(let listItem of this.available){
-            this.availebleList.appendChild(this._addClickActions(listItem));
+        for(let i = 0; i < this.available.length; i++) {
+            let listItem= this.available[i];
+            this.availebleList.appendChild(listItem);
         }
     }
 
@@ -108,8 +111,9 @@ class DualListbox {
     updateSelectedListbox() {
         this.selectedList.innerHTML = '';
         this.selectedList.appendChild(this.selectedListTitle);
-        for(let listItem of this.selected){
-            this.selectedList.appendChild(this._addClickActions(listItem));
+        for(let i = 0; i < this.selected.length; i++) {
+            let listItem= this.selected[i];
+            this.selectedList.appendChild(listItem);
         }
     }
 
@@ -135,7 +139,8 @@ class DualListbox {
      */
     _actionItemSelected(event) {
         event.preventDefault();
-
+        console.log(this);
+        console.log(this.dualListbox);
         let selected = this.dualListbox.querySelector(`.${SELECTED_MODIFIER}`);
         if(selected) {
             this.addSelected(selected);
@@ -168,8 +173,15 @@ class DualListbox {
     /**
      * Action when double clicked on a listItem.
      */
-    _actionItemDoubleClick(listItem) {
-        if (this.selected.indexOf(this) > -1) {
+    _actionItemDoubleClick(listItem, event=null) {
+        if(event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        console.log("Double click", listItem);
+        console.log(this.selected.indexOf(listItem) > -1);
+        if (this.selected.indexOf(listItem) > -1) {
             this.removeSelected(listItem);
         } else {
             this.addSelected(listItem);
@@ -179,14 +191,20 @@ class DualListbox {
     /**
      * Action when single clicked on a listItem.
      */
-    _actionItemClick(listItem) {
-        let items = this.dualListbox.querySelectorAll(`.${ITEM_ELEMENT}`);
+    _actionItemClick(listItem, dualListbox, event=null) {
+        console.log('Single click', listItem);
+        if(event) {
+            event.preventDefault();
+        }
 
-        items.forEach(function(value) {
+        let items = dualListbox.querySelectorAll(`.${ITEM_ELEMENT}`);
+
+        for(let i = 0; i < items.length; i++) {
+            let value = items[i];
             if (value !== listItem) {
                 value.classList.remove(SELECTED_MODIFIER);
             }
-        });
+        }
 
         if(listItem.classList.contains(SELECTED_MODIFIER)) {
             listItem.classList.remove(SELECTED_MODIFIER);
@@ -208,10 +226,10 @@ class DualListbox {
      * Adds the actions to the buttons that are created.
      */
     _addButtonActions() {
-        this.add_all_button.addEventListener('click', this._actionAllSelected);
-        this.add_button.addEventListener('click', this._actionItemSelected);
-        this.remove_button.addEventListener('click', this._actionItemDeselected);
-        this.remove_all_button.addEventListener('click', this._actionAllDeselected);
+        this.add_all_button.addEventListener('click', (event) => this._actionAllSelected(event));
+        this.add_button.addEventListener('click', (event) => this._actionItemSelected(event));
+        this.remove_button.addEventListener('click', (event) => this._actionItemDeselected(event));
+        this.remove_all_button.addEventListener('click', (event) => this._actionAllDeselected(event));
     }
 
     /**
@@ -220,8 +238,8 @@ class DualListbox {
      * @param {Object} listItem
      */
     _addClickActions(listItem) {
-        listItem.addEventListener('dblclick', () => this._actionItemDoubleClick(listItem));
-        listItem.addEventListener('click', () => this._actionItemClick(listItem));
+        listItem.addEventListener('dblclick', (event) => this._actionItemDoubleClick(listItem, event));
+        listItem.addEventListener('click', (event) => this._actionItemClick(listItem, this.dualListbox, event));
         return listItem;
     }
 
@@ -291,6 +309,8 @@ class DualListbox {
         listItem.innerHTML = option.innerHTML;
         listItem.dataset.id = option.value;
 
+        this._addClickActions(listItem);
+
         return listItem;
     }
 
@@ -301,6 +321,7 @@ class DualListbox {
     _createSearch() {
         this.search = document.createElement('input');
         this.search.classList.add(SEARCH_ELEMENT);
+        this.search.attributes.placehold = this.searchPlaceholder;
     }
 
     /**
@@ -312,7 +333,8 @@ class DualListbox {
     _deselectOption(value) {
         let options = this.select.options;
 
-        for(let option of options) {
+        for(let i = 0; i < options.length; i++) {
+            let option = options[i];
             if(option.value === value) {
                 option.selected = false;
             }
@@ -336,6 +358,7 @@ class DualListbox {
         this.removeButtonText = options.removeButtonText || 'remove';
         this.addAllButtonText = options.addAllButtonText || 'add all';
         this.removeAllButtonText = options.removeAllButtonText || 'remove all';
+        this.searchPlaceholder = options.searchPlaceholder || 'Search';
     }
 
     /**
@@ -379,7 +402,8 @@ class DualListbox {
     _selectOption(value) {
         let options = this.select.options;
 
-        for(let option of options) {
+        for(let i = 0; i < options.length; i++) {
+            let option = options[i];
             if(option.value === value) {
                 option.selected = true;
             }
@@ -396,7 +420,9 @@ class DualListbox {
      */
     _splitSelectOptions(select) {
         let options = select.options;
-        [].forEach.call(options, (option) => {
+
+        for(let i = 0; i < options.length; i++) {
+            let option = options[i];
             let listItem = this._createListItem(option);
 
             if(option.attributes.selected) {
@@ -404,7 +430,7 @@ class DualListbox {
             } else {
                 this.available.push(listItem);
             }
-        });
+        }
     }
 }
 

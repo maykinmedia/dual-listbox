@@ -21,4 +21,4 @@ gulp.task('watch-js', function() {
     gulp.watch(paths.source, ['build-js']);
 });
 
-gulp.task('watch', ['watch-sass', 'watch-js']);
+gulp.task('watch', ['build', 'watch-sass', 'watch-js']);
