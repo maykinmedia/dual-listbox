@@ -82,7 +82,7 @@ class DualListbox {
             let item = items[i];
 
             if(searchString) {
-                if(!item.innerText.includes(searchString)) {
+                if(!item.textContent.includes(searchString)) {
                     item.style.display = 'none';
                 } else {
                     item.style.display = 'block';
