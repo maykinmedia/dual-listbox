@@ -18,6 +18,7 @@ const SELECTED_MODIFIER = 'dual-listbox__item--selected';
  */
 class DualListbox {
     constructor(selector, options={}) {
+        this.setDefaults();
         this.select = document.querySelector(selector);
 
         this.selected = [];
@@ -30,6 +31,21 @@ class DualListbox {
         this._addActions();
 
         this.redraw();
+    }
+
+    /**
+     * Sets the default values that can be overwritten.
+     */
+    setDefaults() {
+        this.addEvent = null;
+        this.removeEvent = null;
+        this.availableTitle = 'Available options';
+        this.selectedTitle = 'Selected options';
+        this.addButtonText = 'add';
+        this.removeButtonText = 'remove';
+        this.addAllButtonText = 'add all';
+        this.removeAllButtonText = 'remove all';
+        this.searchPlaceholder = 'Search';
     }
 
     /**
@@ -317,7 +333,7 @@ class DualListbox {
     _createSearch() {
         this.search = document.createElement('input');
         this.search.classList.add(SEARCH_ELEMENT);
-        this.search.attributes.placehold = this.searchPlaceholder;
+        this.search.placeholder = this.searchPlaceholder;
     }
 
     /**
@@ -346,15 +362,9 @@ class DualListbox {
      * Set the option variables to this.
      */
     _initOptions(options) {
-        this.addEvent = options.addEvent;
-        this.removeEvent = options.removeEvent;
-        this.availableTitle = options.availableTitle || 'Available options';
-        this.selectedTitle = options.selectedTitle || 'Selected options';
-        this.addButtonText = options.addButtonText || 'add';
-        this.removeButtonText = options.removeButtonText || 'remove';
-        this.addAllButtonText = options.addAllButtonText || 'add all';
-        this.removeAllButtonText = options.removeAllButtonText || 'remove all';
-        this.searchPlaceholder = options.searchPlaceholder || 'Search';
+        for(var key in options) {
+            this[key] = options[key];
+        }
     }
 
     /**
