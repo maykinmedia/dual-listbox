@@ -1,6 +1,6 @@
 {
   "name": "dual-listbox",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Dual listbox for multi-select elements",
   "main": "dist/dual-listbox.js",
   "directories": {
@@ -24,8 +24,10 @@
     "jasmine-core": "^2.4.1",
     "jshint": "^2.9.2",
     "karma": "^1.1.0",
+    "karma-browserstack-launcher": "^1.2.0",
     "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.0.0",
+    "karma-coveralls": "^1.1.2",
     "karma-es6-shim": "^1.0.0",
     "karma-firefox-launcher": "^1.0.0",
     "karma-jasmine": "^1.0.2",
