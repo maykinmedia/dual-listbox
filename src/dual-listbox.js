@@ -93,8 +93,7 @@ class DualListbox {
      */
     searchLists(searchString, dualListbox) {
         let items = dualListbox.querySelectorAll(`.${ITEM_ELEMENT}`);
-
-				let lowerCaseSearchString = searchString.toLowerCase();
+        let lowerCaseSearchString = searchString.toLowerCase();
 
         for(let i = 0; i < items.length; i++) {
             let item = items[i];
