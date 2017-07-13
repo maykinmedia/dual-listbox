@@ -19,12 +19,38 @@ webpackConfig.externals = [];
 
 // The main configuration
 module.exports = function(config) {
-    config.set({
-        browserStack: {
-            username: '',
-            accessKey: ''
-        },
+    if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
+        console.log('Make sure the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables are set.')
+        process.exit(1)
+    }
 
+    var customLaunchers = {
+        sl_chrome: {
+            base: 'SauceLabs',
+            browserName: 'chrome',
+            platform: 'Windows 7',
+            version: '35'
+        },
+        sl_firefox: {
+            base: 'SauceLabs',
+            browserName: 'firefox',
+            version: '30'
+        },
+        sl_ios_safari: {
+            base: 'SauceLabs',
+            browserName: 'iphone',
+            platform: 'OS X 10.9',
+            version: '7.1'
+        },
+        sl_ie_11: {
+            base: 'SauceLabs',
+            browserName: 'internet explorer',
+            platform: 'Windows 8.1',
+            version: '11'
+        }
+    }
+
+    config.set({
         frameworks: [
             'jasmine-jquery',
             'jasmine-ajax',
@@ -53,36 +79,17 @@ module.exports = function(config) {
         webpackMiddleware: {
             noInfo: true
         },
-
+        colors: true,
+        recordScreenshots: false,
         reporters: (process.env.TRAVIS) ? ['spec', 'coverage', 'coveralls'] : ['spec', 'coverage'],
 
-        // customLaunchers: {
-        //     edge14: {
-        //         base: 'BrowserStack',
-        //         browser: 'edge',
-        //         browser_version: '14',
-        //         os: 'Windows',
-        //         os_version: '10'
-        //     },
-
-        //     edge15: {
-        //         base: 'BrowserStack',
-        //         browser: 'edge',
-        //         browser_version: '15',
-        //         os: 'Windows',
-        //         os_version: '10'
-        //     },
-
-        //     ie11: {
-        //         base: 'BrowserStack',
-        //         browser: 'ie',
-        //         browser_version: '11',
-        //         os: 'Windows',
-        //         os_version: '7'
-        //     }
-        // },
-
-        // browsers: ['Chrome', 'Firefox', 'edge14', 'edge15', 'ie11']
-       browsers: ['Chrome', 'Firefox']
+        sauceLabs: {
+            testName: 'Dual listbox browser testing',
+            public: 'public'
+        },
+        customLaunchers: customLaunchers,
+        captureTimeout: 120000,
+        browsers: Object.keys(customLaunchers),
+        singleRun: true
     });
 }
