@@ -5,6 +5,8 @@
 
 [![NPM](https://nodei.co/npm/dual-listbox.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/dual-listbox/)
 
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/jostcrow.svg)](https://saucelabs.com/u/jostcrow)
+
 # Dual Listbox
 
 > Make your multi select pretty and easy to use with only javascript.
