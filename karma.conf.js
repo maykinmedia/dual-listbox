@@ -75,7 +75,7 @@ module.exports = function(config) {
         },
         colors: true,
         recordScreenshots: false,
-        reporters: (process.env.TRAVIS) ? ['spec', 'coverage', 'coveralls'] : ['spec', 'coverage'],
+        reporters: (process.env.TRAVIS) ? ['spec', 'coverage', 'coveralls', 'saucelabs'] : ['spec', 'coverage', 'saucelabs'],
 
         sauceLabs: {
             testName: 'Dual listbox browser testing',
