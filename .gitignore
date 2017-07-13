@@ -7,3 +7,5 @@ node_modules/
 ### IDE ###
 .idea
 .vscode
+
+npm-debug\.log
