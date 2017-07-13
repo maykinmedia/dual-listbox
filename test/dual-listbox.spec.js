@@ -141,15 +141,16 @@ describe('Duallistbox', function() {
         expect(dlb.selected.length).toBe(0);
     });
 
-    it('should be able to seach the items', () => {
+    it('should be able to search the items', () => {
         setFixtures(FIXTURE_FILLED_SELECT);
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         dlb.searchLists('One', dlb.dualListbox);
         expect(dlb.available.length).toBe(10);
         expect(dlb.selected.length).toBe(0);
+				console.log(dlb.available);
     });
 
-    it('should be able to seach the items with no text', () => {
+    it('should be able to search the items with no text', () => {
         setFixtures(FIXTURE_FILLED_SELECT);
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         dlb.searchLists('', dlb.dualListbox);
