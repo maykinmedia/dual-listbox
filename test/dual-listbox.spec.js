@@ -141,15 +141,33 @@ describe('Duallistbox', function() {
         expect(dlb.selected.length).toBe(0);
     });
 
-    it('should be able to seach the items', () => {
+    it('should be able to search the items', () => {
         setFixtures(FIXTURE_FILLED_SELECT);
+				let query = 'One';
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
-        dlb.searchLists('One', dlb.dualListbox);
+        dlb.searchLists(query, dlb.dualListbox);
         expect(dlb.available.length).toBe(10);
         expect(dlb.selected.length).toBe(0);
+				for (let i=0;i< dlb.available.length;i++) {
+					let element = dlb.available[i];
+					expect(element.style.display!=="none").toBe(element.innerHTML.toLowerCase().indexOf(query.toLowerCase())>=0);
+				}
     });
 
-    it('should be able to seach the items with no text', () => {
+    it('should be able to perform case insensitive search', () => {
+        setFixtures(FIXTURE_FILLED_SELECT);
+				let query = 'tWO';
+        let dlb = new DualListbox(`.${SELECT_CLASS}`);
+        dlb.searchLists(query, dlb.dualListbox);
+        expect(dlb.available.length).toBe(10);
+        expect(dlb.selected.length).toBe(0);
+				for (let i=0;i< dlb.available.length;i++) {
+					let element = dlb.available[i];
+					expect(element.style.display!=="none").toBe(element.innerHTML.toLowerCase().indexOf(query.toLowerCase())>=0);
+				}
+    });
+
+    it('should be able to search the items with no text', () => {
         setFixtures(FIXTURE_FILLED_SELECT);
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         dlb.searchLists('', dlb.dualListbox);

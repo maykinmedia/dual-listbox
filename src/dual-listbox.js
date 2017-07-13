@@ -93,12 +93,13 @@ class DualListbox {
      */
     searchLists(searchString, dualListbox) {
         let items = dualListbox.querySelectorAll(`.${ITEM_ELEMENT}`);
+        let lowerCaseSearchString = searchString.toLowerCase();
 
         for(let i = 0; i < items.length; i++) {
             let item = items[i];
 
             if(searchString) {
-                if(item.textContent.indexOf(searchString) === -1) {
+                if(item.textContent.toLowerCase().indexOf(lowerCaseSearchString) === -1) {
                     item.style.display = 'none';
                 } else {
                     item.style.display = 'list-item';
