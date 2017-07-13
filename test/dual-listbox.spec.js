@@ -143,11 +143,15 @@ describe('Duallistbox', function() {
 
     it('should be able to search the items', () => {
         setFixtures(FIXTURE_FILLED_SELECT);
+				let query = 'One';
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
-        dlb.searchLists('One', dlb.dualListbox);
+        dlb.searchLists(query, dlb.dualListbox);
         expect(dlb.available.length).toBe(10);
         expect(dlb.selected.length).toBe(0);
-				console.log(dlb.available);
+				for (let i=0;i< dlb.available.length;i++) {
+					let element = dlb.available[i];
+					expect(element.style.display!=="none").toBe(element.innerHTML.toLowerCase().indexOf(query.toLowerCase())>=0);
+				}
     });
 
     it('should be able to search the items with no text', () => {
