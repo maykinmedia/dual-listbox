@@ -19,7 +19,7 @@ const SELECTED_MODIFIER = 'dual-listbox__item--selected';
 class DualListbox {
     constructor(selector, options={}) {
         this.setDefaults();
-        if (this.isElement(selector)) {
+        if (this.isDomElement(selector)) {
             this.select = selector;
         } else {
             this.select = document.querySelector(selector);
@@ -446,20 +446,9 @@ class DualListbox {
 
     /**
      * @Private
-     * Returns true if argument is a DOM node
-     */
-    isNode(o) {
-        return (
-            typeof Node === "object" ? o instanceof Node :
-                o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName === "string"
-        );
-    }
-
-    /**
-     * @Private
      * Returns true if argument is a DOM element
      */
-    isElement(o) {
+    isDomElement(o) {
         return (
             typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2
                 o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName === "string"
