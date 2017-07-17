@@ -33,42 +33,43 @@ module.exports = function(config) {
         sl_chrome: {
             base: 'SauceLabs',
             browserName: 'chrome',
-            platform: 'Windows 7',
-            version: '58'
+            platform: 'Windows 10',
+            version: '59.0'
         },
         sl_chrome_2: {
             base: 'SauceLabs',
             browserName: 'chrome',
-            platform: 'Windows 7',
-            version: '57'
+            platform: 'Windows 10',
+            version: '58.0'
         },
         sl_edge: {
             base: 'SauceLabs',
-            browserName: 'edge',
-            platform: 'Windows 7',
-            version: '15'
+            browserName: 'MicrosoftEdge',
+            platform: 'Windows 10',
+            version: '15.15063'
         },
         sl_edge_2: {
             base: 'SauceLabs',
-            browserName: 'edge',
-            platform: 'Windows 7',
-            version: '14'
+            browserName: 'MicrosoftEdge',
+            platform: 'Windows 10',
+            version: '14.14393'
         },
         sl_safari: {
             base: 'SauceLabs',
             browserName: 'safari',
             platform: 'macOS 10.12',
-            version: '10'
+            version: '10.0'
         },
         sl_safari_2: {
             base: 'SauceLabs',
             browserName: 'safari',
-            platform: 'macOS 10.11',
-            version: '9'
+            platform: 'OS X 10.11',
+            version: '9.0'
         },
         sl_firefox: {
             base: 'SauceLabs',
             browserName: 'firefox',
+            platform: 'Windows 10',
             version: '54'
         },
         sl_ie_11: {
@@ -76,6 +77,25 @@ module.exports = function(config) {
             browserName: 'internet explorer',
             platform: 'Windows 8.1',
             version: '11'
+        },
+        sl_safari_mobile: {
+            base: 'SauceLabs',
+            browserName: "Safari",
+            appiumVersion: "1.6.5",
+            deviceName: "iPhone Simulator",
+            deviceOrientation: "portrait",
+            platformVersion: "10.3",
+            platformName: "iOS"
+        },
+        sl_chrome_mobile: {
+            base: 'SauceLabs',
+            browserName: "Android",
+            appiumVersion: "1.6.5",
+            deviceName: "Android Emulator",
+            deviceOrientation: "portrait",
+            browserName: "Chrome",
+            platformVersion: "6.0",
+            platformName: "Android"
         }
     }
 
