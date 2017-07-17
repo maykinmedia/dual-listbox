@@ -34,12 +34,42 @@ module.exports = function(config) {
             base: 'SauceLabs',
             browserName: 'chrome',
             platform: 'Windows 7',
-            version: '35'
+            version: '58'
+        },
+        sl_chrome_2: {
+            base: 'SauceLabs',
+            browserName: 'chrome',
+            platform: 'Windows 7',
+            version: '57'
+        },
+        sl_edge: {
+            base: 'SauceLabs',
+            browserName: 'edge',
+            platform: 'Windows 7',
+            version: '15'
+        },
+        sl_edge_2: {
+            base: 'SauceLabs',
+            browserName: 'edge',
+            platform: 'Windows 7',
+            version: '14'
+        },
+        sl_safari: {
+            base: 'SauceLabs',
+            browserName: 'safari',
+            platform: 'macOS 10.12',
+            version: '10'
+        },
+        sl_safari_2: {
+            base: 'SauceLabs',
+            browserName: 'safari',
+            platform: 'macOS 10.11',
+            version: '9'
         },
         sl_firefox: {
             base: 'SauceLabs',
             browserName: 'firefox',
-            version: '30'
+            version: '54'
         },
         sl_ie_11: {
             base: 'SauceLabs',
