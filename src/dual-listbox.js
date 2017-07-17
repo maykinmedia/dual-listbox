@@ -19,14 +19,14 @@ const SELECTED_MODIFIER = 'dual-listbox__item--selected';
 class DualListbox {
     constructor(selector, options={}) {
         this.setDefaults();
+        this.selected = [];
+        this.available = [];
+
         if (this.isDomElement(selector)) {
             this.select = selector;
         } else {
             this.select = document.querySelector(selector);
         }
-
-        this.selected = [];
-        this.available = [];
 
         this._initOptions(options);
         this._initReusableElements();
