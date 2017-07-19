@@ -29,6 +29,7 @@ module.exports = function(config) {
         throw ConfigException('Make sure the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables are set.')
     }
 
+    // https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
     var customLaunchers = {
         sl_chrome: {
             base: 'SauceLabs',
@@ -78,25 +79,42 @@ module.exports = function(config) {
             platform: 'Windows 8.1',
             version: '11'
         },
-        // sl_safari_mobile: {
-        //     base: 'SauceLabs',
-        //     browserName: "Safari",
-        //     appiumVersion: "1.6.5",
-        //     deviceName: "iPhone Simulator",
-        //     deviceOrientation: "portrait",
-        //     platformVersion: "10.3",
-        //     platformName: "iOS"
-        // },
-        // sl_chrome_mobile: {
-        //     base: 'SauceLabs',
-        //     browserName: "Android",
-        //     appiumVersion: "1.6.5",
-        //     deviceName: "Android Emulator",
-        //     deviceOrientation: "portrait",
-        //     browserName: "Chrome",
-        //     platformVersion: "6.0",
-        //     platformName: "Android"
-        // }
+        sl_safari_mobile: {
+            base: 'SauceLabs',
+            browserName: "Safari",
+            appiumVersion: "1.6.4",
+            deviceName: "iPhone Simulator",
+            deviceOrientation: "portrait",
+            platformVersion: "10.3",
+            platformName: "iOS"
+        },
+        sl_safari_mobile_2: {
+            base: 'SauceLabs',
+            browserName: "Safari",
+            appiumVersion: "1.6.4",
+            deviceName: "iPhone Simulator",
+            deviceOrientation: "portrait",
+            platformVersion: "9.3",
+            platformName: "iOS"
+        },
+        sl_chrome_mobile: {
+            base: 'SauceLabs',
+            browserName: "Chrome",
+            appiumVersion: "1.6.4",
+            deviceName: "Android Emulator",
+            deviceOrientation: "portrait",
+            platformVersion: "6.0",
+            platformName: "Android"
+        },
+        sl_chrome_mobile_2: {
+            base: 'SauceLabs',
+            browserName: "Browser",
+            appiumVersion: "1.6.4",
+            deviceName: "Android Emulator",
+            deviceOrientation: "portrait",
+            platformVersion: "5.1",
+            platformName: "Android"
+        }
     }
 
     config.set({
