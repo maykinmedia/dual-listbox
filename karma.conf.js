@@ -78,25 +78,25 @@ module.exports = function(config) {
             platform: 'Windows 8.1',
             version: '11'
         },
-        sl_safari_mobile: {
-            base: 'SauceLabs',
-            browserName: "Safari",
-            appiumVersion: "1.6.5",
-            deviceName: "iPhone Simulator",
-            deviceOrientation: "portrait",
-            platformVersion: "10.3",
-            platformName: "iOS"
-        },
-        sl_chrome_mobile: {
-            base: 'SauceLabs',
-            browserName: "Android",
-            appiumVersion: "1.6.5",
-            deviceName: "Android Emulator",
-            deviceOrientation: "portrait",
-            browserName: "Chrome",
-            platformVersion: "6.0",
-            platformName: "Android"
-        }
+        // sl_safari_mobile: {
+        //     base: 'SauceLabs',
+        //     browserName: "Safari",
+        //     appiumVersion: "1.6.5",
+        //     deviceName: "iPhone Simulator",
+        //     deviceOrientation: "portrait",
+        //     platformVersion: "10.3",
+        //     platformName: "iOS"
+        // },
+        // sl_chrome_mobile: {
+        //     base: 'SauceLabs',
+        //     browserName: "Android",
+        //     appiumVersion: "1.6.5",
+        //     deviceName: "Android Emulator",
+        //     deviceOrientation: "portrait",
+        //     browserName: "Chrome",
+        //     platformVersion: "6.0",
+        //     platformName: "Android"
+        // }
     }
 
     config.set({
