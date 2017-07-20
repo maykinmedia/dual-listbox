@@ -289,4 +289,13 @@ describe('Duallistbox', function() {
         expect(dlb.available.length).toBe(10);
         expect(dlb.selected.length).toBe(0);
     });
+
+    it('should be able to create object from DOM element', () => {
+        let domParent = document.createElement("div");
+        domParent.innerHTML = FIXTURE_FILLED_SELECT;
+        let dlb = new DualListbox(domParent.getElementsByTagName('select')[0]);
+
+        expect(dlb.available.length).toBe(10);
+        expect(dlb.selected.length).toBe(0);
+    });
 });
