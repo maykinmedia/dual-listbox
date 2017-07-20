@@ -53,7 +53,7 @@ module.exports = function(config) {
             base: 'SauceLabs',
             browserName: 'MicrosoftEdge',
             platform: 'Windows 10',
-            version: 'latest-1'
+            version: '14.14393'
         },
         sl_safari: {
             base: 'SauceLabs',
@@ -65,7 +65,7 @@ module.exports = function(config) {
             base: 'SauceLabs',
             browserName: 'safari',
             platform: 'OS X 10.11',
-            version: 'latest-1'
+            version: '9.0'
         },
         sl_firefox: {
             base: 'SauceLabs',
