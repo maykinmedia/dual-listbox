@@ -10,9 +10,9 @@
 
 # Dual Listbox
 
-> Make your multi select pretty and easy to use with only javascript.
+> Make your multi select pretty and easy to use with only javascript. No other frameworks/libraries required.
 
-Styling.
+Styling. (From the stylesheet that can be found in the dist folder)
 
 ![Default](screenshots/select1.png)
 
