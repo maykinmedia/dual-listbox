@@ -3,6 +3,7 @@
 [![Code Climate](https://codeclimate.com/github/maykinmedia/dual-listbox/badges/gpa.svg)](https://codeclimate.com/github/maykinmedia/dual-listbox)
 [![Lintly](https://lintly.com/gh/maykinmedia/dual-listbox/badge.svg)](https://lintly.com/gh/maykinmedia/dual-listbox/)
 [![npm](https://img.shields.io/npm/dw/dual-listbox.svg)](https://github.com/maykinmedia/dual-listbox)
+[![Known Vulnerabilities](https://snyk.io/test/github/maykinmedia/dual-listbox/badge.svg)](https://snyk.io/test/github/maykinmedia/dual-listbox)
 
 [![NPM](https://nodei.co/npm/dual-listbox.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/dual-listbox/)
 
