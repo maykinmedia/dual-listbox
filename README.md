@@ -57,7 +57,7 @@ new DualListbox('#select', {
 });
 ```
 
-Try it online on [JSFiddle](https://jsfiddle.net/pn2zcwre/2/).
+Try it online on [JSFiddle](https://jsfiddle.net/pn2zcwre/3/).
 
 ## Contributing
 
