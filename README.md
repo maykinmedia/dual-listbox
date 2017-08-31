@@ -57,6 +57,8 @@ new DualListbox('#select', {
 });
 ```
 
+Try it online on [JSFiddle](https://jsfiddle.net/pn2zcwre/2/).
+
 ## Contributing
 
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/maykinmedia/dual-listbox/issues).
