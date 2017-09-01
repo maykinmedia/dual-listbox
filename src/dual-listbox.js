@@ -22,7 +22,7 @@ class DualListbox {
         this.selected = [];
         this.available = [];
 
-        if (this.isDomElement(selector)) {
+        if (DualListbox.isDomElement(selector)) {
             this.select = selector;
         } else {
             this.select = document.querySelector(selector);
@@ -367,7 +367,7 @@ class DualListbox {
      * Set the option variables to this.
      */
     _initOptions(options) {
-        for(var key in options) {
+        for(let key in options) {
             this[key] = options[key];
         }
     }
@@ -448,7 +448,7 @@ class DualListbox {
      * @Private
      * Returns true if argument is a DOM element
      */
-    isDomElement(o) {
+    static isDomElement(o) {
         return (
             typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2
                 o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName === "string"
