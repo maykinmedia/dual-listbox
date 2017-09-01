@@ -1,6 +1,6 @@
 const MAIN_BLOCK = 'dual-listbox';
 
-const CONTAINER_ELEMENT = 'dual-lsitbox__container';
+const CONTAINER_ELEMENT = 'dual-listbox__container';
 const AVAILABLE_ELEMENT = 'dual-listbox__available';
 const SELECTED_ELEMENT = 'dual-listbox__selected';
 const TITLE_ELEMENT = 'dual-listbox__title';
