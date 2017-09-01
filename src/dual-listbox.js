@@ -101,13 +101,8 @@ class DualListbox {
 
         for (let i = 0; i < items.length; i++) {
             let item = items[i];
-
-            if (searchString) {
-                if (item.textContent.toLowerCase().indexOf(lowerCaseSearchString) === -1) {
-                    item.style.display = 'none';
-                } else {
-                    item.style.display = 'list-item';
-                }
+            if (item.textContent.toLowerCase().indexOf(lowerCaseSearchString) === -1) {
+                item.style.display = 'none';
             } else {
                 item.style.display = 'list-item';
             }
@@ -115,7 +110,7 @@ class DualListbox {
     }
 
     /**
-     * Update the elements in the availeble listbox;
+     * Update the elements in the available listbox;
      */
     updateAvailableListbox() {
         this.availebleList.innerHTML = '';
@@ -288,7 +283,7 @@ class DualListbox {
      * Creates list with the header.
      */
     _createList(header, list) {
-        var result = document.createElement('div');
+        let result = document.createElement('div');
         result.appendChild(header);
         result.appendChild(list);
         return result;
