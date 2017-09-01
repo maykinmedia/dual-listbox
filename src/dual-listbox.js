@@ -17,7 +17,7 @@ const SELECTED_MODIFIER = 'dual-listbox__item--selected';
  * @class
  */
 class DualListbox {
-    constructor(selector, options={}) {
+    constructor(selector, options = {}) {
         this.setDefaults();
         this.selected = [];
         this.available = [];
@@ -99,11 +99,11 @@ class DualListbox {
         let items = dualListbox.querySelectorAll(`.${ITEM_ELEMENT}`);
         let lowerCaseSearchString = searchString.toLowerCase();
 
-        for(let i = 0; i < items.length; i++) {
+        for (let i = 0; i < items.length; i++) {
             let item = items[i];
 
-            if(searchString) {
-                if(item.textContent.toLowerCase().indexOf(lowerCaseSearchString) === -1) {
+            if (searchString) {
+                if (item.textContent.toLowerCase().indexOf(lowerCaseSearchString) === -1) {
                     item.style.display = 'none';
                 } else {
                     item.style.display = 'list-item';
@@ -119,9 +119,8 @@ class DualListbox {
      */
     updateAvailableListbox() {
         this.availebleList.innerHTML = '';
-        this.availebleList.appendChild(this.availableListTitle);
-        for(let i = 0; i < this.available.length; i++) {
-            let listItem= this.available[i];
+        for (let i = 0; i < this.available.length; i++) {
+            let listItem = this.available[i];
             this.availebleList.appendChild(listItem);
         }
     }
@@ -131,9 +130,8 @@ class DualListbox {
      */
     updateSelectedListbox() {
         this.selectedList.innerHTML = '';
-        this.selectedList.appendChild(this.selectedListTitle);
-        for(let i = 0; i < this.selected.length; i++) {
-            let listItem= this.selected[i];
+        for (let i = 0; i < this.selected.length; i++) {
+            let listItem = this.selected[i];
             this.selectedList.appendChild(listItem);
         }
     }
@@ -150,7 +148,7 @@ class DualListbox {
     _actionAllSelected(event) {
         event.preventDefault();
 
-        while(this.available.length > 0) {
+        while (this.available.length > 0) {
             this.addSelected(this.available[0]);
         }
     }
@@ -162,7 +160,7 @@ class DualListbox {
         event.preventDefault();
 
         let selected = this.dualListbox.querySelector(`.${SELECTED_MODIFIER}`);
-        if(selected) {
+        if (selected) {
             this.addSelected(selected);
         }
     }
@@ -173,7 +171,7 @@ class DualListbox {
     _actionAllDeselected(event) {
         event.preventDefault();
 
-        while(this.selected.length > 0) {
+        while (this.selected.length > 0) {
             this.removeSelected(this.selected[0]);
         }
     }
@@ -185,7 +183,7 @@ class DualListbox {
         event.preventDefault();
 
         let selected = this.dualListbox.querySelector(`.${SELECTED_MODIFIER}`);
-        if(selected) {
+        if (selected) {
             this.removeSelected(selected);
         }
     }
@@ -193,8 +191,8 @@ class DualListbox {
     /**
      * Action when double clicked on a listItem.
      */
-    _actionItemDoubleClick(listItem, event=null) {
-        if(event) {
+    _actionItemDoubleClick(listItem, event = null) {
+        if (event) {
             event.preventDefault();
             event.stopPropagation();
         }
@@ -209,23 +207,23 @@ class DualListbox {
     /**
      * Action when single clicked on a listItem.
      */
-    _actionItemClick(listItem, dualListbox, event=null) {
-        if(event) {
+    _actionItemClick(listItem, dualListbox, event = null) {
+        if (event) {
             event.preventDefault();
         }
 
         let items = dualListbox.querySelectorAll(`.${ITEM_ELEMENT}`);
 
-        for(let i = 0; i < items.length; i++) {
+        for (let i = 0; i < items.length; i++) {
             let value = items[i];
             if (value !== listItem) {
                 value.classList.remove(SELECTED_MODIFIER);
             }
         }
 
-        if(listItem.classList.contains(SELECTED_MODIFIER)) {
+        if (listItem.classList.contains(SELECTED_MODIFIER)) {
             listItem.classList.remove(SELECTED_MODIFIER);
-        } else{
+        } else {
             listItem.classList.add(SELECTED_MODIFIER);
         }
     }
@@ -276,14 +274,24 @@ class DualListbox {
     _buildDualListbox(container) {
         this.select.style.display = 'none';
 
-        this.dualListBoxContainer.appendChild(this.availebleList);
+        this.dualListBoxContainer.appendChild(this._createList(this.availableListTitle, this.availebleList));
         this.dualListBoxContainer.appendChild(this.buttons);
-        this.dualListBoxContainer.appendChild(this.selectedList);
+        this.dualListBoxContainer.appendChild(this._createList(this.selectedListTitle, this.selectedList));
 
         this.dualListbox.appendChild(this.search);
         this.dualListbox.appendChild(this.dualListBoxContainer);
 
         container.insertBefore(this.dualListbox, this.select);
+    }
+
+    /**
+     * Creates list with the header.
+     */
+    _createList(header, list) {
+        var result = document.createElement('div');
+        result.appendChild(header);
+        result.appendChild(list);
+        return result;
     }
 
     /**
@@ -350,14 +358,14 @@ class DualListbox {
     _deselectOption(value) {
         let options = this.select.options;
 
-        for(let i = 0; i < options.length; i++) {
+        for (let i = 0; i < options.length; i++) {
             let option = options[i];
-            if(option.value === value) {
+            if (option.value === value) {
                 option.selected = false;
             }
         }
 
-        if(this.removeEvent) {
+        if (this.removeEvent) {
             this.removeEvent(value);
         }
     }
@@ -367,8 +375,10 @@ class DualListbox {
      * Set the option variables to this.
      */
     _initOptions(options) {
-        for(let key in options) {
-            this[key] = options[key];
+        for (let key in options) {
+            if (options.hasOwnProperty(key)) {
+                this[key] = options[key];
+            }
         }
     }
 
@@ -379,7 +389,7 @@ class DualListbox {
     _initReusableElements() {
         this.dualListbox = document.createElement('div');
         this.dualListbox.classList.add(MAIN_BLOCK);
-        if(this.select.id) {
+        if (this.select.id) {
             this.dualListbox.classList.add(this.select.id);
         }
 
@@ -392,11 +402,11 @@ class DualListbox {
         this.selectedList = document.createElement('ul');
         this.selectedList.classList.add(SELECTED_ELEMENT);
 
-        this.availableListTitle = document.createElement('li');
+        this.availableListTitle = document.createElement('div');
         this.availableListTitle.classList.add(TITLE_ELEMENT);
         this.availableListTitle.innerText = this.availableTitle;
 
-        this.selectedListTitle = document.createElement('li');
+        this.selectedListTitle = document.createElement('div');
         this.selectedListTitle.classList.add(TITLE_ELEMENT);
         this.selectedListTitle.innerText = this.selectedTitle;
 
@@ -413,14 +423,14 @@ class DualListbox {
     _selectOption(value) {
         let options = this.select.options;
 
-        for(let i = 0; i < options.length; i++) {
+        for (let i = 0; i < options.length; i++) {
             let option = options[i];
-            if(option.value === value) {
+            if (option.value === value) {
                 option.selected = true;
             }
         }
 
-        if(this.addEvent) {
+        if (this.addEvent) {
             this.addEvent(value);
         }
     }
@@ -432,11 +442,11 @@ class DualListbox {
     _splitSelectOptions(select) {
         let options = select.options;
 
-        for(let i = 0; i < options.length; i++) {
+        for (let i = 0; i < options.length; i++) {
             let option = options[i];
             let listItem = this._createListItem(option);
 
-            if(option.attributes.selected) {
+            if (option.attributes.selected) {
                 this.selected.push(listItem);
             } else {
                 this.available.push(listItem);
@@ -457,4 +467,4 @@ class DualListbox {
 }
 
 export default DualListbox;
-export { DualListbox };
+export {DualListbox};
