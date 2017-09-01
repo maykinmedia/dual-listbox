@@ -113,10 +113,10 @@ class DualListbox {
      * Update the elements in the available listbox;
      */
     updateAvailableListbox() {
-        this.availebleList.innerHTML = '';
+        this.availableList.innerHTML = '';
         for (let i = 0; i < this.available.length; i++) {
             let listItem = this.available[i];
-            this.availebleList.appendChild(listItem);
+            this.availableList.appendChild(listItem);
         }
     }
 
@@ -269,7 +269,7 @@ class DualListbox {
     _buildDualListbox(container) {
         this.select.style.display = 'none';
 
-        this.dualListBoxContainer.appendChild(this._createList(this.availableListTitle, this.availebleList));
+        this.dualListBoxContainer.appendChild(this._createList(this.availableListTitle, this.availableList));
         this.dualListBoxContainer.appendChild(this.buttons);
         this.dualListBoxContainer.appendChild(this._createList(this.selectedListTitle, this.selectedList));
 
@@ -391,8 +391,8 @@ class DualListbox {
         this.dualListBoxContainer = document.createElement('div');
         this.dualListBoxContainer.classList.add(CONTAINER_ELEMENT);
 
-        this.availebleList = document.createElement('ul');
-        this.availebleList.classList.add(AVAILABLE_ELEMENT);
+        this.availableList = document.createElement('ul');
+        this.availableList.classList.add(AVAILABLE_ELEMENT);
 
         this.selectedList = document.createElement('ul');
         this.selectedList.classList.add(SELECTED_ELEMENT);
