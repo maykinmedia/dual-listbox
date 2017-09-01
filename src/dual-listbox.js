@@ -113,22 +113,14 @@ class DualListbox {
      * Update the elements in the available listbox;
      */
     updateAvailableListbox() {
-        this.availableList.innerHTML = '';
-        for (let i = 0; i < this.available.length; i++) {
-            let listItem = this.available[i];
-            this.availableList.appendChild(listItem);
-        }
+        this._updateListbox(this.availableList, this.available);
     }
 
     /**
      * Update the elements in the selected listbox;
      */
     updateSelectedListbox() {
-        this.selectedList.innerHTML = '';
-        for (let i = 0; i < this.selected.length; i++) {
-            let listItem = this.selected[i];
-            this.selectedList.appendChild(listItem);
-        }
+        this._updateListbox(this.selectedList, this.selected);
     }
 
     //
@@ -145,6 +137,17 @@ class DualListbox {
 
         while (this.available.length > 0) {
             this.addSelected(this.available[0]);
+        }
+    }
+
+    /**
+     * Update the elements in the listbox;
+     */
+    _updateListbox(list, elements) {
+        list.innerHTML = '';
+        for (let i = 0; i < elements.length; i++) {
+            let listItem = elements[i];
+            list.appendChild(listItem);
         }
     }
 
