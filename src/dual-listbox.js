@@ -30,7 +30,10 @@ class DualListbox {
 
         this._initOptions(options);
         this._initReusableElements();
-        this._splitSelectOptions(this.select);
+        this._splitSelectOptions(this.select.options);
+        if (options.options !== undefined) {
+            this._splitSelectOptions(options.options);
+        }
         this._buildDualListbox(this.select.parentNode);
         this._addActions();
 
@@ -329,7 +332,7 @@ class DualListbox {
         let listItem = document.createElement('li');
 
         listItem.classList.add(ITEM_ELEMENT);
-        listItem.innerHTML = option.innerHTML;
+        listItem.innerHTML = option.text;
         listItem.dataset.id = option.value;
 
         this._addClickActions(listItem);
@@ -437,18 +440,32 @@ class DualListbox {
      * @Private
      * Splits the select options and places them in the correct list.
      */
-    _splitSelectOptions(select) {
-        let options = select.options;
-
+    _splitSelectOptions(options) {
         for (let i = 0; i < options.length; i++) {
             let option = options[i];
-            let listItem = this._createListItem(option);
-
-            if (option.attributes.selected) {
-                this.selected.push(listItem);
+            if (DualListbox.isDomElement(option)) {
+                this._addOption({
+                    text: option.innerHTML,
+                    value: option.value,
+                    selected: option.attributes.selected
+                });
             } else {
-                this.available.push(listItem);
+                this._addOption(option);
             }
+        }
+    }
+
+    /**
+     * @Private
+     * Adds option to the selected of available list (depending on the data).
+     */
+    _addOption(option) {
+        let listItem = this._createListItem(option);
+
+        if (option.selected) {
+            this.selected.push(listItem);
+        } else {
+            this.available.push(listItem);
         }
     }
 

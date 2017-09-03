@@ -1,4 +1,4 @@
-import DualListbox, { DualListbox as DualListbox2 } from '../src/dual-listbox.js';
+import DualListbox, {DualListbox as DualListbox2} from '../src/dual-listbox.js';
 
 
 const SELECT_CLASS = 'select';
@@ -56,8 +56,22 @@ const FIXTURE_FILLED_SELECT_WITH_ID = `
     </select>
 `;
 
+const OPTIONS_WITH_SELECTED_VALUE = [
+    {
+        text: "option 1",
+        value: "VAL1"
+    }, {
+        text: "option 2",
+        value: "VAL2"
+    }, {
+        text: "option 3",
+        value: "VAL3",
+        selected: true
+    }
+];
 
-describe('module', function() {
+
+describe('module', function () {
     it('should export a default', () => {
         expect(DualListbox).toBeTruthy();
     });
@@ -68,12 +82,19 @@ describe('module', function() {
 });
 
 
-describe('Duallistbox', function() {
+describe('Duallistbox', function () {
     it('should be able to initialize an empty select', () => {
         setFixtures(FIXTURE_EMPTY_SELECT);
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         expect(dlb.available.length).toBe(0);
         expect(dlb.selected.length).toBe(0);
+    });
+
+    it('should be able to initialize an empty select with additional items', () => {
+        setFixtures(FIXTURE_EMPTY_SELECT);
+        let dlb = new DualListbox(`.${SELECT_CLASS}`, {options: OPTIONS_WITH_SELECTED_VALUE});
+        expect(dlb.available.length).toBe(2);
+        expect(dlb.selected.length).toBe(1);
     });
 
     it('should be able to initialize a filled select', () => {
@@ -88,6 +109,13 @@ describe('Duallistbox', function() {
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         expect(dlb.available.length).toBe(9);
         expect(dlb.selected.length).toBe(1);
+    });
+
+    it('should be able to initialize a filled select with additional items', () => {
+        setFixtures(FIXTURE_FILLED_SELECT_PRESELECTED);
+        let dlb = new DualListbox(`.${SELECT_CLASS}`, {options: OPTIONS_WITH_SELECTED_VALUE});
+        expect(dlb.available.length).toBe(11);
+        expect(dlb.selected.length).toBe(2);
     });
 
     it('should be able to initialize a filled select with id', () => {
@@ -143,28 +171,28 @@ describe('Duallistbox', function() {
 
     it('should be able to search the items', () => {
         setFixtures(FIXTURE_FILLED_SELECT);
-				let query = 'One';
+        let query = 'One';
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         dlb.searchLists(query, dlb.dualListbox);
         expect(dlb.available.length).toBe(10);
         expect(dlb.selected.length).toBe(0);
-				for (let i=0;i< dlb.available.length;i++) {
-					let element = dlb.available[i];
-					expect(element.style.display!=="none").toBe(element.innerHTML.toLowerCase().indexOf(query.toLowerCase())>=0);
-				}
+        for (let i = 0; i < dlb.available.length; i++) {
+            let element = dlb.available[i];
+            expect(element.style.display !== "none").toBe(element.innerHTML.toLowerCase().indexOf(query.toLowerCase()) >= 0);
+        }
     });
 
     it('should be able to perform case insensitive search', () => {
         setFixtures(FIXTURE_FILLED_SELECT);
-				let query = 'tWO';
+        let query = 'tWO';
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         dlb.searchLists(query, dlb.dualListbox);
         expect(dlb.available.length).toBe(10);
         expect(dlb.selected.length).toBe(0);
-				for (let i=0;i< dlb.available.length;i++) {
-					let element = dlb.available[i];
-					expect(element.style.display!=="none").toBe(element.innerHTML.toLowerCase().indexOf(query.toLowerCase())>=0);
-				}
+        for (let i = 0; i < dlb.available.length; i++) {
+            let element = dlb.available[i];
+            expect(element.style.display !== "none").toBe(element.innerHTML.toLowerCase().indexOf(query.toLowerCase()) >= 0);
+        }
     });
 
     it('should be able to search the items with no text', () => {
@@ -181,6 +209,7 @@ describe('Duallistbox', function() {
         function addCallback(value) {
             expect(value).toBe("1");
         }
+
         let dlb = new DualListbox(`.${SELECT_CLASS}`, {
             addEvent: addCallback
         });
@@ -194,6 +223,7 @@ describe('Duallistbox', function() {
         function addCallback(value) {
             expect(value).toBe("2");
         }
+
         let dlb = new DualListbox(`.${SELECT_CLASS}`, {
             removeEvent: addCallback
         });
@@ -206,7 +236,7 @@ describe('Duallistbox', function() {
 
         new DualListbox(`.${SELECT_CLASS}`);
         let listItem = document.querySelector('[data-id="2"]');
-        let clickEvent  = document.createEvent('MouseEvents');
+        let clickEvent = document.createEvent('MouseEvents');
         clickEvent.initEvent('click', true, true);
         listItem.dispatchEvent(clickEvent);
 
@@ -219,7 +249,7 @@ describe('Duallistbox', function() {
 
         new DualListbox(`.${SELECT_CLASS}`);
         let listItem = document.querySelector('[data-id="2"]');
-        let clickEvent  = document.createEvent('MouseEvents');
+        let clickEvent = document.createEvent('MouseEvents');
         clickEvent.initEvent('click', true, true);
         listItem.dispatchEvent(clickEvent);
 
@@ -240,7 +270,7 @@ describe('Duallistbox', function() {
         expect(dlb.selected.length).toBe(0);
 
         let listItem = document.querySelector('[data-id="2"]');
-        let clickEvent  = document.createEvent('MouseEvents');
+        let clickEvent = document.createEvent('MouseEvents');
         clickEvent.initEvent('dblclick', true, true);
         listItem.dispatchEvent(clickEvent);
 
@@ -269,7 +299,7 @@ describe('Duallistbox', function() {
 
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         let search = document.querySelector('.dual-listbox__search');
-        let changeEvent  = document.createEvent('MouseEvents');
+        let changeEvent = document.createEvent('MouseEvents');
         changeEvent.initEvent('change', true, true);
         search.dispatchEvent(changeEvent);
 
@@ -282,7 +312,7 @@ describe('Duallistbox', function() {
 
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         let search = document.querySelector('.dual-listbox__search');
-        let keyupEvent  = document.createEvent('MouseEvents');
+        let keyupEvent = document.createEvent('MouseEvents');
         keyupEvent.initEvent('keyup', true, true);
         search.dispatchEvent(keyupEvent);
 
