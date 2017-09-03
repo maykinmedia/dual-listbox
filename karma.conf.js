@@ -85,7 +85,7 @@ module.exports = function(config) {
             platform: 'Windows 8.1',
             version: '11'
         }
-    }
+    };
 
     config.set({
         frameworks: [
@@ -129,4 +129,4 @@ module.exports = function(config) {
         browsers: Object.keys(customLaunchers),
         singleRun: true
     });
-}
+};

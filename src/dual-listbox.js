@@ -30,9 +30,9 @@ class DualListbox {
 
         this._initOptions(options);
         this._initReusableElements();
-        this._splitSelectOptions(this.select.options);
+        this._splitOptions(this.select.options);
         if (options.options !== undefined) {
-            this._splitSelectOptions(options.options);
+            this._splitOptions(options.options);
         }
         this._buildDualListbox(this.select.parentNode);
         this._addActions();
@@ -438,9 +438,9 @@ class DualListbox {
 
     /**
      * @Private
-     * Splits the select options and places them in the correct list.
+     * Splits the options and places them in the correct list.
      */
-    _splitSelectOptions(options) {
+    _splitOptions(options) {
         for (let i = 0; i < options.length; i++) {
             let option = options[i];
             if (DualListbox.isDomElement(option)) {
