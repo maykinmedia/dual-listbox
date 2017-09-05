@@ -11,7 +11,7 @@ module.exports = {
     output: {
         filename: paths.packageName + '.js',
         libraryTarget: 'umd',
-        path: __dirname + '/' + paths.output,
+        path: __dirname + '/' + paths.output
     },
 
     module: {
@@ -19,7 +19,7 @@ module.exports = {
             {
                 test: /.js?$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/,
+                exclude: /node_modules/
             }
         ]
     },
