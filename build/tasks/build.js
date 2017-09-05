@@ -30,7 +30,7 @@ gulp.task('build-sass', function() {
         // Compiles sass to css
         .pipe(sass({
             // Allow importing from node_modules in .scss files
-            includePaths: 'node_modules/',
+            includePaths: 'node_modules/'
         }).on('error', sass.logError))
 
         // Auto prefixes css
