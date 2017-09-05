@@ -11,5 +11,6 @@ module.exports = {
     sassSource: appRoot + '**/*.scss',
     tests: 'test/**/*.spec.js',
     packageName: pkg.name,
+    doc: 'doc/',
     output: distDir
 };
