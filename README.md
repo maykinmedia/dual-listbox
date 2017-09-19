@@ -53,7 +53,13 @@ new DualListbox('#select', {
     addButtonText: '>',
     removeButtonText: '<',
     addAllButtonText: '>>',
-    removeAllButtonText: '<<'
+    removeAllButtonText: '<<',
+    
+    options: [
+        {text:"Option 1", value: "OPTION1"},
+        {text:"Option 2", value: "OPTION2"},
+        {text:"Selected option", value: "OPTION3", selected:true}
+    ]
 });
 ```
 
