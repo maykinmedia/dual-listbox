@@ -278,21 +278,21 @@ describe('Duallistbox', function () {
         expect(dlb.selected.length).toBe(1);
     });
 
-    // it('should be able to doubleclick on one of the elements to deselect', () => {
-    //     setFixtures(FIXTURE_FILLED_SELECT_PRESELECTED);
+    it('should be able to doubleclick on one of the elements to deselect', () => {
+        setFixtures(FIXTURE_FILLED_SELECT_PRESELECTED);
 
-    //     let dlb = new DualListbox(`.${SELECT_CLASS}`);
-    //     expect(dlb.available.length).toBe(9);
-    //     expect(dlb.selected.length).toBe(1);
+        let dlb = new DualListbox(`.${SELECT_CLASS}`);
+        expect(dlb.available.length).toBe(9);
+        expect(dlb.selected.length).toBe(1);
 
-    //     let listItem = document.querySelector('[data-id="2"]');
-    //     let clickEvent  = document.createEvent('MouseEvents');
-    //     clickEvent.initEvent('dblclick', true, true);
-    //     listItem.dispatchEvent(clickEvent);
+        let listItem = document.querySelector('[data-id="2"]');
+        let clickEvent  = document.createEvent('MouseEvents');
+        clickEvent.initEvent('dblclick', true, true);
+        listItem.dispatchEvent(clickEvent);
 
-    //     expect(dlb.available.length).toBe(10);
-    //     expect(dlb.selected.length).toBe(0);
-    // });
+        expect(dlb.available.length).toBe(10);
+        expect(dlb.selected.length).toBe(0);
+    });
 
     it('should be able fire search on change', () => {
         setFixtures(FIXTURE_FILLED_SELECT);

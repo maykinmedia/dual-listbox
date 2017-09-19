@@ -1,4 +1,4 @@
-var clone= require('clone');
+var clone = require('clone');
 var paths = require('./build/paths');
 var webpackConfig = clone(require('./webpack.config.js'));
 
@@ -118,7 +118,6 @@ module.exports = function(config) {
         },
         colors: true,
         recordScreenshots: false,
-        reporters: (process.env.TRAVIS) ? ['spec', 'coverage', 'coveralls', 'saucelabs'] : ['spec', 'coverage', 'saucelabs'],
 
         sauceLabs: {
             testName: 'Dual listbox browser testing',
@@ -126,7 +125,9 @@ module.exports = function(config) {
         },
         customLaunchers: customLaunchers,
         captureTimeout: 120000,
-        browsers: Object.keys(customLaunchers),
-        singleRun: true
+        singleRun: true,
+
+        browsers: (process.env.TRAVIS) ? Object.keys(customLaunchers) : ['Chrome', 'Firefox'],
+        reporters: (process.env.TRAVIS) ? ['spec', 'coverage', 'coveralls', 'saucelabs'] : ['spec', 'coverage', 'saucelabs']
     });
 };
