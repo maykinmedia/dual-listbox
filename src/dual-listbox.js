@@ -97,6 +97,7 @@ class DualListbox {
      * Filters the listboxes with the given searchString.
      *
      * @param {Object} searchString
+     * @param dualListbox
      */
     searchLists(searchString, dualListbox) {
         let items = dualListbox.querySelectorAll(`.${ITEM_ELEMENT}`);
