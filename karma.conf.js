@@ -85,7 +85,7 @@ module.exports = function(config) {
             platform: 'Windows 8.1',
             version: '11'
         }
-    }
+    };
 
     config.set({
         frameworks: [
@@ -130,4 +130,4 @@ module.exports = function(config) {
         browsers: (process.env.TRAVIS) ? Object.keys(customLaunchers) : ['Chrome', 'Firefox'],
         reporters: (process.env.TRAVIS) ? ['spec', 'coverage', 'coveralls', 'saucelabs'] : ['spec', 'coverage', 'saucelabs']
     });
-}
+};
