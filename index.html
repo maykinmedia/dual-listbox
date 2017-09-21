@@ -5,24 +5,113 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="dist/dual-listbox.css" rel="stylesheet">
+        <link href="style.css" rel="stylesheet">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"> -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css">
+
+        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
     </head>
     <body>
-        <select class="select1" multiple>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-            <option value="4">Four</option>
-            <option value="5">Five</option>
-            <option value="6">Six</option>
-            <option value="7">Seven</option>
-            <option value="8">Eight</option>
-            <option value="9">Nine</option>
-            <option value="10">Ten</option>
-        </select>
+        <div class="hero">
+            <h1>Dual Listbox</h1>
+            <p>A better way to manage your multi select element.</p>
+        </div>
+
+        <div class="container">
+            <h2>Select by class <span class="source" data-source="dlb1">source</span></h2>
+
+            <pre class="prettyprint linenums dlb1">&lt;select class=&quot;select1&quot; multiple&gt;
+    &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+    dlb1 = new DualListbox('.select1');
+&lt;/script&gt;</pre>
+
+            <select class="select1" multiple>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+
+        </div>
+
+        <div class="container">
+            <h2>Add options and add eventListeners <span class="source" data-source="dlb2">source</span></h2>
+
+            <pre class="prettyprint linenums dlb2">&lt;select class=&quot;select1&quot; multiple&gt;
+    &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+    dlb2 = new DualListbox('.select2', {
+        availableTitle:'Available numbers',
+        selectedTitle: 'Selected numbers',
+        addButtonText: '>',
+        removeButtonText: '<',
+        addAllButtonText: '>>',
+        removeAllButtonText: '<<',
+        searchPlaceholder: 'search numbers'
+    });
+    dlb2.addEventListener('added', function(event){
+        console.log(event);
+    });
+    dlb2.addEventListener('removed', function(event){
+        console.log(event);
+    });
+&lt;/script&gt;</pre>
+
+            <div class="selected-element">
+                <p>Selected element:</p>
+                <div class="changed-element"><li>Nothing yet</li></div>
+            </div>
+
+            <select class="select2" multiple>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+
+        </div>
 
         <script src="dist/dual-listbox.js"></script>
         <script>
             dlb1 = new DualListbox('.select1');
+            dlb1.addEventListener('added', function(event){
+                console.log(event);
+            });
+            dlb1.addEventListener('removed', function(event){
+                console.log(event);
+            });
+
+            dlb2 = new DualListbox('.select2', {
+                availableTitle:'Available numbers',
+                selectedTitle: 'Selected numbers',
+                addButtonText: '>',
+                removeButtonText: '<',
+                addAllButtonText: '>>',
+                removeAllButtonText: '<<',
+                searchPlaceholder: 'search numbers'
+            });
+            dlb2.addEventListener('added', function(event){
+                console.log(event.addedElement);
+                document.querySelector('.changed-element').innerHTML = event.addedElement.outerHTML;
+            });
+            dlb2.addEventListener('removed', function(event){
+                document.querySelector('.changed-element').innerHTML = event.removedElement.outerHTML;
+            });
+
+            var sources = document.querySelectorAll('.source');
+            sources.forEach(function(source) {
+                source.addEventListener('click', function(){
+                    var code = document.querySelector('.' + source.dataset.source);
+                    code.classList.toggle('open')
+                })
+            })
         </script>
     </body>
 </html>

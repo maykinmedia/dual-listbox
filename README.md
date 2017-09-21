@@ -33,19 +33,22 @@ $ npm i dual-listbox --save
 ## Usage
 
 ```javascript
-new DualListbox('select'); // Selects the first selectbox on the page.
-new DualListbox('.select'); // Selects the first element with the class 'select'
-new DualListbox('#select'); // Selects the first element with the id 'select'
+let dualListbox = new DualListbox('select'); // Selects the first selectbox on the page.
+let dualListbox = new DualListbox('.select'); // Selects the first element with the class 'select'
+let dualListbox = new DualListbox('#select'); // Selects the first element with the id 'select'
+
+let select = document.querySelector('#select');
+let dualListbox = new DualListbox(select); // Add a HTMLElement
 ```
 
 You can also pass some options to the DualListbox
 
 ```javascript
-new DualListbox('#select', {
-    addEvent: function(value) {
+let dualListbox = new DualListbox('#select', {
+    addEvent: function(value) { // Should use the event listeners
         console.log(value);
     },
-    removeEvent: function(value) {
+    removeEvent: function(value) { // Should use the event listeners
         console.log(value);
     },
     availableTitle: 'Different title',
@@ -54,12 +57,21 @@ new DualListbox('#select', {
     removeButtonText: '<',
     addAllButtonText: '>>',
     removeAllButtonText: '<<',
-    
+
     options: [
         {text:"Option 1", value: "OPTION1"},
         {text:"Option 2", value: "OPTION2"},
         {text:"Selected option", value: "OPTION3", selected:true}
     ]
+});
+
+dualListbox.addEventListener('added', function(event){
+    console.log(event);
+    console.log(event.addedElement);
+});
+dualListbox.addEventListener('removed', function(event){
+    console.log(event);
+    console.log(event.removedElement);
 });
 ```
 

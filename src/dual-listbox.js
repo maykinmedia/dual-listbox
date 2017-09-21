@@ -38,14 +38,16 @@ class DualListbox {
         this._addActions();
 
         this.redraw();
+
+        return this.dualListbox;
     }
 
     /**
      * Sets the default values that can be overwritten.
      */
     setDefaults() {
-        this.addEvent = null;
-        this.removeEvent = null;
+        this.addEvent = null; // TODO: Remove in favor of eventListener
+        this.removeEvent = null; // TODO: Remove in favor of eventListener
         this.availableTitle = 'Available options';
         this.selectedTitle = 'Selected options';
         this.addButtonText = 'add';
@@ -67,6 +69,11 @@ class DualListbox {
             this.selected.push(listItem);
             this._selectOption(listItem.dataset.id);
             this.redraw();
+
+            let event = document.createEvent("HTMLEvents");
+            event.initEvent("added", false, true);
+            event.addedElement = listItem;
+            this.dualListbox.dispatchEvent(event);
         }
     }
 
@@ -90,6 +97,11 @@ class DualListbox {
             this.available.push(listItem);
             this._deselectOption(listItem.dataset.id);
             this.redraw();
+
+            let event = document.createEvent("HTMLEvents");
+            event.initEvent("removed", false, true);
+            event.removedElement = listItem;
+            this.dualListbox.dispatchEvent(event);
         }
     }
 
