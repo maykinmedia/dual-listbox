@@ -4,23 +4,26 @@
         <title>Dual listbox example</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="dist/dual-listbox.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.1/themes/prism.min.css" rel="stylesheet">
         <link href="style.css" rel="stylesheet">
-        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"> -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css">
-
-        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+        <link href="dist/dual-listbox.css" rel="stylesheet">
     </head>
     <body>
-        <div class="hero">
-            <h1>Dual Listbox</h1>
-            <p>A better way to manage your multi select element.</p>
-        </div>
+        <section class="hero is-medium is-primary is-bold">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">Dual Listbox</h1>
+                    <h2 class="subtitle">A better way to manage your multi select element.</h2>
+                </div>
+            </div>
+        </section>
 
-        <div class="container">
-            <h2>Select by class <span class="source" data-source="dlb1">source</span></h2>
+        <section class="section">
+            <div class="container">
+                <h2 class="subtitle">Select by class <span class="source" data-source="dlb1">source</span></h2>
 
-            <pre class="prettyprint linenums dlb1">&lt;select class=&quot;select1&quot; multiple&gt;
+                <pre class="dlb1"><code class="language-html">&lt;select class=&quot;select1&quot; multiple&gt;
     &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
     &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
     &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
@@ -28,20 +31,21 @@
 
 &lt;script&gt;
     dlb1 = new DualListbox('.select1');
-&lt;/script&gt;</pre>
+&lt;/script&gt;</code></pre>
 
-            <select class="select1" multiple>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
+                <select class="select1" multiple>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </section>
 
-        </div>
+        <section class="section">
+            <div class="container">
+                <h2 class="subtitle">Add options and add eventListeners <span class="source" data-source="dlb2">source</span></h2>
 
-        <div class="container">
-            <h2>Add options and add eventListeners <span class="source" data-source="dlb2">source</span></h2>
-
-            <pre class="prettyprint linenums dlb2">&lt;select class=&quot;select1&quot; multiple&gt;
+                <pre class="dlb2"><code class="language-html">&lt;select class=&quot;select1&quot; multiple&gt;
     &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
     &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
     &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
@@ -63,21 +67,37 @@
     dlb2.addEventListener('removed', function(event){
         console.log(event);
     });
-&lt;/script&gt;</pre>
+&lt;/script&gt;</code></pre>
 
-            <div class="selected-element">
-                <p>Selected element:</p>
-                <div class="changed-element"><li>Nothing yet</li></div>
+                <div class="selected-element">
+                    <p>Selected element:</p>
+                    <ul class="changed-element"><li>Nothing yet</li></ul>
+                </div>
+
+                <select class="select2" multiple>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
             </div>
+        </section>
 
-            <select class="select2" multiple>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
+        <footer class="footer">
+            <div class="container">
+                <div class="content has-text-centered">
+                    <p>
+                        <strong>Dual Listbox</strong> by <a href="http://maykinmedia.nl/">Maykin Media</a>
+                    </p>
+                    <p>
+                        <a class="icon" href="https://github.com/maykinmedia/dual-listbox">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </footer>
 
-        </div>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.1/prism.min.js"></script>
         <script src="dist/dual-listbox.js"></script>
         <script>
             dlb1 = new DualListbox('.select1');

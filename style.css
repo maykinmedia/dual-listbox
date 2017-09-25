@@ -1,37 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300|Roboto+Mono');
 
 html, body {
-    margin: 0;
-    padding: 0;
-    display: block;
-    font-family: 'Roboto Condensed', sans-serif;
-}
-
-h1 {
-    font-size: 50px;
-}
-
-.hero {
-    background-color: rgb(0, 0, 128);
-    color: rgb(255, 255, 255);
-    padding: 140px 0;
-    text-align: center;
-}
-
-.container {
-    width: 695px;
-    margin: 0 auto 50px;
-    position: relative;
+    font-weight: 300;
 }
 
 .source {
     font-size: 60%;
     cursor: pointer;
-    color: rgb(0, 0, 128);
+    color: rgb(50, 115, 220);
 }
 
 .selected-element {
     margin: 20px 0;
+    font-weight: 300;
 }
 
 .selected-element p {
@@ -47,38 +28,32 @@ li.L5, li.L6, li.L7, li.L8 {
   list-style-type: decimal !important;
 }
 
-pre.prettyprint.linenums {
+pre {
     display: none;
-    font-family: 'Roboto Mono', monospace;
-    /* height: 100px; */
-    overflow: auto;
-    border: 0;
-    position: absolute;
-    top: 45px;
-    left: 0;
-    right: 0;
-    padding: 0;
-    margin: 0;
 }
 
-pre.prettyprint.linenums.open {
+pre.open {
     display: block;
 }
 
-pre.prettyprint.linenums ol {
-    background-color: #efefef;
-    padding: 2px 2px 2px 40px;
+code[class*="language-"], pre[class*="language-"] {
+    font-family: 'Roboto Mono', monospace;
 }
 
-pre.prettyprint.linenums ol li {
-    background-color: #fff;
-    padding: 0 0 0 10px;
+.token {
+    font-family: 'Roboto Mono', monospace;
+    font-size: .75rem;
+    height: 1rem;
+    line-height: 1.5;
 }
 
-pre.prettyprint.linenums ol li:first-child {
-    padding-top: 5px;
-}
-
-pre.prettyprint.linenums ol li:last-child {
-    padding-bottom: 5px;
+.tag:not(body) {
+    background-color: transparent;
+    display: inline-block;
+    font-size: .75rem;
+    height: 1rem;
+    line-height: 1.5;
+    padding-left: 0;
+    padding-right: 0;
+    white-space: nowrap;
 }
