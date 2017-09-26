@@ -38,8 +38,6 @@ class DualListbox {
         this._addActions();
 
         this.redraw();
-
-        return this.dualListbox;
     }
 
     /**
