@@ -55,6 +55,10 @@ class DualListbox {
         this.searchPlaceholder = 'Search';
     }
 
+    addEventListener(eventName, callback) {
+        this.dualListbox.addEventListener(eventName, callback);
+    }
+
     /**
      * Add the listItem to the selected list.
      *

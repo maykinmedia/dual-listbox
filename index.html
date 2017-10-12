@@ -30,7 +30,7 @@
 &lt;/select&gt;
 
 &lt;script&gt;
-    dlb1 = new DualListbox('.select1');
+    let dlb1 = new DualListbox('.select1');
 &lt;/script&gt;</code></pre>
 
                 <select class="select1" multiple>
@@ -52,7 +52,7 @@
 &lt;/select&gt;
 
 &lt;script&gt;
-    dlb2 = new DualListbox('.select2', {
+    let dlb2 = new DualListbox('.select2', {
         availableTitle:'Available numbers',
         selectedTitle: 'Selected numbers',
         addButtonText: '>',
@@ -100,15 +100,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.1/prism.min.js"></script>
         <script src="dist/dual-listbox.js"></script>
         <script>
-            dlb1 = new DualListbox('.select1');
-            dlb1.addEventListener('added', function(event){
-                console.log(event);
-            });
-            dlb1.addEventListener('removed', function(event){
-                console.log(event);
-            });
+            var dlb1 = new DualListbox('.select1');
 
-            dlb2 = new DualListbox('.select2', {
+            var dlb2 = new DualListbox('.select2', {
                 availableTitle:'Available numbers',
                 selectedTitle: 'Selected numbers',
                 addButtonText: '>',
@@ -118,7 +112,6 @@
                 searchPlaceholder: 'search numbers'
             });
             dlb2.addEventListener('added', function(event){
-                console.log(event.addedElement);
                 document.querySelector('.changed-element').innerHTML = event.addedElement.outerHTML;
             });
             dlb2.addEventListener('removed', function(event){
