@@ -30,6 +30,16 @@ Install with [npm](https://www.npmjs.com/)
 $ npm i dual-listbox --save
 ```
 
+CDN
+```html
+<script src="https://cdn.jsdelivr.net/npm/dual-listbox/dist/dual-listbox.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/dual-listbox/dist/dual-listbox.css">
+
+<!-- for pinned version -->
+<script src="https://cdn.jsdelivr.net/npm/dual-listbox@1.0.8/dist/dual-listbox.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/dual-listbox@1.0.8/dist/dual-listbox.css">
+```
+
 ## Usage
 
 ```javascript
