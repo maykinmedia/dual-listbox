@@ -7,10 +7,11 @@ Dual select interface allowing the user to select items from a list of provided 
 
 * [DualListbox](#DualListbox)
     * [.setDefaults()](#DualListbox+setDefaults)
+    * [.addEventListener(eventName, callback)](#DualListbox+addEventListener)
     * [.addSelected(listItem)](#DualListbox+addSelected)
     * [.redraw()](#DualListbox+redraw)
     * [.removeSelected(listItem)](#DualListbox+removeSelected)
-    * [.searchLists(searchString)](#DualListbox+searchLists)
+    * [.searchLists(searchString, dualListbox)](#DualListbox+searchLists)
     * [.updateAvailableListbox()](#DualListbox+updateAvailableListbox)
     * [.updateSelectedListbox()](#DualListbox+updateSelectedListbox)
     * [._actionAllSelected()](#DualListbox+_actionAllSelected)
@@ -31,6 +32,18 @@ Dual select interface allowing the user to select items from a list of provided 
 Sets the default values that can be overwritten.
 
 **Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+<a name="DualListbox+addEventListener"></a>
+
+### dualListbox.addEventListener(eventName, callback)
+Add eventListener to the dualListbox element.
+
+**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+
+| Param | Type |
+| --- | --- |
+| eventName | <code>String</code> | 
+| callback | <code>function</code> | 
+
 <a name="DualListbox+addSelected"></a>
 
 ### dualListbox.addSelected(listItem)
@@ -61,7 +74,7 @@ Removes the listItem from the selected list.
 
 <a name="DualListbox+searchLists"></a>
 
-### dualListbox.searchLists(searchString)
+### dualListbox.searchLists(searchString, dualListbox)
 Filters the listboxes with the given searchString.
 
 **Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
@@ -69,6 +82,7 @@ Filters the listboxes with the given searchString.
 | Param | Type |
 | --- | --- |
 | searchString | <code>Object</code> | 
+| dualListbox |  | 
 
 <a name="DualListbox+updateAvailableListbox"></a>
 

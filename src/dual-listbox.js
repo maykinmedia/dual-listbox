@@ -38,8 +38,6 @@ class DualListbox {
         this._addActions();
 
         this.redraw();
-
-        return this.dualListbox;
     }
 
     /**
@@ -55,6 +53,16 @@ class DualListbox {
         this.addAllButtonText = 'add all';
         this.removeAllButtonText = 'remove all';
         this.searchPlaceholder = 'Search';
+    }
+
+    /**
+     * Add eventListener to the dualListbox element.
+     *
+     * @param {String} eventName
+     * @param {function} callback
+     */
+    addEventListener(eventName, callback) {
+        this.dualListbox.addEventListener(eventName, callback);
     }
 
     /**
