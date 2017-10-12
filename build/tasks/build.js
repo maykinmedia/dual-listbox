@@ -55,4 +55,4 @@ gulp.task('build-sass', function() {
  * Run using "gulp build"
  * Runs build-js and build-sass
  */
-gulp.task('build', ['build-js', 'build-sass']);
+gulp.task('build', ['build-js', 'build-sass', 'jsdoc']);

@@ -55,6 +55,12 @@ class DualListbox {
         this.searchPlaceholder = 'Search';
     }
 
+    /**
+     * Add eventListener to the dualListbox element.
+     *
+     * @param {String} eventName
+     * @param {function} callback
+     */
     addEventListener(eventName, callback) {
         this.dualListbox.addEventListener(eventName, callback);
     }
