@@ -419,7 +419,7 @@ describe('Duallistbox', function () {
         expect(dlb.selected.length).toBe(3);
 
         dlb.addEventListener('removed', event => {
-            expect(event.removedElement.innerText).toBe('Two');
+            expect(event.target.innerText).toBe('Two');
             done();
         });
 
@@ -429,7 +429,7 @@ describe('Duallistbox', function () {
         dlb._actionItemDeselected(event);
     });
 
-    it('should be able to add the removed eventListener', (done) => {
+    it('should be able to add the added eventListener', (done) => {
         let domParent = document.createElement("div");
         domParent.innerHTML = FIXTURE_FILLED_SELECT_PRESELECTED_MULTIPLE;
 
@@ -438,7 +438,7 @@ describe('Duallistbox', function () {
         expect(dlb.selected.length).toBe(3);
 
         dlb.addEventListener('added', event => {
-            expect(event.addedElement.innerText).toBe('One');
+            expect(event.target.innerText).toBe('One');
             done();
         });
 

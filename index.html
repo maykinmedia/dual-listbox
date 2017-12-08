@@ -112,10 +112,10 @@
                 searchPlaceholder: 'search numbers'
             });
             dlb2.addEventListener('added', function(event){
-                document.querySelector('.changed-element').innerHTML = event.addedElement.outerHTML;
+                document.querySelector('.changed-element').innerHTML = event.target.outerHTML;
             });
             dlb2.addEventListener('removed', function(event){
-                document.querySelector('.changed-element').innerHTML = event.removedElement.outerHTML;
+                document.querySelector('.changed-element').innerHTML = event.target.outerHTML;
             });
 
             var sources = document.querySelectorAll('.source');
