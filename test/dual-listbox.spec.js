@@ -419,8 +419,12 @@ describe('Duallistbox', function () {
         expect(dlb.selected.length).toBe(3);
 
         dlb.addEventListener('removed', event => {
-            expect(event.target.innerText).toBe('Two');
-            done();
+            setTimeout(() => {
+                console.log(event, event.removedElement);
+                expect(event.removedElement).toBeTruthy();
+                expect(event.removedElement.innerText).toBe('Two');
+                done();
+            }, 300)
         });
 
         dlb.selected[0].classList.add('dual-listbox__item--selected');
@@ -438,8 +442,12 @@ describe('Duallistbox', function () {
         expect(dlb.selected.length).toBe(3);
 
         dlb.addEventListener('added', event => {
-            expect(event.target.innerText).toBe('One');
-            done();
+            setTimeout(() => {
+                console.log(event, event.addedElement);
+                expect(event.addedElement).toBeTruthy();
+                expect(event.addedElement.innerText).toBe('One');
+                done();
+            }, 300)
         });
 
         dlb.available[0].classList.add('dual-listbox__item--selected');

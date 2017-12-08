@@ -80,7 +80,7 @@ class DualListbox {
 
             let event = document.createEvent("HTMLEvents");
             event.initEvent("added", false, true);
-            event.target = listItem;
+            event.addedElement = listItem;
             this.dualListbox.dispatchEvent(event);
         }
     }
@@ -108,7 +108,7 @@ class DualListbox {
 
             let event = document.createEvent("HTMLEvents");
             event.initEvent("removed", false, true);
-            event.target = listItem;
+            event.removedElement = listItem;
             this.dualListbox.dispatchEvent(event);
         }
     }
