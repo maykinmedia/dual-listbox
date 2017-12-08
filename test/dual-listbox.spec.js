@@ -444,7 +444,7 @@ describe('Duallistbox', function () {
             setTimeout(() => {
                 console.log(event, event.addedElement, event.addedElement.textContent);
                 expect(event.addedElement).toBeTruthy();
-                expect(event.addedElement.textContent).toBe('One');
+                expect(event.addedElement.outerHTML).toBe('<li class="dual-listbox__item dual-listbox__item--selected" data-id="1">One</li>');
                 done();
             }, 1000)
         });
