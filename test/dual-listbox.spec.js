@@ -420,9 +420,9 @@ describe('Duallistbox', function () {
 
         dlb.addEventListener('removed', event => {
             setTimeout(() => {
-                console.log(event, event.removedElement);
+                console.log(event, event.removedElement, event.removedElement.textContent);
                 expect(event.removedElement).toBeTruthy();
-                expect(event.removedElement.innerText).toBe('Two');
+                expect(event.removedElement.textContent).toBe('Two');
                 done();
             }, 300)
         });
@@ -443,9 +443,9 @@ describe('Duallistbox', function () {
 
         dlb.addEventListener('added', event => {
             setTimeout(() => {
-                console.log(event, event.addedElement);
+                console.log(event, event.addedElement, event.addedElement.textContent);
                 expect(event.addedElement).toBeTruthy();
-                expect(event.addedElement.innerText).toBe('One');
+                expect(event.addedElement.textContent).toBe('One');
                 done();
             }, 300)
         });
