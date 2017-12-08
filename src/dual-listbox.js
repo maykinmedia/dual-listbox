@@ -159,15 +159,8 @@ class DualListbox {
     _actionAllSelected(event) {
         event.preventDefault();
 
-        let selected = [];
-        this.available.forEach((item) => {
-            if (item.style.display !== "none"){
-                selected.push(item);
-            }
-        });
-        selected.forEach((item) => {
-            this.addSelected(item);
-        });
+        let selected = this.available.filter((item) => item.style.display !== "none");
+        selected.forEach((item) => this.addSelected(item));
     }
 
     /**
@@ -199,15 +192,8 @@ class DualListbox {
     _actionAllDeselected(event) {
         event.preventDefault();
 
-        let deselected = [];
-        this.selected.forEach((item) => {
-            if (item.style.display !== "none"){
-                deselected.push(item);
-            }
-        });
-        deselected.forEach((item) => {
-            this.removeSelected(item);
-        });
+        let deselected = this.selected.filter((item) => item.style.display !== "none");
+        deselected.forEach((item) => this.removeSelected(item));
     }
 
     /**
