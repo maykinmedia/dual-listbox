@@ -420,7 +420,6 @@ describe('Duallistbox', function () {
 
         dlb.addEventListener('removed', event => {
             setTimeout(() => {
-                console.log(event, event.removedElement, event.removedElement.textContent);
                 expect(event.removedElement).toBeTruthy();
                 expect(event.removedElement.textContent).toBe('Two');
                 done();
