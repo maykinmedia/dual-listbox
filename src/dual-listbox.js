@@ -159,9 +159,15 @@ class DualListbox {
     _actionAllSelected(event) {
         event.preventDefault();
 
-        while (this.available.length > 0) {
-            this.addSelected(this.available[0]);
-        }
+        let selected = [];
+        this.available.forEach(item => {
+            if (item.style.display !== 'none'){
+                selected.push(item);
+            }
+        });
+        selected.forEach(item => {
+            this.addSelected(item);
+        });
     }
 
     /**
@@ -193,9 +199,15 @@ class DualListbox {
     _actionAllDeselected(event) {
         event.preventDefault();
 
-        while (this.selected.length > 0) {
-            this.removeSelected(this.selected[0]);
-        }
+        let deselected = [];
+        this.selected.forEach(item => {
+            if (item.style.display !== 'none'){
+                deselected.push(item);
+            }
+        });
+        deselected.forEach(item => {
+            this.removeSelected(item);
+        });
     }
 
     /**
