@@ -160,12 +160,12 @@ class DualListbox {
         event.preventDefault();
 
         let selected = [];
-        this.available.forEach(item => {
-            if (item.style.display !== 'none'){
+        this.available.forEach((item) => {
+            if (item.style.display !== "none"){
                 selected.push(item);
             }
         });
-        selected.forEach(item => {
+        selected.forEach((item) => {
             this.addSelected(item);
         });
     }
@@ -200,12 +200,12 @@ class DualListbox {
         event.preventDefault();
 
         let deselected = [];
-        this.selected.forEach(item => {
-            if (item.style.display !== 'none'){
+        this.selected.forEach((item) => {
+            if (item.style.display !== "none"){
                 deselected.push(item);
             }
         });
-        deselected.forEach(item => {
+        deselected.forEach((item) => {
             this.removeSelected(item);
         });
     }

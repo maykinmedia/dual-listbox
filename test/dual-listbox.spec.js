@@ -355,7 +355,8 @@ describe('Duallistbox', function () {
         expect(dlb.selected.length).toBe(1);
 
         dlb.selected[0].classList.add('dual-listbox__item--selected');
-        let event = new CustomEvent('test');
+        let event = {};
+        event.preventDefault = () => {};
         dlb._actionItemDeselected(event);
         expect(dlb.available.length).toBe(10);
         expect(dlb.selected.length).toBe(0);
@@ -370,7 +371,8 @@ describe('Duallistbox', function () {
         expect(dlb.selected.length).toBe(1);
 
         dlb.available[0].classList.add('dual-listbox__item--selected');
-        let event = new CustomEvent('test');
+        let event = {};
+        event.preventDefault = () => {};
         dlb._actionItemSelected(event);
         expect(dlb.available.length).toBe(8);
         expect(dlb.selected.length).toBe(2);
@@ -384,7 +386,8 @@ describe('Duallistbox', function () {
         expect(dlb.available.length).toBe(10);
         expect(dlb.selected.length).toBe(0);
 
-        let event = new CustomEvent('test');
+        let event = {};
+        event.preventDefault = () => {};
         dlb.searchLists('Four', dlb.dualListbox);
         dlb._actionAllSelected(event);
         expect(dlb.available.length).toBe(9);
@@ -399,7 +402,8 @@ describe('Duallistbox', function () {
         expect(dlb.available.length).toBe(7);
         expect(dlb.selected.length).toBe(3);
 
-        let event = new CustomEvent('test');
+        let event = {};
+        event.preventDefault = () => {};
         dlb.searchLists('Four', dlb.dualListbox);
         dlb._actionAllDeselected(event);
         expect(dlb.available.length).toBe(8);
@@ -420,7 +424,8 @@ describe('Duallistbox', function () {
         });
 
         dlb.selected[0].classList.add('dual-listbox__item--selected');
-        let event = new CustomEvent('test');
+        let event = {};
+        event.preventDefault = () => {};
         dlb._actionItemDeselected(event);
     });
 
@@ -438,7 +443,8 @@ describe('Duallistbox', function () {
         });
 
         dlb.available[0].classList.add('dual-listbox__item--selected');
-        let event = new CustomEvent('test');
+        let event = {};
+        event.preventDefault = () => {};
         dlb._actionItemSelected(event);
     });
 });
