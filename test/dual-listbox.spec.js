@@ -419,8 +419,10 @@ describe('Duallistbox', function () {
         expect(dlb.selected.length).toBe(3);
 
         dlb.addEventListener('removed', event => {
-            expect(event.removedElement.innerText).toBe('Two');
-            done();
+            setTimeout(() => {
+                expect(event.removedElement.innerText).toBe('Two');
+                done();
+            });
         });
 
         dlb.selected[0].classList.add('dual-listbox__item--selected');
