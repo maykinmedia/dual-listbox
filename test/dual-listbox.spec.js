@@ -446,7 +446,7 @@ describe('Duallistbox', function () {
                 expect(event.addedElement).toBeTruthy();
                 expect(event.addedElement.textContent).toBe('One');
                 done();
-            }, 300)
+            }, 1000)
         });
 
         dlb.available[0].classList.add('dual-listbox__item--selected');
