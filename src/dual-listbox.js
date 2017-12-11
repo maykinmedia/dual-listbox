@@ -73,7 +73,7 @@ class DualListbox {
     addSelected(listItem) {
         let index = this.available.indexOf(listItem);
         if (index > -1) {
-            this.available.splice(index, 1);
+            // this.available.splice(index, 1);
             this.selected.push(listItem);
             this._selectOption(listItem.dataset.id);
             this.redraw();
@@ -171,7 +171,10 @@ class DualListbox {
      * Update the elements in the listbox;
      */
     _updateListbox(list, elements) {
-        list.innerHTML = '';
+        while (list.firstChild) {
+            list.removeChild(list.firstChild);
+        }
+
         for (let i = 0; i < elements.length; i++) {
             let listItem = elements[i];
             list.appendChild(listItem);
