@@ -56,6 +56,23 @@ const FIXTURE_FILLED_SELECT_WITH_ID = `
     </select>
 `;
 
+
+const FIXTURE_FILLED_SELECT_PRESELECTED_MULTIPLE = `
+    <select class="${SELECT_CLASS}">
+        <option value="1">One</option>
+        <option value="2" selected>Two</option>
+        <option value="3" selected>Three</option>
+        <option value="4" selected>Four</option>
+        <option value="5">Five</option>
+        <option value="6">Six</option>
+        <option value="7">Seven</option>
+        <option value="8">Eight</option>
+        <option value="9">Nine</option>
+        <option value="10">Ten</option>
+    </select>
+`;
+
+
 const OPTIONS_WITH_SELECTED_VALUE = [
     {
         text: "option 1",
@@ -327,5 +344,109 @@ describe('Duallistbox', function () {
 
         expect(dlb.available.length).toBe(10);
         expect(dlb.selected.length).toBe(0);
+    });
+
+    it('should set the item to availeble.', () => {
+        let domParent = document.createElement("div");
+        domParent.innerHTML = FIXTURE_FILLED_SELECT_PRESELECTED;
+
+        let dlb = new DualListbox(domParent.getElementsByTagName('select')[0]);
+        expect(dlb.available.length).toBe(9);
+        expect(dlb.selected.length).toBe(1);
+
+        dlb.selected[0].classList.add('dual-listbox__item--selected');
+        let event = {};
+        event.preventDefault = () => {};
+        dlb._actionItemDeselected(event);
+        expect(dlb.available.length).toBe(10);
+        expect(dlb.selected.length).toBe(0);
+    });
+
+    it('should set the item to selected.', () => {
+        let domParent = document.createElement("div");
+        domParent.innerHTML = FIXTURE_FILLED_SELECT_PRESELECTED;
+
+        let dlb = new DualListbox(domParent.getElementsByTagName('select')[0]);
+        expect(dlb.available.length).toBe(9);
+        expect(dlb.selected.length).toBe(1);
+
+        dlb.available[0].classList.add('dual-listbox__item--selected');
+        let event = {};
+        event.preventDefault = () => {};
+        dlb._actionItemSelected(event);
+        expect(dlb.available.length).toBe(8);
+        expect(dlb.selected.length).toBe(2);
+    });
+
+    it('should only set the searched results to selected.', () => {
+        let domParent = document.createElement("div");
+        domParent.innerHTML = FIXTURE_FILLED_SELECT;
+
+        let dlb = new DualListbox(domParent.getElementsByTagName('select')[0]);
+        expect(dlb.available.length).toBe(10);
+        expect(dlb.selected.length).toBe(0);
+
+        let event = {};
+        event.preventDefault = () => {};
+        dlb.searchLists('Four', dlb.dualListbox);
+        dlb._actionAllSelected(event);
+        expect(dlb.available.length).toBe(9);
+        expect(dlb.selected.length).toBe(1);
+    });
+
+    it('should only set the searched results to available.', () => {
+        let domParent = document.createElement("div");
+        domParent.innerHTML = FIXTURE_FILLED_SELECT_PRESELECTED_MULTIPLE;
+
+        let dlb = new DualListbox(domParent.getElementsByTagName('select')[0]);
+        expect(dlb.available.length).toBe(7);
+        expect(dlb.selected.length).toBe(3);
+
+        let event = {};
+        event.preventDefault = () => {};
+        dlb.searchLists('Four', dlb.dualListbox);
+        dlb._actionAllDeselected(event);
+        expect(dlb.available.length).toBe(8);
+        expect(dlb.selected.length).toBe(2);
+    });
+
+    it('should be able to add the removed eventListener', (done) => {
+        let domParent = document.createElement("div");
+        domParent.innerHTML = FIXTURE_FILLED_SELECT_PRESELECTED_MULTIPLE;
+
+        let dlb = new DualListbox(domParent.getElementsByTagName('select')[0]);
+        expect(dlb.available.length).toBe(7);
+        expect(dlb.selected.length).toBe(3);
+
+        dlb.addEventListener('removed', event => {
+            expect(event.removedElement).toBeTruthy();
+            expect(event.removedElement.textContent).toBe('Two');
+            done();
+        });
+
+        dlb.selected[0].classList.add('dual-listbox__item--selected');
+        let event = {};
+        event.preventDefault = () => {};
+        dlb._actionItemDeselected(event);
+    });
+
+    it('should be able to add the added eventListener', (done) => {
+        let domParent = document.createElement("div");
+        domParent.innerHTML = FIXTURE_FILLED_SELECT_PRESELECTED_MULTIPLE;
+
+        let dlb = new DualListbox(domParent.getElementsByTagName('select')[0]);
+        expect(dlb.available.length).toBe(7);
+        expect(dlb.selected.length).toBe(3);
+
+        dlb.addEventListener('added', event => {
+            expect(event.addedElement).toBeTruthy();
+            expect(event.addedElement.outerHTML).toBe('<li class="dual-listbox__item dual-listbox__item--selected" data-id="1">One</li>');
+            done();
+        });
+
+        dlb.available[0].classList.add('dual-listbox__item--selected');
+        let event = {};
+        event.preventDefault = () => {};
+        dlb._actionItemSelected(event);
     });
 });

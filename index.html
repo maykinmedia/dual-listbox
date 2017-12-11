@@ -3,6 +3,7 @@
     <head>
         <title>Dual listbox example</title>
         <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.1/themes/prism.min.css" rel="stylesheet">
@@ -119,12 +120,13 @@
             });
 
             var sources = document.querySelectorAll('.source');
-            sources.forEach(function(source) {
+            for(var i = 0; i < sources.length; i++) {
+                var source = sources[i]
                 source.addEventListener('click', function(){
                     var code = document.querySelector('.' + source.dataset.source);
                     code.classList.toggle('open')
                 })
-            })
+            }
         </script>
     </body>
 </html>

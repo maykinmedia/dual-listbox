@@ -78,10 +78,12 @@ class DualListbox {
             this._selectOption(listItem.dataset.id);
             this.redraw();
 
-            let event = document.createEvent("HTMLEvents");
-            event.initEvent("added", false, true);
-            event.addedElement = listItem;
-            this.dualListbox.dispatchEvent(event);
+            setTimeout(() => {
+                let event = document.createEvent("HTMLEvents");
+                event.initEvent("added", false, true);
+                event.addedElement = listItem;
+                this.dualListbox.dispatchEvent(event);
+            }, 0)
         }
     }
 
@@ -106,10 +108,12 @@ class DualListbox {
             this._deselectOption(listItem.dataset.id);
             this.redraw();
 
-            let event = document.createEvent("HTMLEvents");
-            event.initEvent("removed", false, true);
-            event.removedElement = listItem;
-            this.dualListbox.dispatchEvent(event);
+            setTimeout(() => {
+                let event = document.createEvent("HTMLEvents");
+                event.initEvent("removed", false, true);
+                event.removedElement = listItem;
+                this.dualListbox.dispatchEvent(event);
+            }, 0);
         }
     }
 
@@ -159,16 +163,18 @@ class DualListbox {
     _actionAllSelected(event) {
         event.preventDefault();
 
-        while (this.available.length > 0) {
-            this.addSelected(this.available[0]);
-        }
+        let selected = this.available.filter((item) => item.style.display !== "none");
+        selected.forEach((item) => this.addSelected(item));
     }
 
     /**
      * Update the elements in the listbox;
      */
     _updateListbox(list, elements) {
-        list.innerHTML = '';
+        while (list.firstChild) {
+            list.removeChild(list.firstChild);
+        }
+
         for (let i = 0; i < elements.length; i++) {
             let listItem = elements[i];
             list.appendChild(listItem);
@@ -193,9 +199,8 @@ class DualListbox {
     _actionAllDeselected(event) {
         event.preventDefault();
 
-        while (this.selected.length > 0) {
-            this.removeSelected(this.selected[0]);
-        }
+        let deselected = this.selected.filter((item) => item.style.display !== "none");
+        deselected.forEach((item) => this.removeSelected(item));
     }
 
     /**
