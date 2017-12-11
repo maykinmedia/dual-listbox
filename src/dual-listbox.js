@@ -78,10 +78,12 @@ class DualListbox {
             this._selectOption(listItem.dataset.id);
             this.redraw();
 
-            let event = document.createEvent("HTMLEvents");
-            event.initEvent("added", false, true);
-            event.target = listItem;
-            this.dualListbox.dispatchEvent(event);
+            setTimeout(() => {
+                let event = document.createEvent("HTMLEvents");
+                event.initEvent("added", false, true);
+                event.addedElement = listItem;
+                this.dualListbox.dispatchEvent(event);
+            }, 0)
         }
     }
 
@@ -106,10 +108,12 @@ class DualListbox {
             this._deselectOption(listItem.dataset.id);
             this.redraw();
 
-            let event = document.createEvent("HTMLEvents");
-            event.initEvent("removed", false, true);
-            event.target = listItem;
-            this.dualListbox.dispatchEvent(event);
+            setTimeout(() => {
+                let event = document.createEvent("HTMLEvents");
+                event.initEvent("removed", false, true);
+                event.removedElement = listItem;
+                this.dualListbox.dispatchEvent(event);
+            }, 0);
         }
     }
 
