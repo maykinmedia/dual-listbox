@@ -46,7 +46,7 @@
             <div class="container">
                 <h2 class="subtitle">Add options and add eventListeners <span class="source" data-source="dlb2">source</span></h2>
 
-                <pre class="dlb2"><code class="language-html">&lt;select class=&quot;select1&quot; multiple&gt;
+                <pre class="dlb2"><code class="language-html">&lt;select class=&quot;select2&quot; multiple&gt;
     &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
     &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
     &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
@@ -76,6 +76,33 @@
                 </div>
 
                 <select class="select2" multiple>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="subtitle">Add options and add eventListeners <span class="source" data-source="dlb2">source</span></h2>
+
+                <pre class="dlb2"><code class="language-html">&lt;select class=&quot;select3&quot; multiple&gt;
+    &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+    let dlb3 = new DualListbox('.select3', {
+        showAddButton: false,
+        showAddAllButton: false,
+        showRemoveButton: false,
+        showRemoveAllButton: false
+    });
+&lt;/script&gt;</code></pre>
+
+                <select class="select3" multiple>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
@@ -117,6 +144,13 @@
             });
             dlb2.addEventListener('removed', function(event){
                 document.querySelector('.changed-element').innerHTML = event.removedElement.outerHTML;
+            });
+
+            var dlb3 = new DualListbox('.select3', {
+                showAddButton: false,
+                showAddAllButton: false,
+                showRemoveButton: false,
+                showRemoveAllButton: false
             });
 
             var sources = document.querySelectorAll('.source');
