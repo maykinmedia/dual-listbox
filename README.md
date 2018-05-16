@@ -5,6 +5,7 @@
 [![npm](https://img.shields.io/npm/dw/dual-listbox.svg)](https://github.com/maykinmedia/dual-listbox)
 [![Known Vulnerabilities](https://snyk.io/test/github/maykinmedia/dual-listbox/badge.svg)](https://snyk.io/test/github/maykinmedia/dual-listbox)
 [![BCH compliance](https://bettercodehub.com/edge/badge/maykinmedia/dual-listbox?branch=master)](https://bettercodehub.com/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmaykinmedia%2Fdual-listbox.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmaykinmedia%2Fdual-listbox?ref=badge_shield)
 
 [![NPM](https://nodei.co/npm/dual-listbox.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/dual-listbox/)
 
@@ -103,3 +104,6 @@ Pull requests and stars are always welcome. For bugs and feature requests, [plea
 
 Copyright © 2016 [Maykin Media](https://www.maykinmedia.nl/)
 Licensed under the MIT license.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmaykinmedia%2Fdual-listbox.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmaykinmedia%2Fdual-listbox?ref=badge_large)
