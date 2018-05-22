@@ -48,10 +48,19 @@ class DualListbox {
         this.removeEvent = null; // TODO: Remove in favor of eventListener
         this.availableTitle = 'Available options';
         this.selectedTitle = 'Selected options';
+
+        this.showAddButton = true;
         this.addButtonText = 'add';
+
+        this.showRemoveButton = true;
         this.removeButtonText = 'remove';
+
+        this.showAddAllButton = true;
         this.addAllButtonText = 'add all';
+
+        this.showRemoveAllButton = true;
         this.removeAllButtonText = 'remove all';
+
         this.searchPlaceholder = 'Search';
     }
 
@@ -344,10 +353,18 @@ class DualListbox {
         this.remove_all_button.classList.add(BUTTON_ELEMENT);
         this.remove_all_button.innerHTML = this.removeAllButtonText;
 
-        this.buttons.appendChild(this.add_all_button);
-        this.buttons.appendChild(this.add_button);
-        this.buttons.appendChild(this.remove_button);
-        this.buttons.appendChild(this.remove_all_button);
+        if(this.showAddAllButton) {
+            this.buttons.appendChild(this.add_all_button);
+        }
+        if(this.showAddButton) {
+            this.buttons.appendChild(this.add_button);
+        }
+        if(this.showRemoveButton) {
+            this.buttons.appendChild(this.remove_button);
+        }
+        if(this.showRemoveAllButton) {
+            this.buttons.appendChild(this.remove_all_button);
+        }
     }
 
     /**

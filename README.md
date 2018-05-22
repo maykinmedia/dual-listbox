@@ -87,6 +87,27 @@ dualListbox.addEventListener('removed', function(event){
 
 Try it online on [JSFiddle](https://jsfiddle.net/pn2zcwre/3/).
 
+## Exposed elements
+
+All the elements should be exposed. This way it should be possible to add custom attributes to the element of choice.
+
+```javascript
+let dualListbox = new DualListbox('#select');
+
+// Access the buttons:
+dualListbox.add_button.setAttribute('a', 'a');
+dualListbox.add_all_button.setAttribute('a', 'a');
+dualListbox.remove_button.setAttribute('a', 'a');
+dualListbox.remove_all_button.setAttribute('a', 'a');
+
+// Access the search field:
+dualListbox.search.classList.add('some_class');
+
+// Access the list containers:
+dualListbox.selectedList.setAttribute('a', 'a');
+dualListbox.availableList.setAttribute('a', 'a');
+```
+
 ## Contributing
 
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/maykinmedia/dual-listbox/issues).
@@ -101,5 +122,5 @@ Pull requests and stars are always welcome. For bugs and feature requests, [plea
 
 ## License
 
-Copyright © 2016 [Maykin Media](https://www.maykinmedia.nl/)
+Copyright © 2018 [Maykin Media](https://www.maykinmedia.nl/)
 Licensed under the MIT license.
