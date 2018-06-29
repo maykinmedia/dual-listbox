@@ -191,18 +191,14 @@ class DualListbox {
 
         const position = this.all.indexOf(element);
 
-        if(direction === 'down') {
-            let otherElement = this.all[position + 1];
-            if(otherElement) {
-                element.dataset.order = Number(element.dataset.order) + 1;
-                otherElement.dataset.order = Number(otherElement.dataset.order) - 1;
-            }
-        } else if (direction === 'up') {
-            let otherElement = this.all[position - 1];
-            if(otherElement) {
-                element.dataset.order = Number(element.dataset.order) - 1;
-                otherElement.dataset.order = Number(otherElement.dataset.order) + 1;
-            }
+        let elementDown = this.all[position + 1];
+        let elementUp = this.all[position - 1];
+        if(direction === 'down' && elementDown) {
+            element.dataset.order = Number(element.dataset.order) + 1;
+            elementDown.dataset.order = Number(elementDown.dataset.order) - 1;
+        } else if (direction === 'up' && elementUp) {
+            element.dataset.order = Number(element.dataset.order) - 1;
+            elementUp.dataset.order = Number(elementUp.dataset.order) + 1;
         }
 
         this.redraw();
