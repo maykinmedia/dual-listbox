@@ -8,6 +8,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.1.0",
     "babel-core": "^6.9.1",
     "babel-istanbul-loader": "^0.1.0",
     "babel-loader": "^6.2.4",

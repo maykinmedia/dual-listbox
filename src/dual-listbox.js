@@ -21,6 +21,7 @@ class DualListbox {
         this.setDefaults();
         this.selected = [];
         this.available = [];
+        this.all = [];
 
         if (DualListbox.isDomElement(selector)) {
             this.select = selector;
@@ -44,6 +45,7 @@ class DualListbox {
      * Sets the default values that can be overwritten.
      */
     setDefaults() {
+        this.order = false;
         this.addEvent = null; // TODO: Remove in favor of eventListener
         this.removeEvent = null; // TODO: Remove in favor of eventListener
         this.availableTitle = 'Available options';
@@ -100,6 +102,7 @@ class DualListbox {
      * Redraws the Dual listbox content
      */
     redraw() {
+        this.reorder();
         this.updateAvailableListbox();
         this.updateSelectedListbox();
     }
@@ -123,6 +126,25 @@ class DualListbox {
                 event.removedElement = listItem;
                 this.dualListbox.dispatchEvent(event);
             }, 0);
+        }
+    }
+
+    /**
+     * This will reorder the selected and available lists on the dataset order
+     */
+    reorder() {
+        if(this.order) {
+            this.selected.sort(function(a, b){
+                if(a.dataset.order < b.dataset.order) return -1;
+                if(a.dataset.order > b.dataset.order) return 1;
+                return 0;
+            });
+
+            this.available.sort(function(a, b){
+                if(a.dataset.order < b.dataset.order) return -1;
+                if(a.dataset.order > b.dataset.order) return 1;
+                return 0;
+            });
         }
     }
 
@@ -158,6 +180,32 @@ class DualListbox {
      */
     updateSelectedListbox() {
         this._updateListbox(this.selectedList, this.selected);
+    }
+
+    updateOrder(element, direction='down') {
+        this.all.sort(function(a, b){
+            if(a.dataset.order < b.dataset.order) return -1;
+            if(a.dataset.order > b.dataset.order) return 1;
+            return 0;
+        });
+
+        const position = this.all.indexOf(element);
+
+        if(direction === 'down') {
+            let otherElement = this.all[position + 1];
+            if(otherElement) {
+                element.dataset.order = Number(element.dataset.order) + 1;
+                otherElement.dataset.order = Number(otherElement.dataset.order) - 1;
+            }
+        } else if (direction === 'up') {
+            let otherElement = this.all[position - 1];
+            if(otherElement) {
+                element.dataset.order = Number(element.dataset.order) - 1;
+                otherElement.dataset.order = Number(otherElement.dataset.order) + 1;
+            }
+        }
+
+        this.redraw();
     }
 
     //
@@ -377,6 +425,34 @@ class DualListbox {
         listItem.classList.add(ITEM_ELEMENT);
         listItem.innerHTML = option.text;
         listItem.dataset.id = option.value;
+        if(this.order) {
+            let arrowContainer = document.createElement('span');
+            arrowContainer.classList.add('dual-listbox__arrows');
+            let arrowUp = document.createElement('span');
+            arrowUp.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/></svg>';
+            arrowUp.classList.add('dual-listbox__arrow');
+            arrowUp.classList.add('dual-listbox__arrow--up');
+            arrowUp.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                this.updateOrder(listItem, 'up')
+            });
+            let arrowDown = document.createElement('span');
+            arrowDown.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"/></svg>';
+            arrowDown.classList.add('dual-listbox__arrow');
+            arrowDown.classList.add('dual-listbox__arrow--down');
+            arrowDown.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                this.updateOrder(listItem, 'down')
+            });
+
+            arrowContainer.appendChild(arrowUp);
+            arrowContainer.appendChild(arrowDown);
+            listItem.appendChild(arrowContainer);
+
+            listItem.dataset.order = option.order;
+        }
 
         this._addClickActions(listItem);
 
@@ -490,7 +566,8 @@ class DualListbox {
                 this._addOption({
                     text: option.innerHTML,
                     value: option.value,
-                    selected: option.attributes.selected
+                    selected: option.attributes.selected,
+                    order: option.dataset.order | ''
                 });
             } else {
                 this._addOption(option);
@@ -505,6 +582,7 @@ class DualListbox {
     _addOption(option) {
         let listItem = this._createListItem(option);
 
+        this.all.push(listItem);
         if (option.selected) {
             this.selected.push(listItem);
         } else {

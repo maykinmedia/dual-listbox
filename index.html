@@ -20,6 +20,8 @@
             </div>
         </section>
 
+        <!-- DEFAULT -->
+
         <section class="section">
             <div class="container">
                 <h2 class="subtitle">Select by class <span class="source" data-source="dlb1">source</span></h2>
@@ -41,6 +43,8 @@
                 </select>
             </div>
         </section>
+
+        <!-- SHOW OPTIONS AND EVENT LISTENERS -->
 
         <section class="section">
             <div class="container">
@@ -83,6 +87,8 @@
             </div>
         </section>
 
+        <!-- REMOVE BUTTONS -->
+
         <section class="section">
             <div class="container">
                 <h2 class="subtitle">Remove all the buttons from being rendered. <span class="source" data-source="dlb2">source</span></h2>
@@ -106,6 +112,32 @@
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- ORDERED ELEMENTS -->
+
+        <section class="section">
+            <div class="container">
+                <h2 class="subtitle">Make sure that the elements have an order. <span class="source" data-source="dlb2">source</span></h2>
+
+                <pre class="dlb2"><code class="language-html">&lt;select class=&quot;select4&quot; multiple&gt;
+    &lt;option value=&quot;1&quot; data-order=&quot;2&quot;&gt;One&lt;/option&gt;
+    &lt;option value=&quot;2&quot; data-order=&quot;1&quot;&gt;Two&lt;/option&gt;
+    &lt;option value=&quot;3&quot; data-order=&quot;3&quot;&gt;Three&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+    let dlb4 = new DualListbox('.select4', {
+        order: true
+    });
+&lt;/script&gt;</code></pre>
+
+                <select class="select4" multiple>
+                    <option value="1" data-order="2">One</option>
+                    <option value="2" data-order="1">Two</option>
+                    <option value="3" data-order="3">Three</option>
                 </select>
             </div>
         </section>
@@ -151,6 +183,10 @@
                 showAddAllButton: false,
                 showRemoveButton: false,
                 showRemoveAllButton: false
+            });
+
+            var dlb4 = new DualListbox('.select4', {
+                order: true
             });
 
             var sources = document.querySelectorAll('.source');
