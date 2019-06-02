@@ -37,7 +37,7 @@
       border: 0;
       background-color: #eee;
       padding: 10px;
-      color: #fff;
+      color: #777;
 
       &:hover {
           background-color: #ddd;
@@ -65,9 +65,39 @@
     -ms-user-select: none;
     border-bottom: 1px solid #efefef;
     transition: background 0.2s ease;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
     &.dual-listbox__item--selected {
       background-color: transparentize(#089de3, .3);
+    }
+  }
+
+  .dual-listbox__arrows {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .dual-listbox__arrow {
+    padding: 2px;
+    border: 1px solid #ddd;
+    fill: #ddd;
+    box-sizing: border-box;
+    margin-left: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        background-color: #ddd;
+        fill: #777;
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
     }
   }
 }

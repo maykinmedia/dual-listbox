@@ -11,6 +11,7 @@ Dual select interface allowing the user to select items from a list of provided 
     * [.addSelected(listItem)](#DualListbox+addSelected)
     * [.redraw()](#DualListbox+redraw)
     * [.removeSelected(listItem)](#DualListbox+removeSelected)
+    * [.reorder()](#DualListbox+reorder)
     * [.searchLists(searchString, dualListbox)](#DualListbox+searchLists)
     * [.updateAvailableListbox()](#DualListbox+updateAvailableListbox)
     * [.updateSelectedListbox()](#DualListbox+updateSelectedListbox)
@@ -72,6 +73,12 @@ Removes the listItem from the selected list.
 | --- | --- |
 | listItem | <code>NodeElement</code> | 
 
+<a name="DualListbox+reorder"></a>
+
+### dualListbox.reorder()
+This will reorder the selected and available lists on the dataset order
+
+**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
 <a name="DualListbox+searchLists"></a>
 
 ### dualListbox.searchLists(searchString, dualListbox)
