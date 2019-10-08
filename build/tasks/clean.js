@@ -1,7 +1,6 @@
-var gulp = require('gulp');
-var paths = require('../paths');
-var del = require('del');
-var vinylPaths = require('vinyl-paths');
+const gulp = require('gulp');
+const del = require('del');
+const paths = require('../paths');
 
 
 /**
@@ -9,7 +8,10 @@ var vinylPaths = require('vinyl-paths');
  * Run using "gulp clean"
  * Cleans output directory
  */
-gulp.task('clean', function() {
-    gulp.src([paths.output])
-        .pipe(vinylPaths(del));
-});
+function clean(cb) {
+    del([paths.coverageDir, paths.doc, paths.output]);
+    cb();
+}
+
+gulp.task('clean', clean);
+exports.clean = clean;

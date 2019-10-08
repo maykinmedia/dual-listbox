@@ -1,12 +1,17 @@
-var paths = require('./build/paths');
-var webpack = require('webpack');
-var nodeExternals = require('webpack-node-externals');
+const argv = require('yargs').argv;
+const nodeExternals = require('webpack-node-externals');
+const paths = require('./build/paths');
+
+
+let isProduction = process.env.NODE_ENV === 'production';
+
+if (argv.production) {
+    isProduction = true;
+}
 
 
 module.exports = {
     entry: './src/' + paths.packageName,
-    externals: [nodeExternals()],
-    target: 'node',
 
     output: {
         filename: paths.packageName + '.js',
@@ -14,17 +19,24 @@ module.exports = {
         path: __dirname + '/' + paths.output
     },
 
+    // Use externals (don't bundle dependencies).
+    externals: [nodeExternals()],
+    target: 'node',
+
+    // Use --production to optimize output.
+    mode: isProduction ? 'production' : 'development',
+
+    // Add babel (see .babelrc for settings)
     module: {
-        loaders: [
+        rules: [
             {
-                test: /.js?$/,
+                exclude: /node_modules/,
                 loader: 'babel-loader',
-                exclude: /node_modules/
+                test: /.js?$/
             }
         ]
     },
 
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin()
-    ]
+    // Use --sourcemap to generate sourcemap.
+    devtool: argv.sourcemap ? 'sourcemap' : false,
 };
