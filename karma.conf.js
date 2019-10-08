@@ -1,36 +1,47 @@
-var clone = require('clone');
-var paths = require('./build/paths');
-var webpackConfig = clone(require('./webpack.config.js'));
+const clone = require('clone');
+const paths = require('./build/paths');
+const webpackConfig = clone(require('./webpack.config.js'));
 
 
 // Add istanbul-instrumenter to webpack configuration
-webpackConfig.module.loaders.push(
-    {
-        test: /\.js$/,
-        exclude: /(node_modules|test)/,
-        loader: 'babel-istanbul-loader'
+webpackConfig.module.rules.push({
+    test: /\.js$/,
+    include: __dirname + '/' + paths.jsSrcDir,
+    loader: 'istanbul-instrumenter-loader',
+    enforce: 'post',
+
+    options: {
+        esModules: true
     }
-);
+});
 
 webpackConfig.output.filename += '.test';
-webpackConfig.plugins = [];
-webpackConfig.externals = [];
+webpackConfig.plugins = undefined;
+webpackConfig.externals = undefined;
+webpackConfig.target = undefined;
+
+
+// The preprocessor config
+const preprocessors = {};
+preprocessors[paths.jsSpecEntry] = [
+    'webpack'
+];
 
 
 function ConfigException(message) {
-   this.message = message;
-   this.name = 'ConfigException';
+    this.message = message;
+    this.name = 'ConfigException';
 }
 
 
 // The main configuration
-module.exports = function(config) {
+module.exports = function (config) {
     if (process.env.CI && (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY)) {
-        throw ConfigException('Make sure the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables are set.')
+        throw ConfigException('Make sure the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables are set.');
     }
 
     // https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
-    var customLaunchers = {
+    const customLaunchers = {
         sl_chrome: {
             base: 'SauceLabs',
             browserName: 'chrome',
@@ -55,17 +66,17 @@ module.exports = function(config) {
             platform: 'Windows 10',
             version: '14.14393'
         },
-        sl_safari: {
-            base: 'SauceLabs',
-            browserName: 'safari',
-            platform: 'macOS 10.12',
-            version: 'latest'
-        },
+        // sl_safari: {
+        //     base: 'SauceLabs',
+        //     browserName: 'safari',
+        //     platform: 'macOS 10.14',
+        //     version: '12.0'
+        // },
         sl_safari_2: {
             base: 'SauceLabs',
             browserName: 'safari',
-            platform: 'OS X 10.11',
-            version: '9.0'
+            platform: 'OS X 10.13',
+            version: '11.1'
         },
         sl_firefox: {
             base: 'SauceLabs',
@@ -85,49 +96,65 @@ module.exports = function(config) {
             platform: 'Windows 8.1',
             version: '11'
         }
-    };
+    }
 
     config.set({
         frameworks: [
-            'jasmine-jquery',
+            'fixture',
             'jasmine-ajax',
             'jasmine'
         ],
 
         files: [
-            'test/*.spec.js'
+            'node_modules/@babel/polyfill/dist/polyfill.js',
+            paths.jsSpecEntry
         ],
 
-        preprocessors: {
-            'test/*.spec.js': [
-                'webpack'
-            ]
-        },
-
-        coverageReporter: {
-            reporters: [
-                { type: 'lcov', dir: paths.coverageDir },
-                { type: 'text' }
-            ]
-        },
+        preprocessors: preprocessors,
 
         webpack: webpackConfig,
 
         webpackMiddleware: {
             noInfo: true
         },
-        colors: true,
-        recordScreenshots: false,
+
+        hostname: 'localhost',
 
         sauceLabs: {
-            testName: 'Dual listbox browser testing',
-            public: 'public'
+            testName: 'dual-listbox browser testing',
+            // startConnect: false,
+            username: process.env.SAUCE_USERNAME,
+            accessKey: process.env.SAUCE_ACCESS_KEY,
+            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
         },
+
+
+        webpackMiddleware: {
+            noInfo: true
+        },
+
+        browserNoActivityTimeout: 200000,
+        captureTimeout: 200000,
+        colors: true,
+        concurrency: 5,
         customLaunchers: customLaunchers,
-        captureTimeout: 120000,
-        singleRun: true,
+        retryLimit: 5,
+        singleRun: false,
 
         browsers: (process.env.TRAVIS) ? Object.keys(customLaunchers) : ['Chrome', 'Firefox'],
-        reporters: (process.env.TRAVIS) ? ['spec', 'coverage', 'coveralls', 'saucelabs'] : ['spec', 'coverage', 'saucelabs']
+        reporters: (process.env.TRAVIS) ? ['spec', 'coverage', 'saucelabs', 'coveralls'] : ['spec', 'coverage'],
+
+        specReporter: {
+            suppressSkipped: true,
+        },
+
+        coverageReporter: {
+            dir: paths.coverageDir,
+            reporters: [
+                {type: 'html'},
+                {type: 'text'},
+                {type: 'text-summary'},
+            ]
+        },
     });
 };

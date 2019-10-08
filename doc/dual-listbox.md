@@ -31,13 +31,13 @@ Dual select interface allowing the user to select items from a list of provided 
 ### dualListbox.setDefaults()
 Sets the default values that can be overwritten.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+addEventListener"></a>
 
 ### dualListbox.addEventListener(eventName, callback)
 Add eventListener to the dualListbox element.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 
 | Param | Type |
 | --- | --- |
@@ -49,7 +49,7 @@ Add eventListener to the dualListbox element.
 ### dualListbox.addSelected(listItem)
 Add the listItem to the selected list.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 
 | Param | Type |
 | --- | --- |
@@ -60,13 +60,13 @@ Add the listItem to the selected list.
 ### dualListbox.redraw()
 Redraws the Dual listbox content
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+removeSelected"></a>
 
 ### dualListbox.removeSelected(listItem)
 Removes the listItem from the selected list.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 
 | Param | Type |
 | --- | --- |
@@ -77,7 +77,7 @@ Removes the listItem from the selected list.
 ### dualListbox.searchLists(searchString, dualListbox)
 Filters the listboxes with the given searchString.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 
 | Param | Type |
 | --- | --- |
@@ -89,67 +89,67 @@ Filters the listboxes with the given searchString.
 ### dualListbox.updateAvailableListbox()
 Update the elements in the available listbox;
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+updateSelectedListbox"></a>
 
 ### dualListbox.updateSelectedListbox()
 Update the elements in the selected listbox;
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+_actionAllSelected"></a>
 
-### dualListbox._actionAllSelected()
+### dualListbox.\_actionAllSelected()
 Action to set all listItems to selected.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+_updateListbox"></a>
 
-### dualListbox._updateListbox()
+### dualListbox.\_updateListbox()
 Update the elements in the listbox;
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+_actionItemSelected"></a>
 
-### dualListbox._actionItemSelected()
+### dualListbox.\_actionItemSelected()
 Action to set one listItem to selected.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+_actionAllDeselected"></a>
 
-### dualListbox._actionAllDeselected()
+### dualListbox.\_actionAllDeselected()
 Action to set all listItems to available.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+_actionItemDeselected"></a>
 
-### dualListbox._actionItemDeselected()
+### dualListbox.\_actionItemDeselected()
 Action to set one listItem to available.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+_actionItemDoubleClick"></a>
 
-### dualListbox._actionItemDoubleClick()
+### dualListbox.\_actionItemDoubleClick()
 Action when double clicked on a listItem.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+_actionItemClick"></a>
 
-### dualListbox._actionItemClick()
+### dualListbox.\_actionItemClick()
 Action when single clicked on a listItem.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+_addButtonActions"></a>
 
-### dualListbox._addButtonActions()
+### dualListbox.\_addButtonActions()
 Adds the actions to the buttons that are created.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+_addClickActions"></a>
 
-### dualListbox._addClickActions(listItem)
+### dualListbox.\_addClickActions(listItem)
 Adds the click items to the listItem.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 
 | Param | Type |
 | --- | --- |
@@ -157,13 +157,13 @@ Adds the click items to the listItem.
 
 <a name="DualListbox+_createList"></a>
 
-### dualListbox._createList()
+### dualListbox.\_createList()
 Creates list with the header.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  
 <a name="DualListbox+_createButtons"></a>
 
-### dualListbox._createButtons()
+### dualListbox.\_createButtons()
 Creates the buttons to add/remove the selected item.
 
-**Kind**: instance method of <code>[DualListbox](#DualListbox)</code>  
+**Kind**: instance method of [<code>DualListbox</code>](#DualListbox)  

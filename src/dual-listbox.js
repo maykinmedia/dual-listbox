@@ -92,7 +92,7 @@ class DualListbox {
                 event.initEvent("added", false, true);
                 event.addedElement = listItem;
                 this.dualListbox.dispatchEvent(event);
-            }, 0)
+            }, 0);
         }
     }
 

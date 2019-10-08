@@ -6,8 +6,8 @@ const {lint} = require('./lint');
 const {test} = require('./test');
 
 /**
- * Default task
- * Run using "gulp"
+ * Prepare-release task
+ * Run using "gulp prepare-release"
  * Runs clean, build, jsdoc, lint and test
  */
-gulp.task('default', gulp.series(clean, build, jsdoc, lint, test));
+gulp.task('prepare-release', gulp.series(clean, build, jsdoc, lint, test));

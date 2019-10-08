@@ -1,4 +1,4 @@
-import DualListbox, {DualListbox as DualListbox2} from '../src/dual-listbox.js';
+import DualListbox, {DualListbox as DualListbox2} from '../../src/dual-listbox.js';
 
 
 const SELECT_CLASS = 'select';
@@ -101,49 +101,49 @@ describe('module', function () {
 
 describe('Duallistbox', function () {
     it('should be able to initialize an empty select', () => {
-        setFixtures(FIXTURE_EMPTY_SELECT);
+        fixture.set(FIXTURE_EMPTY_SELECT);
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         expect(dlb.available.length).toBe(0);
         expect(dlb.selected.length).toBe(0);
     });
 
     it('should be able to initialize an empty select with additional items', () => {
-        setFixtures(FIXTURE_EMPTY_SELECT);
+        fixture.set(FIXTURE_EMPTY_SELECT);
         let dlb = new DualListbox(`.${SELECT_CLASS}`, {options: OPTIONS_WITH_SELECTED_VALUE});
         expect(dlb.available.length).toBe(2);
         expect(dlb.selected.length).toBe(1);
     });
 
     it('should be able to initialize a filled select', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         expect(dlb.available.length).toBe(10);
         expect(dlb.selected.length).toBe(0);
     });
 
     it('should be able to initialize a filled select with preselected items', () => {
-        setFixtures(FIXTURE_FILLED_SELECT_PRESELECTED);
+        fixture.set(FIXTURE_FILLED_SELECT_PRESELECTED);
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         expect(dlb.available.length).toBe(9);
         expect(dlb.selected.length).toBe(1);
     });
 
     it('should be able to initialize a filled select with additional items', () => {
-        setFixtures(FIXTURE_FILLED_SELECT_PRESELECTED);
+        fixture.set(FIXTURE_FILLED_SELECT_PRESELECTED);
         let dlb = new DualListbox(`.${SELECT_CLASS}`, {options: OPTIONS_WITH_SELECTED_VALUE});
         expect(dlb.available.length).toBe(11);
         expect(dlb.selected.length).toBe(2);
     });
 
     it('should be able to initialize a filled select with id', () => {
-        setFixtures(FIXTURE_FILLED_SELECT_WITH_ID);
+        fixture.set(FIXTURE_FILLED_SELECT_WITH_ID);
         let dlb = new DualListbox(`#select`);
         expect(dlb.available.length).toBe(9);
         expect(dlb.selected.length).toBe(1);
     });
 
     it('should be able to add a list item to selected', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         let listItem = document.querySelector('[data-id="1"]');
         dlb.addSelected(listItem);
@@ -152,7 +152,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able to add a list item to selected that is already selected', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         let listItem = document.querySelector('[data-id="1"]');
         dlb.addSelected(listItem);
@@ -165,7 +165,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able to remove a list item from selected', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         let listItem = document.querySelector('[data-id="1"]');
         dlb.addSelected(listItem);
@@ -178,7 +178,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able to remove a list item from selected that is not selected', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         let listItem = document.querySelector('[data-id="1"]');
         dlb.removeSelected(listItem);
@@ -187,7 +187,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able to search the items', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
         let query = 'One';
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         dlb.searchLists(query, dlb.dualListbox);
@@ -200,7 +200,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able to perform case insensitive search', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
         let query = 'tWO';
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         dlb.searchLists(query, dlb.dualListbox);
@@ -213,7 +213,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able to search the items with no text', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         dlb.searchLists('', dlb.dualListbox);
         expect(dlb.available.length).toBe(10);
@@ -221,7 +221,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able to hit the addEvent callback', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
 
         function addCallback(value) {
             expect(value).toBe("1");
@@ -235,7 +235,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able to hit the removeEvent callback', () => {
-        setFixtures(FIXTURE_FILLED_SELECT_PRESELECTED);
+        fixture.set(FIXTURE_FILLED_SELECT_PRESELECTED);
 
         function addCallback(value) {
             expect(value).toBe("2");
@@ -249,7 +249,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able to click on one of the elements', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
 
         new DualListbox(`.${SELECT_CLASS}`);
         let listItem = document.querySelector('[data-id="2"]');
@@ -262,7 +262,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able to click on one of the elements to remove the class', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
 
         new DualListbox(`.${SELECT_CLASS}`);
         let listItem = document.querySelector('[data-id="2"]');
@@ -280,7 +280,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able to doubleclick on one of the elements to select', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
 
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         expect(dlb.available.length).toBe(10);
@@ -296,7 +296,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able to doubleclick on one of the elements to deselect', () => {
-        setFixtures(FIXTURE_FILLED_SELECT_PRESELECTED);
+        fixture.set(FIXTURE_FILLED_SELECT_PRESELECTED);
 
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         expect(dlb.available.length).toBe(9);
@@ -312,7 +312,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able fire search on change', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
 
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         let search = document.querySelector('.dual-listbox__search');
@@ -325,7 +325,7 @@ describe('Duallistbox', function () {
     });
 
     it('should be able fire search with the keyboard', () => {
-        setFixtures(FIXTURE_FILLED_SELECT);
+        fixture.set(FIXTURE_FILLED_SELECT);
 
         let dlb = new DualListbox(`.${SELECT_CLASS}`);
         let search = document.querySelector('.dual-listbox__search');
