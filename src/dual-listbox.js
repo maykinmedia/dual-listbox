@@ -406,6 +406,7 @@ class DualListbox {
             let option = options[i];
             if (option.value === value) {
                 option.selected = false;
+                option.removeAttribute('selected');
             }
         }
 
@@ -471,6 +472,7 @@ class DualListbox {
             let option = options[i];
             if (option.value === value) {
                 option.selected = true;
+                option.setAttribute('selected', '');
             }
         }
 
