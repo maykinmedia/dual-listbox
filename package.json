@@ -40,7 +40,7 @@
         "karma-fixture": "latest",
         "karma-jasmine": "latest",
         "karma-jasmine-ajax": "latest",
-        "karma-sauce-launcher": "latest",
+        "karma-sauce-launcher": "^1.2.0",
         "karma-spec-reporter": "latest",
         "karma-webpack": "latest",
         "webpack": "latest",
