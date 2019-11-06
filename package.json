@@ -7,7 +7,7 @@
         "test": "test"
     },
     "dependencies": {
-        "jshint": "^2.10.2"
+        "@shopify/draggable": "^1.0.0-beta.8"
     },
     "devDependencies": {
         "@babel/core": "latest",
@@ -30,6 +30,7 @@
         "istanbul-instrumenter-loader": "latest",
         "jasmine-core": "latest",
         "jsdoc-to-markdown": "latest",
+        "jshint": "^2.10.2",
         "jshint-stylish": "latest",
         "karma": "latest",
         "karma-chrome-launcher": "latest",

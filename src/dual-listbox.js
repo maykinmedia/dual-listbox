@@ -40,6 +40,25 @@ class DualListbox {
         this.redraw();
     }
 
+    allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.dataset.id);
+    }
+
+    drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        const moved_element = this.dualListBoxContainer.querySelector(`[data-id="${data}"]`);
+        if(ev.target == this.selectedList) {
+            this.addSelected(moved_element);
+        } else {
+            this.removeSelected(moved_element);
+        }
+    }
+
     /**
      * Sets the default values that can be overwritten.
      */
@@ -180,6 +199,8 @@ class DualListbox {
      * Update the elements in the listbox;
      */
     _updateListbox(list, elements) {
+        elements.sort((a, b) => a.dataset.order > b.dataset.order);
+
         while (list.firstChild) {
             list.removeChild(list.firstChild);
         }
@@ -373,10 +394,12 @@ class DualListbox {
      */
     _createListItem(option) {
         let listItem = document.createElement('li');
-
         listItem.classList.add(ITEM_ELEMENT);
         listItem.innerHTML = option.text;
         listItem.dataset.id = option.value;
+        listItem.dataset.order = option.dataset.order;
+        listItem.addEventListener('dragstart', this.drag);
+        listItem.setAttribute("draggable", "true");
 
         this._addClickActions(listItem);
 
@@ -443,9 +466,13 @@ class DualListbox {
 
         this.availableList = document.createElement('ul');
         this.availableList.classList.add(AVAILABLE_ELEMENT);
+        this.availableList.addEventListener('drop', this.drop.bind(this));
+        this.availableList.addEventListener('dragover', this.allowDrop);
 
         this.selectedList = document.createElement('ul');
         this.selectedList.classList.add(SELECTED_ELEMENT);
+        this.selectedList.addEventListener('drop', this.drop.bind(this));
+        this.selectedList.addEventListener('dragover', this.allowDrop);
 
         this.availableListTitle = document.createElement('div');
         this.availableListTitle.classList.add(TITLE_ELEMENT);
@@ -492,7 +519,10 @@ class DualListbox {
                 this._addOption({
                     text: option.innerHTML,
                     value: option.value,
-                    selected: option.attributes.selected
+                    selected: option.attributes.selected,
+                    dataset: {
+                        order: option.dataset.order
+                    }
                 });
             } else {
                 this._addOption(option);
