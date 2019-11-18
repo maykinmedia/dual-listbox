@@ -35,12 +35,12 @@
   .dual-listbox__button {
       margin-bottom: 5px;
       border: 0;
-      background-color: #eee;
+      background-color: #ddd;
       padding: 10px;
       color: #fff;
 
       &:hover {
-          background-color: #ddd;
+          background-color: #ccc;
       }
   }
 
@@ -66,6 +66,7 @@
     border-bottom: 1px solid #efefef;
     transition: background 0.2s ease;
 
+    &:active,
     &.dual-listbox__item--selected {
       background-color: transparentize(#089de3, .3);
     }

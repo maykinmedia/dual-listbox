@@ -1,3 +1,5 @@
+import Sortable from 'sortablejs';
+
 const MAIN_BLOCK = 'dual-listbox';
 
 const CONTAINER_ELEMENT = 'dual-listbox__container';
@@ -199,7 +201,7 @@ class DualListbox {
      * Update the elements in the listbox;
      */
     _updateListbox(list, elements) {
-        elements.sort((a, b) => a.dataset.order > b.dataset.order);
+        elements.sort((a, b) => Number(a.dataset.order) > Number(b.dataset.order));
 
         while (list.firstChild) {
             list.removeChild(list.firstChild);
@@ -466,13 +468,39 @@ class DualListbox {
 
         this.availableList = document.createElement('ul');
         this.availableList.classList.add(AVAILABLE_ELEMENT);
-        this.availableList.addEventListener('drop', this.drop.bind(this));
-        this.availableList.addEventListener('dragover', this.allowDrop);
+        // this.availableList.addEventListener('drop', this.drop.bind(this));
+        // this.availableList.addEventListener('dragover', this.allowDrop);
+
+        var sortable = Sortable.create(this.availableList, {
+            group: 'test'
+        });
+        this.availableList.addEventListener('end', (event) => {
+            if(event.from === event.to) {
+                this.reorder(this.available, event.item, event.oldIndex, event.newIndex);
+            }
+        });
+        this.availableList.addEventListener('add', (event) => {
+            this.removeSelected(event.item);
+            this.rebuildOrder();
+        });
 
         this.selectedList = document.createElement('ul');
         this.selectedList.classList.add(SELECTED_ELEMENT);
-        this.selectedList.addEventListener('drop', this.drop.bind(this));
-        this.selectedList.addEventListener('dragover', this.allowDrop);
+        // this.selectedList.addEventListener('drop', this.drop.bind(this));
+        // this.selectedList.addEventListener('dragover', this.allowDrop);
+
+        var sortable = Sortable.create(this.selectedList, {
+            group: 'test'
+        });
+        this.selectedList.addEventListener('end', (event) => {
+            if(event.from === event.to) {
+                this.reorder(this.selected, event.item, event.oldIndex, event.newIndex);
+            }
+        });
+        this.selectedList.addEventListener('add', (event) => {
+            this.addSelected(event.item);
+            this.rebuildOrder();
+        });
 
         this.availableListTitle = document.createElement('div');
         this.availableListTitle.classList.add(TITLE_ELEMENT);
@@ -484,6 +512,35 @@ class DualListbox {
 
         this._createButtons();
         this._createSearch();
+    }
+
+    rebuildOrder() {
+        // Reset the order on the elements
+        this.available.forEach((listItem, index) => {
+            listItem.dataset.order = index;
+        });
+        this.selected.forEach((listItem, index) => {
+            listItem.dataset.order = index;
+        });
+    }
+
+    reorder(list, item, old_value, new_value) {
+        list.splice(old_value, 1);
+        list.splice(new_value, 0, item);
+
+        this.rebuildOrder();
+
+        setTimeout(() => {
+            console.log('reorder event created');
+            let event = document.createEvent("HTMLEvents");
+            event.initEvent("reorder", false, true);
+            event.reorderedItem = item;
+            event.reorderedList = list;
+            event.reorderedOldValue = old_value;
+            event.reorderedNewValue = new_value;
+            this.dualListbox.dispatchEvent(event);
+            console.log('reorder event fired');
+        }, 0);
     }
 
     /**

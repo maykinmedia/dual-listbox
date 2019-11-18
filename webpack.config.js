@@ -20,7 +20,7 @@ module.exports = {
     },
 
     // Use externals (don't bundle dependencies).
-    externals: [nodeExternals()],
+    // externals: [nodeExternals()],
     target: 'web',
 
     // Use --production to optimize output.
