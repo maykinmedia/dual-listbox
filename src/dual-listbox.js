@@ -42,25 +42,6 @@ class DualListbox {
         this.redraw();
     }
 
-    allowDrop(ev) {
-        ev.preventDefault();
-    }
-
-    drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.dataset.id);
-    }
-
-    drop(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        const moved_element = this.dualListBoxContainer.querySelector(`[data-id="${data}"]`);
-        if(ev.target == this.selectedList) {
-            this.addSelected(moved_element);
-        } else {
-            this.removeSelected(moved_element);
-        }
-    }
-
     /**
      * Sets the default values that can be overwritten.
      */
@@ -69,6 +50,7 @@ class DualListbox {
         this.removeEvent = null; // TODO: Remove in favor of eventListener
         this.availableTitle = 'Available options';
         this.selectedTitle = 'Selected options';
+        this.ordering = false;
 
         this.showAddButton = true;
         this.addButtonText = 'add';
@@ -100,13 +82,24 @@ class DualListbox {
      *
      * @param {NodeElement} listItem
      */
-    addSelected(listItem) {
+    addSelected(listItem, insertIndex=null, redraw=true) {
         let index = this.available.indexOf(listItem);
         if (index > -1) {
             this.available.splice(index, 1);
-            this.selected.push(listItem);
+            if(insertIndex !== null) {
+                this.selected.splice(insertIndex, 0, listItem);
+            } else {
+                this.selected.push(listItem);
+            }
             this._selectOption(listItem.dataset.id);
-            this.redraw();
+
+            if(this.ordering) {
+                this.rebuildOrder();
+            }
+
+            if(redraw) {
+                this.redraw();
+            }
 
             setTimeout(() => {
                 let event = document.createEvent("HTMLEvents");
@@ -201,7 +194,9 @@ class DualListbox {
      * Update the elements in the listbox;
      */
     _updateListbox(list, elements) {
-        elements.sort((a, b) => Number(a.dataset.order) > Number(b.dataset.order));
+        elements.sort((a, b) => {
+            return Number(a.dataset.order) > Number(b.dataset.order);
+        });
 
         while (list.firstChild) {
             list.removeChild(list.firstChild);
@@ -363,18 +358,22 @@ class DualListbox {
         this.add_all_button = document.createElement('button');
         this.add_all_button.classList.add(BUTTON_ELEMENT);
         this.add_all_button.innerHTML = this.addAllButtonText;
+        this.add_all_button.setAttribute('type', 'button');
 
         this.add_button = document.createElement('button');
         this.add_button.classList.add(BUTTON_ELEMENT);
         this.add_button.innerHTML = this.addButtonText;
+        this.add_button.setAttribute('type', 'button');
 
         this.remove_button = document.createElement('button');
         this.remove_button.classList.add(BUTTON_ELEMENT);
         this.remove_button.innerHTML = this.removeButtonText;
+        this.remove_button.setAttribute('type', 'button');
 
         this.remove_all_button = document.createElement('button');
         this.remove_all_button.classList.add(BUTTON_ELEMENT);
         this.remove_all_button.innerHTML = this.removeAllButtonText;
+        this.remove_all_button.setAttribute('type', 'button');
 
         if(this.showAddAllButton) {
             this.buttons.appendChild(this.add_all_button);
@@ -399,8 +398,9 @@ class DualListbox {
         listItem.classList.add(ITEM_ELEMENT);
         listItem.innerHTML = option.text;
         listItem.dataset.id = option.value;
-        listItem.dataset.order = option.dataset.order;
-        listItem.addEventListener('dragstart', this.drag);
+        if(this.ordering) {
+            listItem.dataset.order = option.dataset.order;
+        }
         listItem.setAttribute("draggable", "true");
 
         this._addClickActions(listItem);
@@ -468,38 +468,35 @@ class DualListbox {
 
         this.availableList = document.createElement('ul');
         this.availableList.classList.add(AVAILABLE_ELEMENT);
-        // this.availableList.addEventListener('drop', this.drop.bind(this));
-        // this.availableList.addEventListener('dragover', this.allowDrop);
 
-        var sortable = Sortable.create(this.availableList, {
-            group: 'test'
+        Sortable.create(this.availableList, {
+            group: 'test',
+            sort: false,
+            animation: 150
         });
         this.availableList.addEventListener('end', (event) => {
-            if(event.from === event.to) {
-                this.reorder(this.available, event.item, event.oldIndex, event.newIndex);
+            if(event.to === event.from) {
+                this.reorder(this.available, event.item, event.oldIndex, event.newIndex, event.to === event.from);
             }
         });
         this.availableList.addEventListener('add', (event) => {
             this.removeSelected(event.item);
-            this.rebuildOrder();
         });
 
         this.selectedList = document.createElement('ul');
         this.selectedList.classList.add(SELECTED_ELEMENT);
-        // this.selectedList.addEventListener('drop', this.drop.bind(this));
-        // this.selectedList.addEventListener('dragover', this.allowDrop);
 
-        var sortable = Sortable.create(this.selectedList, {
-            group: 'test'
+        Sortable.create(this.selectedList, {
+            group: 'test',
+            animation: 150
         });
         this.selectedList.addEventListener('end', (event) => {
-            if(event.from === event.to) {
-                this.reorder(this.selected, event.item, event.oldIndex, event.newIndex);
+            if(event.to === event.from) {
+                this.reorder(this.selected, event.item, event.oldIndex, event.newIndex, event.to === event.from);
             }
         });
         this.selectedList.addEventListener('add', (event) => {
-            this.addSelected(event.item);
-            this.rebuildOrder();
+            this.addSelected(event.item, event.newIndex);
         });
 
         this.availableListTitle = document.createElement('div');
@@ -524,14 +521,19 @@ class DualListbox {
         });
     }
 
-    reorder(list, item, old_value, new_value) {
-        list.splice(old_value, 1);
+    reorder(list, item, old_value, new_value, removeOld) {
+        // Stop if reordering is not set to true
+        if(!this.ordering) {return false;}
+
+        if(removeOld) {
+            list.splice(old_value, 1);
+        }
         list.splice(new_value, 0, item);
 
         this.rebuildOrder();
+        this.redraw();
 
         setTimeout(() => {
-            console.log('reorder event created');
             let event = document.createEvent("HTMLEvents");
             event.initEvent("reorder", false, true);
             event.reorderedItem = item;
@@ -539,7 +541,6 @@ class DualListbox {
             event.reorderedOldValue = old_value;
             event.reorderedNewValue = new_value;
             this.dualListbox.dispatchEvent(event);
-            console.log('reorder event fired');
         }, 0);
     }
 
@@ -578,7 +579,7 @@ class DualListbox {
                     value: option.value,
                     selected: option.attributes.selected,
                     dataset: {
-                        order: option.dataset.order
+                        order: option.dataset && option.dataset.order ? option.dataset.order : ''
                     }
                 });
             } else {

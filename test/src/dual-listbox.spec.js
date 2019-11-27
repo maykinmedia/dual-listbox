@@ -440,7 +440,7 @@ describe('Duallistbox', function () {
 
         dlb.addEventListener('added', event => {
             expect(event.addedElement).toBeTruthy();
-            expect(event.addedElement.outerHTML).toBe('<li class="dual-listbox__item dual-listbox__item--selected" data-id="1">One</li>');
+            expect(event.addedElement.outerHTML).toBe('<li class="dual-listbox__item dual-listbox__item--selected" data-id="1" draggable="true">One</li>');
             done();
         });
 
