@@ -38,7 +38,6 @@ class DualListbox {
         }
         this._buildDualListbox(this.select.parentNode);
         this._addActions();
-
         this.redraw();
     }
 
@@ -50,7 +49,6 @@ class DualListbox {
         this.removeEvent = null; // TODO: Remove in favor of eventListener
         this.availableTitle = 'Available options';
         this.selectedTitle = 'Selected options';
-        this.ordering = false;
 
         this.showAddButton = true;
         this.addButtonText = 'add';
@@ -93,9 +91,7 @@ class DualListbox {
             }
             this._selectOption(listItem.dataset.id);
 
-            if(this.ordering) {
-                this.rebuildOrder();
-            }
+            this.rebuildOrder();
 
             if(redraw) {
                 this.redraw();
@@ -195,7 +191,9 @@ class DualListbox {
      */
     _updateListbox(list, elements) {
         elements.sort((a, b) => {
-            return Number(a.dataset.order) > Number(b.dataset.order);
+            const na = parseInt(a.dataset.order);
+            const nb = parseInt(b.dataset.order);
+            return na > nb ? 1 : -1;
         });
 
         while (list.firstChild) {
@@ -398,7 +396,8 @@ class DualListbox {
         listItem.classList.add(ITEM_ELEMENT);
         listItem.innerHTML = option.text;
         listItem.dataset.id = option.value;
-        if(this.ordering) {
+        console.log(option.dataset.order);
+        if(option.dataset.order) {
             listItem.dataset.order = option.dataset.order;
         }
         listItem.setAttribute("draggable", "true");
@@ -522,9 +521,6 @@ class DualListbox {
     }
 
     reorder(list, item, old_value, new_value, removeOld) {
-        // Stop if reordering is not set to true
-        if(!this.ordering) {return false;}
-
         if(removeOld) {
             list.splice(old_value, 1);
         }
