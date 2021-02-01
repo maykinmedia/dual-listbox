@@ -1,6 +1,6 @@
 {
     "name": "dual-listbox",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "description": "Dual listbox for multi-select elements",
     "main": "dist/dual-listbox.js",
     "directories": {
