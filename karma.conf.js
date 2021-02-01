@@ -66,17 +66,17 @@ module.exports = function (config) {
             platform: 'Windows 10',
             version: '14.14393'
         },
-        // sl_safari: {
-        //     base: 'SauceLabs',
-        //     browserName: 'safari',
-        //     platform: 'macOS 10.14',
-        //     version: '12.0'
-        // },
+        sl_safari_1: {
+            base: 'SauceLabs',
+            browserName: 'safari',
+            platform: 'macOS 11.00',
+            version: 'latest'
+        },
         sl_safari_2: {
             base: 'SauceLabs',
             browserName: 'safari',
-            platform: 'OS X 10.13',
-            version: '11.1'
+            platform: 'macOS 10.13',
+            version: '12.1'
         },
         sl_firefox: {
             base: 'SauceLabs',
@@ -90,12 +90,6 @@ module.exports = function (config) {
             platform: 'Windows 10',
             version: 'latest-1'
         },
-        sl_ie_11: {
-            base: 'SauceLabs',
-            browserName: 'internet explorer',
-            platform: 'Windows 8.1',
-            version: '11'
-        }
     }
 
     config.set({
@@ -122,27 +116,21 @@ module.exports = function (config) {
 
         sauceLabs: {
             testName: 'dual-listbox browser testing',
-            // startConnect: false,
             username: process.env.SAUCE_USERNAME,
             accessKey: process.env.SAUCE_ACCESS_KEY,
-            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
+            tunnelIdentifier: process.env.GITHUB_RUN_ID,
         },
 
-
-        webpackMiddleware: {
-            noInfo: true
-        },
-
+        autoWatch: process.env.CI ? false: true,
+        singleRun: process.env.CI ? true: false,
         browserNoActivityTimeout: 200000,
         captureTimeout: 200000,
-        colors: true,
         concurrency: 5,
         customLaunchers: customLaunchers,
         retryLimit: 5,
-        singleRun: false,
 
-        browsers: (process.env.TRAVIS) ? Object.keys(customLaunchers) : ['Chrome', 'Firefox'],
-        reporters: (process.env.TRAVIS) ? ['spec', 'coverage', 'saucelabs', 'coveralls'] : ['spec', 'coverage'],
+        browsers: (process.env.CI) ? Object.keys(customLaunchers) : ['Chrome', 'Firefox'],
+        reporters: (process.env.CI) ? ['spec', 'coverage', 'saucelabs', 'coveralls'] : ['spec', 'coverage'],
 
         specReporter: {
             suppressSkipped: true,

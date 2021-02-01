@@ -338,32 +338,34 @@ class DualListbox {
         this.buttons.classList.add(BUTTONS_ELEMENT);
 
         this.add_all_button = document.createElement('button');
-        this.add_all_button.classList.add(BUTTON_ELEMENT);
         this.add_all_button.innerHTML = this.addAllButtonText;
 
         this.add_button = document.createElement('button');
-        this.add_button.classList.add(BUTTON_ELEMENT);
         this.add_button.innerHTML = this.addButtonText;
 
         this.remove_button = document.createElement('button');
-        this.remove_button.classList.add(BUTTON_ELEMENT);
         this.remove_button.innerHTML = this.removeButtonText;
 
         this.remove_all_button = document.createElement('button');
-        this.remove_all_button.classList.add(BUTTON_ELEMENT);
         this.remove_all_button.innerHTML = this.removeAllButtonText;
 
-        if(this.showAddAllButton) {
-            this.buttons.appendChild(this.add_all_button);
+        const options = {
+            showAddAllButton: this.add_all_button,
+            showAddButton: this.add_button,
+            showRemoveButton: this.remove_button,
+            showRemoveAllButton: this.remove_all_button,
         }
-        if(this.showAddButton) {
-            this.buttons.appendChild(this.add_button);
-        }
-        if(this.showRemoveButton) {
-            this.buttons.appendChild(this.remove_button);
-        }
-        if(this.showRemoveAllButton) {
-            this.buttons.appendChild(this.remove_all_button);
+
+        for (let optionName in options) {
+            const option = this[optionName]
+            const button = options[optionName]
+
+            button.setAttribute('type', 'button');
+            button.classList.add(BUTTON_ELEMENT);
+
+            if (option) {
+                this.buttons.appendChild(button);
+            }
         }
     }
 
