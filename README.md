@@ -46,7 +46,11 @@ new DualListbox('#select', {
     addButtonText: '>',
     removeButtonText: '<',
     addAllButtonText: '>>',
-    removeAllButtonText: '<<'
+    removeAllButtonText: '<<',
+
+    sortable: true,
+    upButtonText: 'ᐱ',
+    downButtonText: 'ᐯ',
 });
 ```
 
