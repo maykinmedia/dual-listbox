@@ -2,7 +2,7 @@
     "comments": false,
     "compact": true,
     "presets": [
-        "@babel/preset-env"
+        ["@babel/preset-env", {"targets": {"ie": "11"}}]
     ],
     "plugins": [
         ["@babel/plugin-transform-spread", {

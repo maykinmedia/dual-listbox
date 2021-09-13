@@ -21,7 +21,7 @@ module.exports = {
 
     // Use externals (don't bundle dependencies).
     externals: [nodeExternals()],
-    target: 'node',
+    target: 'web',
 
     // Use --production to optimize output.
     mode: isProduction ? 'production' : 'development',

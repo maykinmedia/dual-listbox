@@ -1,3 +1,9 @@
+/**
+ * Formset module
+ * Contains logic for generating django formsets
+ * @module
+ */
+
 const MAIN_BLOCK = 'dual-listbox';
 
 const CONTAINER_ELEMENT = 'dual-listbox__container';
@@ -10,7 +16,6 @@ const BUTTON_ELEMENT = 'dual-listbox__button';
 const SEARCH_ELEMENT = 'dual-listbox__search';
 
 const SELECTED_MODIFIER = 'dual-listbox__item--selected';
-
 
 /**
  * Dual select interface allowing the user to select items from a list of provided options.
@@ -299,8 +304,10 @@ class DualListbox {
      * Adds the actions to the search input.
      */
     _addSearchActions() {
-        this.search.addEventListener('change', (event) => this.searchLists(event.target.value, this.dualListbox));
-        this.search.addEventListener('keyup', (event) => this.searchLists(event.target.value, this.dualListbox));
+        this.search_left.addEventListener('change', (event) => this.searchLists(event.target.value, this.availableList));
+        this.search_left.addEventListener('keyup', (event) => this.searchLists(event.target.value, this.availableList));
+        this.search_right.addEventListener('change', (event) => this.searchLists(event.target.value, this.selectedList));
+        this.search_right.addEventListener('keyup', (event) => this.searchLists(event.target.value, this.selectedList));
     }
 
     /**
@@ -310,11 +317,10 @@ class DualListbox {
     _buildDualListbox(container) {
         this.select.style.display = 'none';
 
-        this.dualListBoxContainer.appendChild(this._createList(this.availableListTitle, this.availableList));
+        this.dualListBoxContainer.appendChild(this._createList(this.search_left, this.availableListTitle, this.availableList));
         this.dualListBoxContainer.appendChild(this.buttons);
-        this.dualListBoxContainer.appendChild(this._createList(this.selectedListTitle, this.selectedList));
+        this.dualListBoxContainer.appendChild(this._createList(this.search_right, this.selectedListTitle, this.selectedList));
 
-        this.dualListbox.appendChild(this.search);
         this.dualListbox.appendChild(this.dualListBoxContainer);
 
         container.insertBefore(this.dualListbox, this.select);
@@ -323,8 +329,9 @@ class DualListbox {
     /**
      * Creates list with the header.
      */
-    _createList(header, list) {
+    _createList(search, header, list) {
         let result = document.createElement('div');
+        result.appendChild(search);
         result.appendChild(header);
         result.appendChild(list);
         return result;
@@ -354,17 +361,19 @@ class DualListbox {
             showAddButton: this.add_button,
             showRemoveButton: this.remove_button,
             showRemoveAllButton: this.remove_all_button,
-        }
+        };
 
         for (let optionName in options) {
-            const option = this[optionName]
-            const button = options[optionName]
+            if(optionName) {
+                const option = this[optionName];
+                const button = options[optionName];
 
-            button.setAttribute('type', 'button');
-            button.classList.add(BUTTON_ELEMENT);
+                button.setAttribute('type', 'button');
+                button.classList.add(BUTTON_ELEMENT);
 
-            if (option) {
-                this.buttons.appendChild(button);
+                if (option) {
+                    this.buttons.appendChild(button);
+                }
             }
         }
     }
@@ -389,10 +398,20 @@ class DualListbox {
      * @Private
      * Creates the search input.
      */
-    _createSearch() {
-        this.search = document.createElement('input');
-        this.search.classList.add(SEARCH_ELEMENT);
-        this.search.placeholder = this.searchPlaceholder;
+    _createSearchLeft() {
+        this.search_left = document.createElement('input');
+        this.search_left.classList.add(SEARCH_ELEMENT);
+        this.search_left.placeholder = this.searchPlaceholder;
+    }
+
+    /**
+     * @Private
+     * Creates the search input.
+     */
+     _createSearchRight() {
+        this.search_right = document.createElement('input');
+        this.search_right.classList.add(SEARCH_ELEMENT);
+        this.search_right.placeholder = this.searchPlaceholder;
     }
 
     /**
@@ -458,7 +477,8 @@ class DualListbox {
         this.selectedListTitle.innerText = this.selectedTitle;
 
         this._createButtons();
-        this._createSearch();
+        this._createSearchLeft();
+        this._createSearchRight();
     }
 
     /**
@@ -529,4 +549,4 @@ class DualListbox {
 }
 
 export default DualListbox;
-export {DualListbox};
+export { DualListbox };
