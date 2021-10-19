@@ -178,7 +178,22 @@ class DualListbox {
         event.preventDefault();
 
         let selected = this.available.filter((item) => item.style.display !== "none");
-        selected.forEach((item) => this.addSelected(item));
+        selected.forEach(function(listItem){
+            let index = this.available.indexOf(listItem);
+            if (index > -1) {
+                this.available.splice(index, 1);
+                this.selected.push(listItem);
+                this._selectOption(listItem.dataset.id);
+
+                setTimeout(() => {
+                    let event = document.createEvent("HTMLEvents");
+                    event.initEvent("added", false, true);
+                    event.addedElement = listItem;
+                    this.dualListbox.dispatchEvent(event);
+                }, 0);
+            }
+        });
+        this.redraw();
     }
 
     /**
@@ -214,7 +229,22 @@ class DualListbox {
         event.preventDefault();
 
         let deselected = this.selected.filter((item) => item.style.display !== "none");
-        deselected.forEach((item) => this.removeSelected(item));
+        deselected.forEach(function(listItem){
+            let index = this.selected.indexOf(listItem);
+            if (index > -1) {
+                this.selected.splice(index, 1);
+                this.available.push(listItem);
+                this._deselectOption(listItem.dataset.id);
+
+                setTimeout(() => {
+                    let event = document.createEvent("HTMLEvents");
+                    event.initEvent("removed", false, true);
+                    event.removedElement = listItem;
+                    this.dualListbox.dispatchEvent(event);
+                }, 0);
+            }
+        });
+        this.redraw();
     }
 
     /**
