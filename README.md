@@ -10,6 +10,9 @@
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/jostcrow.svg)](https://saucelabs.com/u/jostcrow)
 
+# Changes
+> Solves the duplicate option rendering problem, as mentioned in this issue https://github.com/maykinmedia/dual-listbox/issues/63
+
 # Dual Listbox
 
 > Make your multi select pretty and easy to use with only javascript. No other frameworks/libraries required.
