@@ -101,7 +101,8 @@ dualListbox.remove_button.setAttribute('a', 'a');
 dualListbox.remove_all_button.setAttribute('a', 'a');
 
 // Access the search field:
-dualListbox.search.classList.add('some_class');
+dualListbox.search_left.classList.add('some_class');
+dualListbox.search_right.classList.add('some_class');
 
 // Access the list containers:
 dualListbox.selectedList.setAttribute('a', 'a');
