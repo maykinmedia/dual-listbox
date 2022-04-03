@@ -482,7 +482,7 @@ class DualListbox {
 
     /**
      * Returns an array where the first element is the old index of the currently
-     * selected item in the right box and the second element is hte new index.
+     * selected item in the right box and the second element is the new index.
      *
      * @private
      * @param {string} direction
@@ -492,9 +492,9 @@ class DualListbox {
         const oldIndex = this.selected.findIndex(element => element.classList.contains('dual-listbox__item--selected'));
 
         let newIndex = oldIndex;
-        if ('up' === direction && oldIndex > 0) {
+        if (DIRECTION_UP === direction && oldIndex > 0) {
             newIndex -= 1;
-        } else if ('down' === direction && oldIndex < (this.selected.length - 1)) {
+        } else if (DIRECTION_DOWN === direction && oldIndex < (this.selected.length - 1)) {
             newIndex += 1;
         }
 
