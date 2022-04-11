@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300|Roboto+Mono');
+
+html, body {
+    font-weight: 300;
+}
+
+.source {
+    font-size: 60%;
+    cursor: pointer;
+    color: rgb(50, 115, 220);
+}
+
+.selected-element {
+    margin: 20px 0;
+    font-weight: 300;
+}
+
+.selected-element p {
+    margin-bottom: 0;
+}
+
+.changed-element li {
+    list-style: none;
+}
+
+li.L0, li.L1, li.L2, li.L3,
+li.L5, li.L6, li.L7, li.L8 {
+  list-style-type: decimal !important;
+}
+
+pre {
+    display: none;
+}
+
+pre.open {
+    display: block;
+}
+
+code[class*="language-"], pre[class*="language-"] {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.token {
+    font-family: 'Roboto Mono', monospace;
+    font-size: .75rem;
+    height: 1rem;
+    line-height: 1.5;
+}
+
+.tag:not(body) {
+    background-color: transparent;
+    display: inline-block;
+    font-size: .75rem;
+    height: 1rem;
+    line-height: 1.5;
+    padding-left: 0;
+    padding-right: 0;
+    white-space: nowrap;
+}
