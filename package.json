@@ -3,9 +3,6 @@
     "version": "1.4.0",
     "description": "Dual listbox for multi-select elements",
     "browserslist": "> 0.25%, not dead",
-    "directories": {
-        "test": "test"
-    },
     "dependencies": {},
     "devDependencies": {
         "@babel/core": "^7.17.8",
