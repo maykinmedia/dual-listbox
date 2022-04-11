@@ -1,12 +1,3 @@
 {
-    "comments": false,
-    "compact": true,
-    "presets": [
-        ["@babel/preset-env", {"targets": {"ie": "11"}}]
-    ],
-    "plugins": [
-        ["@babel/plugin-transform-spread", {
-            "loose": true
-        }]
-    ]
+    "presets": ["@babel/preset-env"]
 }
