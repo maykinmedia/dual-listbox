@@ -45,6 +45,9 @@
             "src/**/*.{js,jsx}",
             "!**/node_modules/**",
             "!**/vendor/**"
-        ]
+        ],
+        "transform": {
+            "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/babelJest.js"
+        }
     }
 }
