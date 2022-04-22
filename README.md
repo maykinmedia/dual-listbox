@@ -12,6 +12,8 @@
 
 > Make your multi select pretty and easy to use with only javascript. No other frameworks/libraries required.
 
+[Try the demo](https://maykinmedia.github.io/dual-listbox/)
+
 Styling. (From the stylesheet that can be found in the dist folder)
 
 ![Default](screenshots/select1.png)
