@@ -9,3 +9,8 @@ node_modules/
 .vscode
 
 npm-debug\.log
+.parcel-cache/
+coverage/
+# dist/
+dist/dual-listbox.test.js
+dist/dual-listbox.test.js.map
