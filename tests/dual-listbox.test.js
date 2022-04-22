@@ -1,8 +1,10 @@
 /**
  * @jest-environment jsdom
  */
-
-import DualListbox, { DualListbox as DualListbox2 } from "./dual-listbox.js";
+import { test, expect } from "vitest";
+import DualListbox, {
+    DualListbox as DualListbox2,
+} from "../src/dual-listbox.js";
 
 const SELECT_CLASS = "select";
 
