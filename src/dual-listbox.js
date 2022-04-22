@@ -11,6 +11,9 @@ const SEARCH_ELEMENT = "dual-listbox__search";
 
 const SELECTED_MODIFIER = "dual-listbox__item--selected";
 
+const DIRECTION_UP = "up";
+const DIRECTION_DOWN = "down";
+
 /**
  * Dual select interface allowing the user to select items from a list of provided options.
  * @class
@@ -35,6 +38,10 @@ class DualListbox {
         }
         this._buildDualListbox(this.select.parentNode);
         this._addActions();
+
+        if (this.sortable) {
+            this._initializeSortButtons();
+        }
 
         this.redraw();
     }
@@ -61,6 +68,10 @@ class DualListbox {
         this.removeAllButtonText = "remove all";
 
         this.searchPlaceholder = "Search";
+
+        this.sortable = false;
+        this.upButtonText = "up";
+        this.downButtonText = "down";
     }
 
     /**
@@ -568,6 +579,129 @@ class DualListbox {
         } else {
             this.available.push(listItem);
         }
+    }
+
+    /**
+     * @private
+     * @return {void}
+     */
+    _initializeSortButtons() {
+        const sortUpButton = document.createElement("button");
+        sortUpButton.classList.add("dual-listbox__button");
+        sortUpButton.innerText = this.upButtonText;
+        sortUpButton.addEventListener("click", (event) =>
+            this._onSortButtonClick(event, DIRECTION_UP)
+        );
+
+        const sortDownButton = document.createElement("button");
+        sortDownButton.classList.add("dual-listbox__button");
+        sortDownButton.innerText = this.downButtonText;
+        sortDownButton.addEventListener("click", (event) =>
+            this._onSortButtonClick(event, DIRECTION_DOWN)
+        );
+
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("dual-listbox__buttons");
+        buttonContainer.appendChild(sortUpButton);
+        buttonContainer.appendChild(sortDownButton);
+
+        this.dualListBoxContainer.appendChild(buttonContainer);
+    }
+
+    /**
+     * @private
+     * @param {MouseEvent} event
+     * @param {string} direction
+     * @return {void}
+     */
+    _onSortButtonClick(event, direction) {
+        event.preventDefault();
+
+        const [oldIndex, newIndex] = this._findSelected(direction);
+        if (oldIndex !== newIndex) {
+            this._sortUnderlyingSelectOptions(oldIndex, newIndex);
+            this._sortSelected(oldIndex, newIndex);
+            this.redraw();
+        }
+    }
+
+    /**
+     * Returns an array where the first element is the old index of the currently
+     * selected item in the right box and the second element is the new index.
+     *
+     * @private
+     * @param {string} direction
+     * @return {int[]}
+     */
+    _findSelected(direction) {
+        const oldIndex = this.selected.findIndex((element) =>
+            element.classList.contains("dual-listbox__item--selected")
+        );
+
+        let newIndex = oldIndex;
+        if (DIRECTION_UP === direction && oldIndex > 0) {
+            newIndex -= 1;
+        } else if (
+            DIRECTION_DOWN === direction &&
+            oldIndex < this.selected.length - 1
+        ) {
+            newIndex += 1;
+        }
+
+        return [oldIndex, newIndex];
+    }
+
+    /**
+     * Sorts the <option>'s in the underlying <select> in order to ensure
+     * that submitted form value are in the correct order.
+     *
+     * Note: This method must be called before {@link _sortSelected} as it
+     *       relies on the selected elements being in the old state.
+     *
+     * @private
+     * @param {int} oldIndex
+     * @param {int} newIndex
+     * @return {void}
+     */
+    _sortUnderlyingSelectOptions(oldIndex, newIndex) {
+        // `this.selected` are the list elements that are currently 'selected' in
+        // the right box. The indexes of these are different from the indexes of the
+        // underlying select, since the latter contains all options. The indexes are
+        // mapped correctly using `data-id` which contains the value of the option.
+        const oldValue = this.selected[oldIndex].getAttribute("data-id");
+        const newValue = this.selected[newIndex].getAttribute("data-id");
+        const oldOptionIndex = [...this.select.children].findIndex(
+            (option) => option.value === oldValue
+        );
+        const newOptionIndex = [...this.select.children].findIndex(
+            (option) => option.value === newValue
+        );
+
+        // Remove old element
+        const option = this.select.children[oldOptionIndex];
+        option.remove();
+
+        // Re-insert it at correct posision
+        this.select.insertBefore(option, this.select.children[newOptionIndex]);
+    }
+
+    /**
+     * Sorts the `selected` array that forms the basis of the visual
+     * rendering of the DualListBox.
+     *
+     * Note: After this method was called you will probably want to call
+     *       {@link redraw} in order to ensure that the DOM output matches
+     *       the new order.
+     *
+     * @private
+     * @param {int} oldIndex
+     * @param {int} newIndex
+     * @return {void}
+     */
+    _sortSelected(oldIndex, newIndex) {
+        const selected = this.selected[oldIndex];
+        this.selected.splice(oldIndex, 1);
+        this.selected.splice(newIndex, 0, selected);
     }
 
     /**

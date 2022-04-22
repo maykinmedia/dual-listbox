@@ -135,6 +135,35 @@
             </div>
         </section>
 
+        <section class="section">
+            <div class="container">
+                <h2 class="subtitle">
+                    Allow ordering
+                    <span class="source" data-source="dlb4">source</span>
+                </h2>
+
+                <pre
+                    class="dlb4"
+                ><code class="language-html">&lt;select class=&quot;select4&quot; multiple&gt;
+    &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+    let dlb4 = new DualListbox('.select4', {
+        sortable: true,
+    });
+&lt;/script&gt;</code></pre>
+
+                <select class="select4" multiple>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </section>
+
         <footer class="footer">
             <div class="container">
                 <div class="content has-text-centered">
@@ -184,12 +213,16 @@
                 showRemoveAllButton: false,
             });
 
+            var dlb4 = new DualListbox(".select4", {
+                sortable: true,
+            });
+
             var sources = document.querySelectorAll(".source");
             for (var i = 0; i < sources.length; i++) {
                 var source = sources[i];
-                source.addEventListener("click", function () {
+                source.addEventListener("click", function (event) {
                     var code = document.querySelector(
-                        "." + source.dataset.source
+                        "." + event.currentTarget.dataset.source
                     );
                     code.classList.toggle("open");
                 });
