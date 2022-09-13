@@ -207,10 +207,11 @@ class DualListbox {
             elements.sort(sortFunc);
         }
 
+        let fragment = document.createDocumentFragment();
         for (let i = 0; i < elements.length; i++) {
-            let listItem = elements[i];
-            list.appendChild(listItem);
+            fragment.appendChild(elements[i]);
         }
+        list.appendChild(fragment);
     }
 
     /**
