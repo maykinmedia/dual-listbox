@@ -73,8 +73,8 @@ class DualListbox {
         this.upButtonText = "up";
         this.downButtonText = "down";
 
-        this.sortAvailableListItems = false;
-        this.sortSelectedListItems = false;
+        this.availableItemsSortFunc = null;
+        this.selectedtemsSortFunc = null;
     }
 
     /**
@@ -167,14 +167,14 @@ class DualListbox {
      * Update the elements in the available listbox;
      */
     updateAvailableListbox() {
-        this._updateListbox(this.availableList, this.available, this.sortAvailableListItems);
+        this._updateListbox(this.availableList, this.available, this.availableItemsSortFunc);
     }
 
     /**
      * Update the elements in the selected listbox;
      */
     updateSelectedListbox() {
-        this._updateListbox(this.selectedList, this.selected, this.sortSelectedListItems);
+        this._updateListbox(this.selectedList, this.selected, this.selectedItemsSortFunc);
     }
 
     //
@@ -198,18 +198,15 @@ class DualListbox {
     /**
      * Update the elements in the listbox;
      */
-    _updateListbox(list, elements, sortListItems) {
+    _updateListbox(list, elements, sortFunc) {
         while (list.firstChild) {
             list.removeChild(list.firstChild);
         }
 
-        if (sortListItems) {
-          elements.sort(function(a, b) {
-              if (a.textContent < b.textContent) return -1;
-              if (a.textContent == b.textContent) return 0;
-              return 1;
-          });
+        if (sortFunc) {
+            elements.sort(sortFunc);
         }
+
         for (let i = 0; i < elements.length; i++) {
             let listItem = elements[i];
             list.appendChild(listItem);
