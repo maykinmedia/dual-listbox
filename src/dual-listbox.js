@@ -23,6 +23,7 @@ class DualListbox {
         this.setDefaults();
         this.selected = [];
         this.available = [];
+        this.dragged = null;
 
         if (DualListbox.isDomElement(selector)) {
             this.select = selector;
@@ -72,6 +73,8 @@ class DualListbox {
         this.sortable = false;
         this.upButtonText = "up";
         this.downButtonText = "down";
+
+        this.draggable = false;
     }
 
     /**
@@ -436,6 +439,10 @@ class DualListbox {
 
         this._addClickActions(listItem);
 
+        if (this.draggable) {
+            listItem.setAttribute("draggable", "true");
+        }
+
         return listItem;
     }
 
@@ -483,6 +490,36 @@ class DualListbox {
 
     /**
      * @Private
+     * Create drag and drop listeners
+     */
+    _createDragListeners() {
+        [this.availableList, this.selectedList].forEach(dropzone => {
+            dropzone.addEventListener("dragover", (evt) => {
+                evt.preventDefault();
+
+                if (this.selected.indexOf(this.dragged) > -1) {
+                    if (evt.toElement.className?.includes(AVAILABLE_ELEMENT) || evt.toElement.parentElement.className?.includes(AVAILABLE_ELEMENT)) {
+                        this.removeSelected(this.dragged);
+                    }
+                } 
+                else {
+                    if (evt.toElement.className?.includes(SELECTED_ELEMENT) || evt.toElement.parentElement.className?.includes(SELECTED_ELEMENT)) {
+                        this.addSelected(this.dragged);
+                    }
+                }
+            });
+            dropzone.addEventListener("dragenter", (evt) => {
+                evt.preventDefault();
+
+                if (evt.fromElement == null && evt.target.className?.includes(ITEM_ELEMENT)) {
+                    this.dragged = evt.target;
+                }
+            });
+        });
+    }
+
+    /**
+     * @Private
      * Set the option variables to this.
      */
     _initOptions(options) {
@@ -524,6 +561,9 @@ class DualListbox {
         this._createButtons();
         this._createSearchLeft();
         this._createSearchRight();
+        if (this.draggable) {
+            this._createDragListeners();
+        }
     }
 
     /**
