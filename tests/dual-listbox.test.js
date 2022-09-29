@@ -405,27 +405,23 @@ test("should only set the searched results to available.", () => {
     expect(dlb.options.filter((option) => option.selected).length).toBe(0);
 });
 
-// test("should be able to add the removed eventListener", (done) => {
-//     let domParent = document.createElement("div");
-//     domParent.innerHTML = FIXTURE_FILLED_SELECT_PRESELECTED_MULTIPLE;
+test("should be able to add the removed eventListener", (done) => {
+    let domParent = document.createElement("div");
+    domParent.innerHTML = FIXTURE_FILLED_SELECT_PRESELECTED_MULTIPLE;
 
-//     let dlb = new DualListbox(domParent.getElementsByTagName("select")[0]);
-//     expect(dlb.options.length).toBe(10);
-//     expect(dlb.options.filter((option) => option.selected).length).toBe(3);
+    let dlb = new DualListbox(domParent.getElementsByTagName("select")[0]);
+    expect(dlb.options.length).toBe(10);
+    expect(dlb.options.filter((option) => option.selected).length).toBe(3);
 
-//     dlb.addEventListener("removed", (event) => {
-//         expect(event.removedElement).toBeTruthy();
-//         expect(event.removedElement.textContent).toBe("Two");
-//         done();
-//     });
+    dlb.addEventListener("removed", (event) => {
+        expect(event.removedElement).toBeTruthy();
+        expect(event.removedElement.textContent).toBe("Two");
+        done();
+    });
 
-//     dlb.selectedList
-//         .querySelector(".dual-listbox__item")
-//         .classList.add("dual-listbox__item--selected");
-//     let event = {};
-//     event.preventDefault = () => {};
-//     dlb.actionItemDeselected(event);
-// });
+    let listItem = document.querySelector('[data-id="2"]');
+    dlb.changeSelected(listItem);
+});
 
 // test("should be able to add the added eventListener", (done) => {
 //     let domParent = document.createElement("div");
@@ -443,10 +439,6 @@ test("should only set the searched results to available.", () => {
 //         done();
 //     });
 
-//     dlb.availableList
-//         .querySelector(".dual-listbox__item")
-//         .classList.add("dual-listbox__item--selected");
-//     let event = {};
-//     event.preventDefault = () => {};
-//     dlb.actionItemSelected(event);
+//     let listItem = document.querySelector('[data-id="1"]');
+//     dlb.changeSelected(listItem);
 // });

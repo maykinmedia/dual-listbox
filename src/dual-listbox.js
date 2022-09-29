@@ -21,8 +21,6 @@ const DIRECTION_DOWN = "down";
 class DualListbox {
     constructor(selector, options = {}) {
         this.setDefaults();
-        // this.selected = [];
-        // this.available = [];
         this.dragged = null;
         this.options = [];
 
