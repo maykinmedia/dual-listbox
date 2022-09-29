@@ -37,6 +37,7 @@ class DualListbox {
         } else {
             this._splitOptions(this.select.options);
         }
+
         this._buildDualListbox(this.select.parentNode);
         this._addActions();
 
