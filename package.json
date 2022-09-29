@@ -16,7 +16,7 @@
         "test": "vitest run --coverage",
         "build": "node build.js",
         "serve": "serve",
-        "watch": "parcel watch ./src/*",
+        "watch": "nodemon -w ./src/ ./build.js",
         "lint": "prettier src/ -c",
         "format": "prettier src/ -w",
         "prepare-release": "npm format && npm test && npm run build"
@@ -50,6 +50,7 @@
         }
     },
     "dependencies": {
+        "nodemon": "^2.0.20",
         "prettier": "^2.6.2"
     }
 }

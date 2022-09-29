@@ -95,6 +95,7 @@ class DualListbox {
             this.available.splice(index, 1);
             this.selected.push(listItem);
             this._selectOption(listItem.dataset.id);
+            // To not redraw when changing all elements
             !all && this.redraw();
 
             setTimeout(() => {
@@ -125,6 +126,7 @@ class DualListbox {
             this.selected.splice(index, 1);
             this.available.push(listItem);
             this._deselectOption(listItem.dataset.id);
+            // To not redraw when changing all elements
             !all && this.redraw();
 
             setTimeout(() => {
