@@ -501,26 +501,51 @@ class DualListbox {
      * Create drag and drop listeners
      */
     _createDragListeners() {
-        [this.availableList, this.selectedList].forEach(dropzone => {
-            dropzone.addEventListener("dragover", (evt) => {
-                evt.preventDefault();
+        const liListeners = (li) => {
+            li.addEventListener("dragstart", (event) => {
+                // store a ref. on the dragged elem
+                this.dragged = event.currentTarget;
+                event.currentTarget.classList.add("dragging");
+            });
 
-                if (this.selected.indexOf(this.dragged) > -1) {
-                    if (evt.toElement.className?.includes(AVAILABLE_ELEMENT) || evt.toElement.parentElement.className?.includes(AVAILABLE_ELEMENT)) {
+            li.addEventListener("dragend", (event) => {
+                event.currentTarget.classList.remove("dragging");
+            });
+        };
+        [...this.selectedList.children].forEach(liListeners);
+        [...this.availableList.children].forEach(liListeners);
+
+        [this.availableList, this.selectedList].forEach((dropzone) => {
+            dropzone.addEventListener(
+                "dragover",
+                (event) => {
+                    // Allow the drop event to be emitted for the dropzone.
+                    event.preventDefault();
+                },
+                false
+            );
+
+            dropzone.addEventListener("dragenter", (event) => {
+                event.target.classList.add("dropping");
+            });
+
+            dropzone.addEventListener("dragleave", (event) => {
+                event.target.classList.remove("dropping");
+            });
+
+            dropzone.addEventListener("drop", (event) => {
+                event.preventDefault();
+
+                event.target.classList.remove("dropping");
+                if (
+                    dropzone.classList.contains("dual-listbox__selected") ||
+                    dropzone.classList.contains("dual-listbox__available")
+                ) {
+                    if (dropzone.classList.contains("dual-listbox__selected")) {
+                        this.addSelected(this.dragged);
+                    } else {
                         this.removeSelected(this.dragged);
                     }
-                } 
-                else {
-                    if (evt.toElement.className?.includes(SELECTED_ELEMENT) || evt.toElement.parentElement.className?.includes(SELECTED_ELEMENT)) {
-                        this.addSelected(this.dragged);
-                    }
-                }
-            });
-            dropzone.addEventListener("dragenter", (evt) => {
-                evt.preventDefault();
-
-                if (evt.fromElement == null && evt.target.className?.includes(ITEM_ELEMENT)) {
-                    this.dragged = evt.target;
                 }
             });
         });
@@ -570,7 +595,9 @@ class DualListbox {
         this._createSearchLeft();
         this._createSearchRight();
         if (this.draggable) {
-            this._createDragListeners();
+            setTimeout(() => {
+                this._createDragListeners();
+            }, 10);
         }
     }
 

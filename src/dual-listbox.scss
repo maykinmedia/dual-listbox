@@ -70,4 +70,13 @@
             background-color: transparentize(#089de3, 0.3);
         }
     }
+
+    .dragging {
+        opacity: 0.5;
+        background-color: #ddd;
+    }
+
+    .dropping {
+        border: 1px solid #bbb;
+    }
 }
