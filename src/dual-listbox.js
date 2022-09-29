@@ -89,13 +89,14 @@ class DualListbox {
      *
      * @param {NodeElement} listItem
      */
-    addSelected(listItem) {
+    addSelected(listItem, all) {
         let index = this.available.indexOf(listItem);
         if (index > -1) {
             this.available.splice(index, 1);
             this.selected.push(listItem);
             this._selectOption(listItem.dataset.id);
-            this.redraw();
+            // To not redraw when changing all elements
+            !all && this.redraw();
 
             setTimeout(() => {
                 let event = document.createEvent("HTMLEvents");
@@ -119,13 +120,14 @@ class DualListbox {
      *
      * @param {NodeElement} listItem
      */
-    removeSelected(listItem) {
+    removeSelected(listItem, all) {
         let index = this.selected.indexOf(listItem);
         if (index > -1) {
             this.selected.splice(index, 1);
             this.available.push(listItem);
             this._deselectOption(listItem.dataset.id);
-            this.redraw();
+            // To not redraw when changing all elements
+            !all && this.redraw();
 
             setTimeout(() => {
                 let event = document.createEvent("HTMLEvents");
@@ -189,7 +191,10 @@ class DualListbox {
         let selected = this.available.filter(
             (item) => item.style.display !== "none"
         );
-        selected.forEach((item) => this.addSelected(item));
+        selected.forEach((item) => this.addSelected(item, true));
+        setTimeout(() => {
+            this.redraw();
+        }, 1);
     }
 
     /**
@@ -214,7 +219,7 @@ class DualListbox {
 
         let selected = this.dualListbox.querySelector(`.${SELECTED_MODIFIER}`);
         if (selected) {
-            this.addSelected(selected);
+            this.addSelected(selected, false);
         }
     }
 
@@ -227,7 +232,10 @@ class DualListbox {
         let deselected = this.selected.filter(
             (item) => item.style.display !== "none"
         );
-        deselected.forEach((item) => this.removeSelected(item));
+        deselected.forEach((item) => this.removeSelected(item, true));
+        setTimeout(() => {
+            this.redraw();
+        }, 1);
     }
 
     /**
@@ -238,7 +246,7 @@ class DualListbox {
 
         let selected = this.dualListbox.querySelector(`.${SELECTED_MODIFIER}`);
         if (selected) {
-            this.removeSelected(selected);
+            this.removeSelected(selected, false);
         }
     }
 
@@ -252,9 +260,9 @@ class DualListbox {
         }
 
         if (this.selected.indexOf(listItem) > -1) {
-            this.removeSelected(listItem);
+            this.removeSelected(listItem, false);
         } else {
-            this.addSelected(listItem);
+            this.addSelected(listItem, false);
         }
     }
 
