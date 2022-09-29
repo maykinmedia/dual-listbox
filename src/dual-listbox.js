@@ -21,9 +21,10 @@ const DIRECTION_DOWN = "down";
 class DualListbox {
     constructor(selector, options = {}) {
         this.setDefaults();
-        this.selected = [];
-        this.available = [];
+        // this.selected = [];
+        // this.available = [];
         this.dragged = null;
+        this.options = [];
 
         if (DualListbox.isDomElement(selector)) {
             this.select = selector;
@@ -33,14 +34,15 @@ class DualListbox {
 
         this._initOptions(options);
         this._initReusableElements();
-        this._splitOptions(this.select.options);
         if (options.options !== undefined) {
-            this._splitOptions(options.options);
+            this.options = options.options;
+        } else {
+            this._splitOptions(this.select.options);
         }
         this._buildDualListbox(this.select.parentNode);
         this._addActions();
 
-        if (this.sortable) {
+        if (this.showSortButtons) {
             this._initializeSortButtons();
         }
 
@@ -51,8 +53,6 @@ class DualListbox {
      * Sets the default values that can be overwritten.
      */
     setDefaults() {
-        this.addEvent = null; // TODO: Remove in favor of eventListener
-        this.removeEvent = null; // TODO: Remove in favor of eventListener
         this.availableTitle = "Available options";
         this.selectedTitle = "Selected options";
 
@@ -70,11 +70,53 @@ class DualListbox {
 
         this.searchPlaceholder = "Search";
 
-        this.sortable = false;
+        this.showSortButtons = false;
+        this.sortFunction = (a, b) => {
+            if (a.selected) {
+                return -1;
+            }
+            if (b.selected) {
+                return 1;
+            }
+            if (a.order < b.order) {
+                return -1;
+            }
+            if (a.order > b.order) {
+                return 1;
+            }
+            return 0;
+        };
         this.upButtonText = "up";
         this.downButtonText = "down";
 
-        this.draggable = false;
+        this.enableDoubleClick = true;
+        this.draggable = true;
+    }
+
+    changeOrder(liItem, newPosition) {
+        console.log(liItem);
+        const index = this.options.findIndex((option) => {
+            console.log(option, liItem.dataset.id);
+            return option.value === liItem.dataset.id;
+        });
+        console.log(index);
+        const cutOptions = this.options.splice(index, 1);
+        console.log(cutOptions);
+        this.options.splice(newPosition, 0, cutOptions[0]);
+    }
+
+    addOptions(options) {
+        options.forEach((option) => {
+            this.addOption(option);
+        });
+    }
+
+    addOption(option, index = null) {
+        if (index) {
+            this.options.splice(index, 0, option);
+        } else {
+            this.options.push(option);
+        }
     }
 
     /**
@@ -92,53 +134,52 @@ class DualListbox {
      *
      * @param {NodeElement} listItem
      */
-    addSelected(listItem, all) {
-        let index = this.available.indexOf(listItem);
-        if (index > -1) {
-            this.available.splice(index, 1);
-            this.selected.push(listItem);
-            this._selectOption(listItem.dataset.id);
-            // To not redraw when changing all elements
-            !all && this.redraw();
+    changeSelected(listItem) {
+        const changeOption = this.options.find(
+            (option) => option.value === listItem.dataset.id
+        );
+        changeOption.selected = !changeOption.selected;
+        this.redraw();
 
-            setTimeout(() => {
-                let event = document.createEvent("HTMLEvents");
+        setTimeout(() => {
+            let event = document.createEvent("HTMLEvents");
+            if (changeOption.selected) {
                 event.initEvent("added", false, true);
                 event.addedElement = listItem;
-                this.dualListbox.dispatchEvent(event);
-            }, 0);
+            } else {
+                event.initEvent("removed", false, true);
+                event.removedElement = listItem;
+            }
+
+            this.dualListbox.dispatchEvent(event);
+        }, 0);
+    }
+
+    actionAllSelected(event) {
+        if (event) {
+            event.preventDefault();
         }
+        this.options.forEach((option) => (option.selected = true));
+        this.redraw();
+    }
+
+    actionAllDeselected(event) {
+        if (event) {
+            event.preventDefault();
+        }
+        this.options.forEach((option) => (option.selected = false));
+        this.redraw();
     }
 
     /**
      * Redraws the Dual listbox content
      */
     redraw() {
+        this.options.sort(this.sortFunction);
+
         this.updateAvailableListbox();
         this.updateSelectedListbox();
-    }
-
-    /**
-     * Removes the listItem from the selected list.
-     *
-     * @param {NodeElement} listItem
-     */
-    removeSelected(listItem, all) {
-        let index = this.selected.indexOf(listItem);
-        if (index > -1) {
-            this.selected.splice(index, 1);
-            this.available.push(listItem);
-            this._deselectOption(listItem.dataset.id);
-            // To not redraw when changing all elements
-            !all && this.redraw();
-
-            setTimeout(() => {
-                let event = document.createEvent("HTMLEvents");
-                event.initEvent("removed", false, true);
-                event.removedElement = listItem;
-                this.dualListbox.dispatchEvent(event);
-            }, 0);
-        }
+        this.syncSelect();
     }
 
     /**
@@ -169,14 +210,36 @@ class DualListbox {
      * Update the elements in the available listbox;
      */
     updateAvailableListbox() {
-        this._updateListbox(this.availableList, this.available);
+        this._updateListbox(
+            this.availableList,
+            this.options.filter((option) => !option.selected)
+        );
     }
 
     /**
      * Update the elements in the selected listbox;
      */
     updateSelectedListbox() {
-        this._updateListbox(this.selectedList, this.selected);
+        this._updateListbox(
+            this.selectedList,
+            this.options.filter((option) => option.selected)
+        );
+    }
+
+    syncSelect() {
+        while (this.select.firstChild) {
+            this.select.removeChild(this.select.lastChild);
+        }
+
+        this.options.forEach((option) => {
+            let optionElement = document.createElement("option");
+            optionElement.value = option.value;
+            optionElement.innerText = option.text;
+            if (option.selected) {
+                optionElement.setAttribute("selected", "selected");
+            }
+            this.select.appendChild(optionElement);
+        });
     }
 
     //
@@ -186,70 +249,41 @@ class DualListbox {
     //
 
     /**
-     * Action to set all listItems to selected.
-     */
-    _actionAllSelected(event) {
-        event.preventDefault();
-
-        let selected = this.available.filter(
-            (item) => item.style.display !== "none"
-        );
-        selected.forEach((item) => this.addSelected(item, true));
-        setTimeout(() => {
-            this.redraw();
-        }, 1);
-    }
-
-    /**
      * Update the elements in the listbox;
      */
-    _updateListbox(list, elements) {
+    _updateListbox(list, options) {
         while (list.firstChild) {
             list.removeChild(list.firstChild);
         }
 
-        for (let i = 0; i < elements.length; i++) {
-            let listItem = elements[i];
-            list.appendChild(listItem);
-        }
+        options.forEach((option) => {
+            list.appendChild(this._createListItem(option));
+        });
     }
 
     /**
      * Action to set one listItem to selected.
      */
-    _actionItemSelected(event) {
+    actionItemSelected(event) {
         event.preventDefault();
 
-        let selected = this.dualListbox.querySelector(`.${SELECTED_MODIFIER}`);
-        if (selected) {
-            this.addSelected(selected, false);
-        }
-    }
-
-    /**
-     * Action to set all listItems to available.
-     */
-    _actionAllDeselected(event) {
-        event.preventDefault();
-
-        let deselected = this.selected.filter(
-            (item) => item.style.display !== "none"
+        let selected = this.availableList.querySelector(
+            `.${SELECTED_MODIFIER}`
         );
-        deselected.forEach((item) => this.removeSelected(item, true));
-        setTimeout(() => {
-            this.redraw();
-        }, 1);
+        if (selected) {
+            this.changeSelected(selected);
+        }
     }
 
     /**
      * Action to set one listItem to available.
      */
-    _actionItemDeselected(event) {
+    actionItemDeselected(event) {
         event.preventDefault();
 
-        let selected = this.dualListbox.querySelector(`.${SELECTED_MODIFIER}`);
+        let selected = this.selectedList.querySelector(`.${SELECTED_MODIFIER}`);
         if (selected) {
-            this.removeSelected(selected, false);
+            this.changeSelected(selected);
         }
     }
 
@@ -261,12 +295,7 @@ class DualListbox {
             event.preventDefault();
             event.stopPropagation();
         }
-
-        if (this.selected.indexOf(listItem) > -1) {
-            this.removeSelected(listItem, false);
-        } else {
-            this.addSelected(listItem, false);
-        }
+        if (this.enableDoubleClick) this.changeSelected(listItem);
     }
 
     /**
@@ -307,16 +336,16 @@ class DualListbox {
      */
     _addButtonActions() {
         this.add_all_button.addEventListener("click", (event) =>
-            this._actionAllSelected(event)
+            this.actionAllSelected(event)
         );
         this.add_button.addEventListener("click", (event) =>
-            this._actionItemSelected(event)
+            this.actionItemSelected(event)
         );
         this.remove_button.addEventListener("click", (event) =>
-            this._actionItemDeselected(event)
+            this.actionItemDeselected(event)
         );
         this.remove_all_button.addEventListener("click", (event) =>
-            this._actionAllDeselected(event)
+            this.actionAllDeselected(event)
         );
     }
 
@@ -445,6 +474,7 @@ class DualListbox {
         listItem.innerHTML = option.text;
         listItem.dataset.id = option.value;
 
+        this._liListeners(listItem);
         this._addClickActions(listItem);
 
         if (this.draggable) {
@@ -452,6 +482,53 @@ class DualListbox {
         }
 
         return listItem;
+    }
+
+    _liListeners(li) {
+        li.addEventListener("dragstart", (event) => {
+            // store a ref. on the dragged elem
+            console.log("drag start", event);
+            this.dragged = event.currentTarget;
+            event.currentTarget.classList.add("dragging");
+        });
+        li.addEventListener("dragend", (event) => {
+            event.currentTarget.classList.remove("dragging");
+        });
+
+        // For changing the order
+        li.addEventListener(
+            "dragover",
+            (event) => {
+                // Allow the drop event to be emitted for the dropzone.
+                event.preventDefault();
+            },
+            false
+        );
+
+        li.addEventListener("dragenter", (event) => {
+            event.target.classList.add("drop-above");
+        });
+
+        li.addEventListener("dragleave", (event) => {
+            event.target.classList.remove("drop-above");
+        });
+
+        li.addEventListener("drop", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            event.target.classList.remove("drop-above");
+            let newIndex = this.options.findIndex(
+                (option) => option.value === event.target.dataset.id
+            );
+            if (event.target.parentElement === this.dragged.parentElement) {
+                this.changeOrder(this.dragged, newIndex);
+                this.redraw();
+            } else {
+                this.changeSelected(this.dragged);
+                this.changeOrder(this.dragged, newIndex);
+                this.redraw();
+            }
+        });
     }
 
     /**
@@ -476,45 +553,9 @@ class DualListbox {
 
     /**
      * @Private
-     * Deselects the option with the matching value
-     *
-     * @param {Object} value
-     */
-    _deselectOption(value) {
-        let options = this.select.options;
-
-        for (let i = 0; i < options.length; i++) {
-            let option = options[i];
-            if (option.value === value) {
-                option.selected = false;
-                option.removeAttribute("selected");
-            }
-        }
-
-        if (this.removeEvent) {
-            this.removeEvent(value);
-        }
-    }
-
-    /**
-     * @Private
      * Create drag and drop listeners
      */
     _createDragListeners() {
-        const liListeners = (li) => {
-            li.addEventListener("dragstart", (event) => {
-                // store a ref. on the dragged elem
-                this.dragged = event.currentTarget;
-                event.currentTarget.classList.add("dragging");
-            });
-
-            li.addEventListener("dragend", (event) => {
-                event.currentTarget.classList.remove("dragging");
-            });
-        };
-        [...this.selectedList.children].forEach(liListeners);
-        [...this.availableList.children].forEach(liListeners);
-
         [this.availableList, this.selectedList].forEach((dropzone) => {
             dropzone.addEventListener(
                 "dragover",
@@ -526,26 +567,22 @@ class DualListbox {
             );
 
             dropzone.addEventListener("dragenter", (event) => {
-                event.target.classList.add("dropping");
+                event.target.classList.add("drop-in");
             });
 
             dropzone.addEventListener("dragleave", (event) => {
-                event.target.classList.remove("dropping");
+                event.target.classList.remove("drop-in");
             });
 
             dropzone.addEventListener("drop", (event) => {
                 event.preventDefault();
 
-                event.target.classList.remove("dropping");
+                event.target.classList.remove("drop-in");
                 if (
                     dropzone.classList.contains("dual-listbox__selected") ||
                     dropzone.classList.contains("dual-listbox__available")
                 ) {
-                    if (dropzone.classList.contains("dual-listbox__selected")) {
-                        this.addSelected(this.dragged);
-                    } else {
-                        this.removeSelected(this.dragged);
-                    }
+                    this.changeSelected(this.dragged);
                 }
             });
         });
@@ -603,57 +640,17 @@ class DualListbox {
 
     /**
      * @Private
-     * Selects the option with the matching value
-     *
-     * @param {Object} value
-     */
-    _selectOption(value) {
-        let options = this.select.options;
-
-        for (let i = 0; i < options.length; i++) {
-            let option = options[i];
-            if (option.value === value) {
-                option.selected = true;
-                option.setAttribute("selected", "");
-            }
-        }
-
-        if (this.addEvent) {
-            this.addEvent(value);
-        }
-    }
-
-    /**
-     * @Private
      * Splits the options and places them in the correct list.
      */
     _splitOptions(options) {
-        for (let i = 0; i < options.length; i++) {
-            let option = options[i];
-            if (DualListbox.isDomElement(option)) {
-                this._addOption({
-                    text: option.innerHTML,
-                    value: option.value,
-                    selected: option.attributes.selected,
-                });
-            } else {
-                this._addOption(option);
-            }
-        }
-    }
-
-    /**
-     * @Private
-     * Adds option to the selected of available list (depending on the data).
-     */
-    _addOption(option) {
-        let listItem = this._createListItem(option);
-
-        if (option.selected) {
-            this.selected.push(listItem);
-        } else {
-            this.available.push(listItem);
-        }
+        [...options].forEach((option, index) => {
+            this.addOption({
+                text: option.innerHTML,
+                value: option.value,
+                selected: option.attributes.selected || false,
+                order: index,
+            });
+        });
     }
 
     /**
@@ -692,11 +689,18 @@ class DualListbox {
     _onSortButtonClick(event, direction) {
         event.preventDefault();
 
-        const [oldIndex, newIndex] = this._findSelected(direction);
-        if (oldIndex !== newIndex) {
-            this._sortUnderlyingSelectOptions(oldIndex, newIndex);
-            this._sortSelected(oldIndex, newIndex);
-            this.redraw();
+        const selected = this.dualListbox.querySelector(
+            ".dual-listbox__item--selected"
+        );
+        const option = this.options.find(
+            (option) => option.value === selected.dataset.id
+        );
+        if (selected) {
+            const newIndex = this._getNewIndex(selected, direction);
+            if (newIndex >= 0) {
+                this.changeOrder(selected, newIndex);
+                this.redraw();
+            }
         }
     }
 
@@ -708,75 +712,22 @@ class DualListbox {
      * @param {string} direction
      * @return {int[]}
      */
-    _findSelected(direction) {
-        const oldIndex = this.selected.findIndex((element) =>
-            element.classList.contains("dual-listbox__item--selected")
+    _getNewIndex(selected, direction) {
+        const oldIndex = this.options.findIndex(
+            (option) => option.value === selected.dataset.id
         );
 
         let newIndex = oldIndex;
-        if (DIRECTION_UP === direction && oldIndex > 0) {
+        if (DIRECTION_UP === direction) {
             newIndex -= 1;
         } else if (
             DIRECTION_DOWN === direction &&
-            oldIndex < this.selected.length - 1
+            oldIndex < selected.length - 1
         ) {
             newIndex += 1;
         }
 
-        return [oldIndex, newIndex];
-    }
-
-    /**
-     * Sorts the <option>'s in the underlying <select> in order to ensure
-     * that submitted form value are in the correct order.
-     *
-     * Note: This method must be called before {@link _sortSelected} as it
-     *       relies on the selected elements being in the old state.
-     *
-     * @private
-     * @param {int} oldIndex
-     * @param {int} newIndex
-     * @return {void}
-     */
-    _sortUnderlyingSelectOptions(oldIndex, newIndex) {
-        // `this.selected` are the list elements that are currently 'selected' in
-        // the right box. The indexes of these are different from the indexes of the
-        // underlying select, since the latter contains all options. The indexes are
-        // mapped correctly using `data-id` which contains the value of the option.
-        const oldValue = this.selected[oldIndex].getAttribute("data-id");
-        const newValue = this.selected[newIndex].getAttribute("data-id");
-        const oldOptionIndex = [...this.select.children].findIndex(
-            (option) => option.value === oldValue
-        );
-        const newOptionIndex = [...this.select.children].findIndex(
-            (option) => option.value === newValue
-        );
-
-        // Remove old element
-        const option = this.select.children[oldOptionIndex];
-        option.remove();
-
-        // Re-insert it at correct posision
-        this.select.insertBefore(option, this.select.children[newOptionIndex]);
-    }
-
-    /**
-     * Sorts the `selected` array that forms the basis of the visual
-     * rendering of the DualListBox.
-     *
-     * Note: After this method was called you will probably want to call
-     *       {@link redraw} in order to ensure that the DOM output matches
-     *       the new order.
-     *
-     * @private
-     * @param {int} oldIndex
-     * @param {int} newIndex
-     * @return {void}
-     */
-    _sortSelected(oldIndex, newIndex) {
-        const selected = this.selected[oldIndex];
-        this.selected.splice(oldIndex, 1);
-        this.selected.splice(newIndex, 0, selected);
+        return newIndex;
     }
 
     /**

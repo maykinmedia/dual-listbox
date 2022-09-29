@@ -1,6 +1,6 @@
 {
     "name": "dual-listbox",
-    "version": "1.4.0",
+    "version": "2.0.0",
     "description": "Dual listbox for multi-select elements",
     "browserslist": "> 0.05%",
     "devDependencies": {
@@ -9,17 +9,17 @@
         "esbuild-plugin-sass": "^1.0.1",
         "jsdom": "^19.0.0",
         "serve": "^14.0.1",
-        "vite": "^2.9.5",
+        "vite": "^2.9.13",
         "vitest": "^0.9.4"
     },
     "scripts": {
         "test": "vitest run --coverage",
         "build": "node build.js",
         "serve": "serve",
-        "watch": "nodemon -w ./src/ ./build.js",
+        "watch": "nodemon -w ./src/ -e js,scss ./build.js",
         "lint": "prettier src/ -c",
         "format": "prettier src/ -w",
-        "prepare-release": "npm format && npm test && npm run build"
+        "prepare-release": "npm run format && npm test && npm run build"
     },
     "repository": {
         "type": "git",

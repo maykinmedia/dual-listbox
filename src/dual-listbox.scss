@@ -35,12 +35,13 @@
     .dual-listbox__button {
         margin-bottom: 5px;
         border: 0;
-        background-color: #eee;
+        background-color: #ddd;
         padding: 10px;
         color: #fff;
+        cursor: pointer;
 
         &:hover {
-            background-color: #ddd;
+            background-color: #ccc;
         }
     }
 
@@ -76,7 +77,12 @@
         background-color: #ddd;
     }
 
-    .dropping {
-        border: 1px solid #bbb;
+    .drop-in {
+        border: 1px solid #aaa;
+    }
+
+    .drop-above {
+        border: 0;
+        border-top: 1px solid rgb(124, 144, 255);
     }
 }

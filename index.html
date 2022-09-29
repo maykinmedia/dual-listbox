@@ -138,7 +138,7 @@
         <section class="section">
             <div class="container">
                 <h2 class="subtitle">
-                    Allow ordering
+                    Show the sort buttons
                     <span class="source" data-source="dlb4">source</span>
                 </h2>
 
@@ -152,7 +152,7 @@
 
 &lt;script&gt;
     let dlb4 = new DualListbox('.select4', {
-        sortable: true,
+        showSortButtons: true,
     });
 &lt;/script&gt;</code></pre>
 
@@ -160,36 +160,255 @@
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
+                    <option value="4">Four</option>
+                    <option value="5">Five</option>
+                    <option value="6">Six</option>
+                    <option value="7">Seven</option>
+                    <option value="8">Eight</option>
+                    <option value="9">Nine</option>
                 </select>
             </div>
         </section>
 
         <section class="section">
             <div class="container">
-                <h2 class="subtitle">
-                    Allow drag-and-drop
-                    <span class="source" data-source="dlb5">source</span>
-                </h2>
+                <h2 class="title is-2">All options</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Default</th>
+                            <th>Excepted values</th>
+                            <th>Explanation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>draggable</th>
+                            <td><code>true</code></td>
+                            <td><code>boolean</code></td>
+                            <td>If the list items should be draggable.</td>
+                        </tr>
+                        <tr>
+                            <th>showSortButtons</th>
+                            <td><code>false</code></td>
+                            <td><code>boolean</code></td>
+                            <td>
+                                If the sort buttons should be shown. (up and
+                                down)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>enableDoubleClick</th>
+                            <td><code>true</code></td>
+                            <td><code>boolean</code></td>
+                            <td>
+                                If double clicking a list items should change
+                                column.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>showAddButton</th>
+                            <td><code>true</code></td>
+                            <td><code>boolean</code></td>
+                            <td>If the "add" button should be shown.</td>
+                        </tr>
+                        <tr>
+                            <th>showRemoveButton</th>
+                            <td><code>true</code></td>
+                            <td><code>boolean</code></td>
+                            <td>If the "remove" button should be shown.</td>
+                        </tr>
+                        <tr>
+                            <th>showAddAllButton</th>
+                            <td><code>true</code></td>
+                            <td><code>boolean</code></td>
+                            <td>If the "add all" button should be shown.</td>
+                        </tr>
+                        <tr>
+                            <th>showRemoveAllButton</th>
+                            <td><code>true</code></td>
+                            <td><code>boolean</code></td>
+                            <td>If the "remove all" button should be shown.</td>
+                        </tr>
 
-                <pre
-                    class="dlb5"
-                ><code class="language-html">&lt;select class=&quot;select5&quot; multiple&gt;
-    &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
-    &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
-    &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
-&lt;/select&gt;
+                        <tr>
+                            <th>availableTitle</th>
+                            <td><code>"Available options"</code></td>
+                            <td><code>string</code></td>
+                            <td>
+                                The title that should be shown above the
+                                "Available options"
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>selectedTitle</th>
+                            <td><code>"Selected options"</code></td>
+                            <td><code>string</code></td>
+                            <td>
+                                The title that should be shown above the
+                                "Selected options"
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>addButtonText</th>
+                            <td><code>"add"</code></td>
+                            <td><code>string</code></td>
+                            <td>
+                                The text that should be displayed in the "add"
+                                button.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>removeButtonText</th>
+                            <td><code>"remove"</code></td>
+                            <td><code>string</code></td>
+                            <td>
+                                The text that should be displayed in the
+                                "remove" button.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>addAllButtonText</th>
+                            <td><code>"add all"</code></td>
+                            <td><code>string</code></td>
+                            <td>
+                                The text that should be displayed in the "add
+                                all" button.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>removeAllButtonText</th>
+                            <td><code>"remove all"</code></td>
+                            <td><code>string</code></td>
+                            <td>
+                                The text that should be displayed in the "remove
+                                all" button.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>searchPlaceholder</th>
+                            <td><code>"Search"</code></td>
+                            <td><code>string</code></td>
+                            <td>
+                                The text that should be displayed in the
+                                "search" fields.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>upButtonText</th>
+                            <td><code>"up"</code></td>
+                            <td><code>string</code></td>
+                            <td>
+                                The text that should be displayed in the "up"
+                                button. (only when sorting is enabled)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>downButtonText</th>
+                            <td><code>"down"</code></td>
+                            <td><code>string</code></td>
+                            <td>
+                                The text that should be displayed in the "down"
+                                button. (only when sorting is enabled)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>options</th>
+                            <td>
+                                <code>undefined</code>
+                            </td>
+                            <td>
+                                <code
+                                    >Array<{text:"text to display", value: "what
+                                    the select value should be", selected:
+                                    false, order: 1}></code
+                                >
+                            </td>
+                            <td>
+                                A list of options that should be added. This
+                                will overwrite the select options
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>sortFunction</th>
+                            <td>
+                                <code>Function</code>
+                            </td>
+                            <td><code>Function</code></td>
+                            <td>
+                                A function to overwrite the default sorting that
+                                will be applied.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-&lt;script&gt;
-    let dlb5 = new DualListbox('.select5', {
-        draggable: true
-    });
-&lt;/script&gt;</code></pre>
+        <section class="section">
+            <div class="container">
+                <h2 class="title is-2">Public functions</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Function name</th>
+                            <th>Arguments</th>
+                            <th>Explanation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>changeOrder</th>
+                            <td>liItem, newPosition</td>
+                            <td>
+                                Change the order of the given list Element and
+                                the new position
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>addOptions</th>
+                            <td>options</td>
+                            <td>Add a single option to the options list.</td>
+                        </tr>
+                        <tr>
+                            <th>addOption</th>
+                            <td>option, index (optional)</td>
+                            <td>
+                                Add a single option to the options list.
+                                Optionally add the index.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>addEventListener</th>
+                            <td>eventName, callback</td>
+                            <td>Add an eventListener</td>
+                        </tr>
+                        <tr>
+                            <th>changeSelected</th>
+                            <td>listItem</td>
+                            <td>
+                                Change the selected state of the list element.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>actionAllSelected</th>
+                            <td>event (optional)</td>
+                            <td>Change all items to be selected.</td>
+                        </tr>
+                        <tr>
+                            <th>actionAllDeselected</th>
+                            <td>event (optional)</td>
+                            <td>Change all items to not be selected.</td>
+                        </tr>
 
-                <select class="select5" multiple>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                        <tr>
+                            <th>redraw</th>
+                            <td></td>
+                            <td>Redraw the lists.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
@@ -225,6 +444,7 @@
                 addAllButtonText: ">>",
                 removeAllButtonText: "<<",
                 searchPlaceholder: "search numbers",
+                enableDoubleClick: false,
             });
             dlb2.addEventListener("added", function (event) {
                 document.querySelector(".changed-element").innerHTML =
@@ -243,11 +463,7 @@
             });
 
             var dlb4 = new DualListbox(".select4", {
-                sortable: true,
-            });
-
-            var dlb5 = new DualListbox(".select5", {
-                draggable: true,
+                showSortButtons: true,
             });
 
             var sources = document.querySelectorAll(".source");
