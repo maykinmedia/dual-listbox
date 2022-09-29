@@ -35,10 +35,10 @@ class DualListbox {
 
         if (options.options !== undefined) {
             this._splitOptions(options.options);
-        }else{
+        } else {
             this._splitOptions(this.select.options);
         }
-        
+
         this._buildDualListbox(this.select.parentNode);
         this._addActions();
 
