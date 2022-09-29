@@ -23,6 +23,7 @@ class DualListbox {
         this.setDefaults();
         this.selected = [];
         this.available = [];
+        this.dragged = null;
 
         if (DualListbox.isDomElement(selector)) {
             this.select = selector;
@@ -72,6 +73,8 @@ class DualListbox {
         this.sortable = false;
         this.upButtonText = "up";
         this.downButtonText = "down";
+
+        this.draggable = false;
     }
 
     /**
@@ -444,6 +447,10 @@ class DualListbox {
 
         this._addClickActions(listItem);
 
+        if (this.draggable) {
+            listItem.setAttribute("draggable", "true");
+        }
+
         return listItem;
     }
 
@@ -491,6 +498,61 @@ class DualListbox {
 
     /**
      * @Private
+     * Create drag and drop listeners
+     */
+    _createDragListeners() {
+        const liListeners = (li) => {
+            li.addEventListener("dragstart", (event) => {
+                // store a ref. on the dragged elem
+                this.dragged = event.currentTarget;
+                event.currentTarget.classList.add("dragging");
+            });
+
+            li.addEventListener("dragend", (event) => {
+                event.currentTarget.classList.remove("dragging");
+            });
+        };
+        [...this.selectedList.children].forEach(liListeners);
+        [...this.availableList.children].forEach(liListeners);
+
+        [this.availableList, this.selectedList].forEach((dropzone) => {
+            dropzone.addEventListener(
+                "dragover",
+                (event) => {
+                    // Allow the drop event to be emitted for the dropzone.
+                    event.preventDefault();
+                },
+                false
+            );
+
+            dropzone.addEventListener("dragenter", (event) => {
+                event.target.classList.add("dropping");
+            });
+
+            dropzone.addEventListener("dragleave", (event) => {
+                event.target.classList.remove("dropping");
+            });
+
+            dropzone.addEventListener("drop", (event) => {
+                event.preventDefault();
+
+                event.target.classList.remove("dropping");
+                if (
+                    dropzone.classList.contains("dual-listbox__selected") ||
+                    dropzone.classList.contains("dual-listbox__available")
+                ) {
+                    if (dropzone.classList.contains("dual-listbox__selected")) {
+                        this.addSelected(this.dragged);
+                    } else {
+                        this.removeSelected(this.dragged);
+                    }
+                }
+            });
+        });
+    }
+
+    /**
+     * @Private
      * Set the option variables to this.
      */
     _initOptions(options) {
@@ -532,6 +594,11 @@ class DualListbox {
         this._createButtons();
         this._createSearchLeft();
         this._createSearchRight();
+        if (this.draggable) {
+            setTimeout(() => {
+                this._createDragListeners();
+            }, 10);
+        }
     }
 
     /**

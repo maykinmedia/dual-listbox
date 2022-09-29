@@ -8,7 +8,7 @@
         "esbuild": "^0.14.38",
         "esbuild-plugin-sass": "^1.0.1",
         "jsdom": "^19.0.0",
-        "serve": "^13.0.2",
+        "serve": "^14.0.1",
         "vite": "^2.9.5",
         "vitest": "^0.9.4"
     },
