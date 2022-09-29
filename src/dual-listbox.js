@@ -72,6 +72,9 @@ class DualListbox {
         this.sortable = false;
         this.upButtonText = "up";
         this.downButtonText = "down";
+
+        this.availableItemsSortFunc = null;
+        this.selectedtemsSortFunc = null;
     }
 
     /**
@@ -166,14 +169,14 @@ class DualListbox {
      * Update the elements in the available listbox;
      */
     updateAvailableListbox() {
-        this._updateListbox(this.availableList, this.available);
+        this._updateListbox(this.availableList, this.available, this.availableItemsSortFunc);
     }
 
     /**
      * Update the elements in the selected listbox;
      */
     updateSelectedListbox() {
-        this._updateListbox(this.selectedList, this.selected);
+        this._updateListbox(this.selectedList, this.selected, this.selectedItemsSortFunc);
     }
 
     //
@@ -200,15 +203,20 @@ class DualListbox {
     /**
      * Update the elements in the listbox;
      */
-    _updateListbox(list, elements) {
+    _updateListbox(list, elements, sortFunc) {
         while (list.firstChild) {
             list.removeChild(list.firstChild);
         }
 
-        for (let i = 0; i < elements.length; i++) {
-            let listItem = elements[i];
-            list.appendChild(listItem);
+        if (sortFunc) {
+            elements.sort(sortFunc);
         }
+
+        let fragment = document.createDocumentFragment();
+        for (let i = 0; i < elements.length; i++) {
+            fragment.appendChild(elements[i]);
+        }
+        list.appendChild(fragment);
     }
 
     /**
