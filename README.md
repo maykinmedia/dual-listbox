@@ -84,6 +84,8 @@ let dualListbox = new DualListbox("#select", {
     upButtonText: "ᐱ",
     downButtonText: "ᐯ",
 
+    draggable: true,
+
     options: [
         { text: "Option 1", value: "OPTION1" },
         { text: "Option 2", value: "OPTION2" },

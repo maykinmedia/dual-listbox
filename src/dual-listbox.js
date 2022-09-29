@@ -23,6 +23,7 @@ class DualListbox {
         this.setDefaults();
         this.selected = [];
         this.available = [];
+        this.dragged = null;
 
         if (DualListbox.isDomElement(selector)) {
             this.select = selector;
@@ -75,6 +76,8 @@ class DualListbox {
         this.sortable = false;
         this.upButtonText = "up";
         this.downButtonText = "down";
+
+        this.draggable = false;
     }
 
     /**
@@ -92,13 +95,14 @@ class DualListbox {
      *
      * @param {NodeElement} listItem
      */
-    addSelected(listItem) {
+    addSelected(listItem, all) {
         let index = this.available.indexOf(listItem);
         if (index > -1) {
             this.available.splice(index, 1);
             this.selected.push(listItem);
             this._selectOption(listItem.dataset.id);
-            this.redraw();
+            // To not redraw when changing all elements
+            !all && this.redraw();
 
             setTimeout(() => {
                 let event = document.createEvent("HTMLEvents");
@@ -122,13 +126,14 @@ class DualListbox {
      *
      * @param {NodeElement} listItem
      */
-    removeSelected(listItem) {
+    removeSelected(listItem, all) {
         let index = this.selected.indexOf(listItem);
         if (index > -1) {
             this.selected.splice(index, 1);
             this.available.push(listItem);
             this._deselectOption(listItem.dataset.id);
-            this.redraw();
+            // To not redraw when changing all elements
+            !all && this.redraw();
 
             setTimeout(() => {
                 let event = document.createEvent("HTMLEvents");
@@ -192,7 +197,10 @@ class DualListbox {
         let selected = this.available.filter(
             (item) => item.style.display !== "none"
         );
-        selected.forEach((item) => this.addSelected(item));
+        selected.forEach((item) => this.addSelected(item, true));
+        setTimeout(() => {
+            this.redraw();
+        }, 1);
     }
 
     /**
@@ -217,7 +225,7 @@ class DualListbox {
 
         let selected = this.dualListbox.querySelector(`.${SELECTED_MODIFIER}`);
         if (selected) {
-            this.addSelected(selected);
+            this.addSelected(selected, false);
         }
     }
 
@@ -230,7 +238,10 @@ class DualListbox {
         let deselected = this.selected.filter(
             (item) => item.style.display !== "none"
         );
-        deselected.forEach((item) => this.removeSelected(item));
+        deselected.forEach((item) => this.removeSelected(item, true));
+        setTimeout(() => {
+            this.redraw();
+        }, 1);
     }
 
     /**
@@ -241,7 +252,7 @@ class DualListbox {
 
         let selected = this.dualListbox.querySelector(`.${SELECTED_MODIFIER}`);
         if (selected) {
-            this.removeSelected(selected);
+            this.removeSelected(selected, false);
         }
     }
 
@@ -255,9 +266,9 @@ class DualListbox {
         }
 
         if (this.selected.indexOf(listItem) > -1) {
-            this.removeSelected(listItem);
+            this.removeSelected(listItem, false);
         } else {
-            this.addSelected(listItem);
+            this.addSelected(listItem, false);
         }
     }
 
@@ -439,6 +450,10 @@ class DualListbox {
 
         this._addClickActions(listItem);
 
+        if (this.draggable) {
+            listItem.setAttribute("draggable", "true");
+        }
+
         return listItem;
     }
 
@@ -486,6 +501,61 @@ class DualListbox {
 
     /**
      * @Private
+     * Create drag and drop listeners
+     */
+    _createDragListeners() {
+        const liListeners = (li) => {
+            li.addEventListener("dragstart", (event) => {
+                // store a ref. on the dragged elem
+                this.dragged = event.currentTarget;
+                event.currentTarget.classList.add("dragging");
+            });
+
+            li.addEventListener("dragend", (event) => {
+                event.currentTarget.classList.remove("dragging");
+            });
+        };
+        [...this.selectedList.children].forEach(liListeners);
+        [...this.availableList.children].forEach(liListeners);
+
+        [this.availableList, this.selectedList].forEach((dropzone) => {
+            dropzone.addEventListener(
+                "dragover",
+                (event) => {
+                    // Allow the drop event to be emitted for the dropzone.
+                    event.preventDefault();
+                },
+                false
+            );
+
+            dropzone.addEventListener("dragenter", (event) => {
+                event.target.classList.add("dropping");
+            });
+
+            dropzone.addEventListener("dragleave", (event) => {
+                event.target.classList.remove("dropping");
+            });
+
+            dropzone.addEventListener("drop", (event) => {
+                event.preventDefault();
+
+                event.target.classList.remove("dropping");
+                if (
+                    dropzone.classList.contains("dual-listbox__selected") ||
+                    dropzone.classList.contains("dual-listbox__available")
+                ) {
+                    if (dropzone.classList.contains("dual-listbox__selected")) {
+                        this.addSelected(this.dragged);
+                    } else {
+                        this.removeSelected(this.dragged);
+                    }
+                }
+            });
+        });
+    }
+
+    /**
+     * @Private
      * Set the option variables to this.
      */
     _initOptions(options) {
@@ -527,6 +597,11 @@ class DualListbox {
         this._createButtons();
         this._createSearchLeft();
         this._createSearchRight();
+        if (this.draggable) {
+            setTimeout(() => {
+                this._createDragListeners();
+            }, 10);
+        }
     }
 
     /**

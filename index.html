@@ -164,6 +164,35 @@
             </div>
         </section>
 
+        <section class="section">
+            <div class="container">
+                <h2 class="subtitle">
+                    Allow drag-and-drop
+                    <span class="source" data-source="dlb5">source</span>
+                </h2>
+
+                <pre
+                    class="dlb5"
+                ><code class="language-html">&lt;select class=&quot;select5&quot; multiple&gt;
+    &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+    let dlb5 = new DualListbox('.select5', {
+        draggable: true
+    });
+&lt;/script&gt;</code></pre>
+
+                <select class="select5" multiple>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </section>
+
         <footer class="footer">
             <div class="container">
                 <div class="content has-text-centered">
@@ -215,6 +244,10 @@
 
             var dlb4 = new DualListbox(".select4", {
                 sortable: true,
+            });
+
+            var dlb5 = new DualListbox(".select5", {
+                draggable: true,
             });
 
             var sources = document.querySelectorAll(".source");
