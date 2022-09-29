@@ -1,4 +1,0 @@
-exclude:
-- karma.conf.js
-- /build/*
-- webpack.config.js

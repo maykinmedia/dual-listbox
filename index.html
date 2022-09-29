@@ -2,29 +2,42 @@
 <html lang="en">
     <head>
         <title>Dual listbox example</title>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.1/themes/prism.min.css" rel="stylesheet">
-        <link href="style.css" rel="stylesheet">
-        <link href="dist/dual-listbox.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.1/themes/prism.min.css"
+            rel="stylesheet"
+        />
+        <link href="style.css" rel="stylesheet" />
+        <link href="dist/dual-listbox.css" rel="stylesheet" />
     </head>
     <body>
         <section class="hero is-medium is-primary is-bold">
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">Dual Listbox</h1>
-                    <h2 class="subtitle">A better way to manage your multi select element.</h2>
+                    <h2 class="subtitle">
+                        A better way to manage your multi select element.
+                    </h2>
                 </div>
             </div>
         </section>
 
         <section class="section">
             <div class="container">
-                <h2 class="subtitle">Select by class <span class="source" data-source="dlb1">source</span></h2>
+                <h2 class="subtitle">
+                    Select by class
+                    <span class="source" data-source="dlb1">source</span>
+                </h2>
 
-                <pre class="dlb1"><code class="language-html">&lt;select class=&quot;select1&quot; multiple&gt;
+                <pre
+                    class="dlb1"
+                ><code class="language-html">&lt;select class=&quot;select1&quot; multiple&gt;
     &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
     &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
     &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
@@ -44,9 +57,14 @@
 
         <section class="section">
             <div class="container">
-                <h2 class="subtitle">Add options and add eventListeners <span class="source" data-source="dlb2">source</span></h2>
+                <h2 class="subtitle">
+                    Add options and add eventListeners
+                    <span class="source" data-source="dlb2">source</span>
+                </h2>
 
-                <pre class="dlb2"><code class="language-html">&lt;select class=&quot;select2&quot; multiple&gt;
+                <pre
+                    class="dlb2"
+                ><code class="language-html">&lt;select class=&quot;select2&quot; multiple&gt;
     &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
     &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
     &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
@@ -72,7 +90,9 @@
 
                 <div class="selected-element">
                     <p>Selected element:</p>
-                    <ul class="changed-element"><li>Nothing yet</li></ul>
+                    <ul class="changed-element">
+                        <li>Nothing yet</li>
+                    </ul>
                 </div>
 
                 <select class="select2" multiple>
@@ -85,9 +105,14 @@
 
         <section class="section">
             <div class="container">
-                <h2 class="subtitle">Remove all the buttons from being rendered. <span class="source" data-source="dlb3">source</span></h2>
+                <h2 class="subtitle">
+                    Remove all the buttons from being rendered.
+                    <span class="source" data-source="dlb3">source</span>
+                </h2>
 
-                <pre class="dlb3"><code class="language-html">&lt;select class=&quot;select3&quot; multiple&gt;
+                <pre
+                    class="dlb3"
+                ><code class="language-html">&lt;select class=&quot;select3&quot; multiple&gt;
     &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
     &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
     &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
@@ -110,14 +135,47 @@
             </div>
         </section>
 
+        <section class="section">
+            <div class="container">
+                <h2 class="subtitle">
+                    Allow ordering
+                    <span class="source" data-source="dlb4">source</span>
+                </h2>
+
+                <pre
+                    class="dlb4"
+                ><code class="language-html">&lt;select class=&quot;select4&quot; multiple&gt;
+    &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+    let dlb4 = new DualListbox('.select4', {
+        sortable: true,
+    });
+&lt;/script&gt;</code></pre>
+
+                <select class="select4" multiple>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </section>
+
         <footer class="footer">
             <div class="container">
                 <div class="content has-text-centered">
                     <p>
-                        <strong>Dual Listbox</strong> by <a href="http://maykinmedia.nl/">Maykin Media</a>
+                        <strong>Dual Listbox</strong> by
+                        <a href="http://maykinmedia.nl/">Maykin Media</a>
                     </p>
                     <p>
-                        <a class="icon" href="https://github.com/maykinmedia/dual-listbox">
+                        <a
+                            class="icon"
+                            href="https://github.com/maykinmedia/dual-listbox"
+                        >
                             <i class="fa fa-github"></i>
                         </a>
                     </p>
@@ -128,38 +186,46 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.8.1/prism.min.js"></script>
         <script src="dist/dual-listbox.js"></script>
         <script>
-            var dlb1 = new DualListbox('.select1');
+            var dlb1 = new DualListbox(".select1");
 
-            var dlb2 = new DualListbox('.select2', {
-                availableTitle:'Available numbers',
-                selectedTitle: 'Selected numbers',
-                addButtonText: '>',
-                removeButtonText: '<',
-                addAllButtonText: '>>',
-                removeAllButtonText: '<<',
-                searchPlaceholder: 'search numbers'
+            var dlb2 = new DualListbox(".select2", {
+                availableTitle: "Available numbers",
+                selectedTitle: "Selected numbers",
+                addButtonText: ">",
+                removeButtonText: "<",
+                addAllButtonText: ">>",
+                removeAllButtonText: "<<",
+                searchPlaceholder: "search numbers",
             });
-            dlb2.addEventListener('added', function(event){
-                document.querySelector('.changed-element').innerHTML = event.addedElement.outerHTML;
+            dlb2.addEventListener("added", function (event) {
+                document.querySelector(".changed-element").innerHTML =
+                    event.addedElement.outerHTML;
             });
-            dlb2.addEventListener('removed', function(event){
-                document.querySelector('.changed-element').innerHTML = event.removedElement.outerHTML;
+            dlb2.addEventListener("removed", function (event) {
+                document.querySelector(".changed-element").innerHTML =
+                    event.removedElement.outerHTML;
             });
 
-            var dlb3 = new DualListbox('.select3', {
+            var dlb3 = new DualListbox(".select3", {
                 showAddButton: false,
                 showAddAllButton: false,
                 showRemoveButton: false,
-                showRemoveAllButton: false
+                showRemoveAllButton: false,
             });
 
-            var sources = document.querySelectorAll('.source');
-            for(var i = 0; i < sources.length; i++) {
-                var source = sources[i]
-                source.addEventListener('click', function(){
-                    var code = document.querySelector('.' + source.dataset.source);
-                    code.classList.toggle('open')
-                })
+            var dlb4 = new DualListbox(".select4", {
+                sortable: true,
+            });
+
+            var sources = document.querySelectorAll(".source");
+            for (var i = 0; i < sources.length; i++) {
+                var source = sources[i];
+                source.addEventListener("click", function (event) {
+                    var code = document.querySelector(
+                        "." + event.currentTarget.dataset.source
+                    );
+                    code.classList.toggle("open");
+                });
             }
         </script>
     </body>
