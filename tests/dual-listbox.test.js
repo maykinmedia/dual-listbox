@@ -131,8 +131,8 @@ test("should be able to initialize a filled select with additional items", () =>
     let dlb = new DualListbox(`.${SELECT_CLASS}`, {
         options: OPTIONS_WITH_SELECTED_VALUE,
     });
-    expect(dlb.available.length).toBe(11);
-    expect(dlb.selected.length).toBe(2);
+    expect(dlb.available.length).toBe(2);
+    expect(dlb.selected.length).toBe(1);
 });
 
 test("should be able to initialize a filled select with id", () => {
