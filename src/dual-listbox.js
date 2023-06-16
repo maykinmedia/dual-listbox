@@ -659,14 +659,14 @@ class DualListbox {
     _initializeSortButtons() {
         const sortUpButton = document.createElement("button");
         sortUpButton.classList.add("dual-listbox__button");
-        sortUpButton.innerText = this.upButtonText;
+        sortUpButton.innerHTML = this.upButtonText;
         sortUpButton.addEventListener("click", (event) =>
             this._onSortButtonClick(event, DIRECTION_UP)
         );
 
         const sortDownButton = document.createElement("button");
         sortDownButton.classList.add("dual-listbox__button");
-        sortDownButton.innerText = this.downButtonText;
+        sortDownButton.innerHTML = this.downButtonText;
         sortDownButton.addEventListener("click", (event) =>
             this._onSortButtonClick(event, DIRECTION_DOWN)
         );
