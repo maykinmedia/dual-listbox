@@ -94,7 +94,6 @@ class DualListbox {
 
     changeOrder(liItem, newPosition) {
         const index = this.options.findIndex((option) => {
-            console.log(option, liItem.dataset.id);
             return option.value === liItem.dataset.id;
         });
         const cutOptions = this.options.splice(index, 1);
