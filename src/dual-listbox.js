@@ -160,6 +160,13 @@ class DualListbox {
         }
         this.options.forEach((option) => (option.selected = true));
         this.redraw();
+
+        setTimeout(() => {
+            let event = document.createEvent("HTMLEvents");
+            event.initEvent("addedAll", false, true);
+
+            this.dualListbox.dispatchEvent(event);
+        }, 0);
     }
 
     actionAllDeselected(event) {
@@ -168,6 +175,13 @@ class DualListbox {
         }
         this.options.forEach((option) => (option.selected = false));
         this.redraw();
+
+        setTimeout(() => {
+            let event = document.createEvent("HTMLEvents");
+            event.initEvent("removedAll", false, true);
+
+            this.dualListbox.dispatchEvent(event);
+        }, 0);
     }
 
     /**
