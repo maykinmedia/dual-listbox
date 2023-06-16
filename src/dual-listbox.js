@@ -93,15 +93,19 @@ class DualListbox {
     }
 
     changeOrder(liItem, newPosition) {
-        console.log(liItem);
         const index = this.options.findIndex((option) => {
             console.log(option, liItem.dataset.id);
             return option.value === liItem.dataset.id;
         });
-        console.log(index);
         const cutOptions = this.options.splice(index, 1);
-        console.log(cutOptions);
         this.options.splice(newPosition, 0, cutOptions[0]);
+
+        setTimeout(() => {
+            let event = document.createEvent("HTMLEvents");
+            event.initEvent("reordered", false, true);
+
+            this.dualListbox.dispatchEvent(event);
+        }, 0);
     }
 
     addOptions(options) {
